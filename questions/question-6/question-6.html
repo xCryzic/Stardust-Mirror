@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title> RECOVERY NODE 1971</title>
+
+  <link rel="stylesheet" href="question-6.css">
+</head>
+
+<body class="question-page">
+
+  <div class="scanlines"></div>
+  <div class="noise"></div>
+
+  <main class="terminal">
+
+    <header class="topbar">
+
+      <div class="brand">
+        <span class="dot"></span>
+        STARDUST // MIRROR PROTOCOL
+      </div>
+
+      <div class="record">
+        RECORD 06
+      </div>
+
+    </header>
+
+
+    <section class="content">
+
+      <div class="classification">
+        RECOVERED COMMUNICATION // 1971
+      </div>
+
+      <h1>
+        THE<br>
+        <span> RECOVERY NODE 1971</span>
+      </h1>
+
+      <div class="divider"></div>
+
+
+      <section class="briefing">
+
+        <p class="label">
+          RECOVERED COMMUNICATION
+        </p>
+
+        <p>
+          The following conversation was recovered from
+          the final STARDUST communication archive.
+        </p>
+
+        <p>
+          Most of the transmission is intact.
+          Several lines, however, appear to have been
+          altered after recovery.
+        </p>
+
+        <p>
+          The crew reported that the signal had begun
+          behaving strangely before communication was lost.
+        </p>
+
+      </section>
+
+
+      <!-- RECOVERED CONVERSATION -->
+
+      <section class="conversation">
+
+        <div class="conversation-header">
+          <span>TRANSMISSION // 1971-08-14</span>
+          <span>PARTIAL RECOVERY</span>
+        </div>
+
+        <div class="conversation-body">
+
+          <p>
+            <span class="time">03:17:42</span>
+            <strong>ELIAS:</strong>
+            I don't understand what happened to the signal.
+          </p>
+
+          <p>
+            <span class="time">03:17:48</span>
+            <strong>MARA:</strong>
+            Neither do I. It started changing languages.
+          </p>
+
+          <p>
+            <span class="time">03:17:53</span>
+            <strong>ELIAS:</strong>
+            What do you mean?
+          </p>
+
+          <p>
+            <span class="time">03:17:57</span>
+            <strong>MARA:</strong>
+            Look at the terminal.
+          </p>
+
+          <!-- ROT13 CLUE -->
+          <p class="corrupted">
+            <span class="time">03:17:58</span>
+            <strong>MIRROR:</strong>
+            ncv/erpbirel/1971
+          </p>
+
+          <p>
+            <span class="time">03:18:01</span>
+            <strong>ELIAS:</strong>
+            That's not one of our systems.
+          </p>
+
+          <p>
+            <span class="time">03:18:04</span>
+            <strong>MARA:</strong>
+            I know.
+          </p>
+
+          <p>
+            <span class="time">03:18:07</span>
+            <strong>MARA:</strong>
+            It's coming from inside the archive.
+          </p>
+
+          <p class="corrupted">
+            <span class="time">03:18:11</span>
+            <strong>MIRROR:</strong>
+            gur syntvag.
+          </p>
+
+          <p>
+            <span class="time">03:18:14</span>
+            <strong>ELIAS:</strong>
+            Did you hear that?
+          </p>
+
+          <p>
+            <span class="time">03:18:19</span>
+            <strong>MARA:</strong>
+            Yes.
+          </p>
+
+          <p>
+            <span class="time">03:18:23</span>
+            <strong>MARA:</strong>
+            Don't answer it.
+          </p>
+
+          <p class="corrupted">
+            <span class="time">03:18:27</span>
+            <strong>MIRROR:</strong>
+            gur qrnq.
+          </p>
+
+          <p>
+            <span class="time">03:18:31</span>
+            <strong>ELIAS:</strong>
+            Mara?
+          </p>
+
+          <p>
+            <span class="time">03:18:34</span>
+            <strong>ELIAS:</strong>
+            Mara, respond.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- TERMINAL -->
+
+      <section class="terminal-message">
+
+        <div class="terminal-header">
+
+          <span>
+            MIRROR_SYSTEM
+          </span>
+
+          <span id="backendStatus">
+            CONNECTING...
+          </span>
+
+        </div>
+
+        <div class="terminal-body">
+
+          <p>&gt; COMMUNICATION RECOVERED</p>
+          <p>&gt; CORRUPTED SEGMENTS DETECTED</p>
+          <p>&gt; LANGUAGE ANOMALY DETECTED</p>
+
+          <p class="blink">
+            &gt; DETERMINE WHAT THE MIRROR IS SAYING_
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- ANSWER -->
+
+      <section class="answer-section">
+
+        <div class="answer-label">
+          TRANSMISSION RESPONSE
+        </div>
+
+        <form id="answerForm" autocomplete="off">
+
+          <input
+            id="answerInput"
+            name="answer"
+            type="text"
+            placeholder="ENTER RECOVERED TRANSMISSION"
+            spellcheck="false"
+            autocomplete="off"
+            required
+          >
+
+          <button type="submit">
+            SUBMIT
+          </button>
+
+        </form>
+
+        <div
+          id="answerMessage"
+          class="q-status"
+          aria-live="polite"
+        ></div>
+
+        <div
+          id="nextContainer"
+          class="next-container"
+        ></div>
+
+      </section>
+
+    </section>
+
+
+    <footer>
+
+      <span>
+        STARDUST MIRROR PROTOCOL
+      </span>
+
+      <span>
+        1971 → 2027
+      </span>
+
+    </footer>
+
+  </main>
+
+  <script src="question-6.js"></script>
+
+</body>
+</html>

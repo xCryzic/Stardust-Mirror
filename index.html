@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STARDUST — Mirror Protocol // A School Cybersecurity CTF</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="startup-animation.css">
+</head>
+<body>
+<!-- STARDUST CINEMATIC STARTUP -->
+  <div id="startupOverlay" class="startup-overlay" aria-hidden="true">
+    <div id="startupStage" class="startup-stage">
+      
+      <!-- Video added here -->
+      <video id="startupVideo" src="start-up.mp4" autoplay muted playsinline></video>
+      
+      <div id="startupStar" class="startup-text">STAR</div>
+      <div id="startupDust" class="startup-text">DUST</div>
+      
+      <!-- Canvas has been removed -->
+      
+      <img id="startupLogo" src="logo.webp" alt="Stardust Logo">
+    </div>
+  </div>
+  </div>
+
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="streaks" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="dust" id="dust" aria-hidden="true"></div>
+
+  <div class="vignette" aria-hidden="true"></div>
+
+  <header class="navbar">
+    <a href="index.html" class="nav-brand-block">
+      <span class="nav-brand">STARDUST</span>
+      <span class="nav-brand-sub">Mirror&nbsp;Protocol</span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link is-active">HOME</a>
+      <a href="questions/question-page.html" class="nav-link">QUESTIONS</a>
+      <a href="leaderboard.html" class="nav-link">LEADERBOARD</a>
+      <a href="login.html" class="nav-link nav-login" id="navLogin">
+        LOGIN
+      </a>
+    </nav>
+    <span class="nav-status">
+      <span class="stat-line">MISSION&nbsp;01&nbsp;/ ARCHIVE</span>
+      <span class="stat-line"><i class="dot"></i> <span class="stat-online">SYSTEM&nbsp;STATUS: ONLINE</span></span>
+    </span>
+  </header>
+
+  <!-- classified telemetry strip -->
+  <div class="telemetry reveal" data-reveal="1" aria-hidden="true">
+    <span class="telemetry-item"><span class="k">MISSION</span><span class="v">STARDUST</span></span>
+    <span class="telemetry-item"><span class="k">YEAR</span><span class="v">1971</span></span>
+    <span class="telemetry-item"><span class="k">CREW</span><span class="v">06</span></span>
+    <span class="telemetry-item"><span class="k">STATUS</span><span class="v is-warn">LOST</span></span>
+    <span class="telemetry-item"><span class="k">SIGNAL</span><span class="v is-accent">DETECTED</span></span>
+    <span class="telemetry-item"><span class="k">ARCHIVE</span><span class="v">RECOVERED</span></span>
+  </div>
+
+  <main class="hero">
+
+    <!-- LEFT: content -->
+    <section class="hero-left">
+      <h1 class="title" id="mainTitle">
+        <span class="reveal-left" data-reveal="2">STARDUST</span>
+      </h1>
+      <p class="subtitle reveal" data-reveal="2">Mirror&nbsp;Protocol</p>
+      <p class="mission-tag reveal" data-reveal="3">The Final Mission</p>
+
+      <p class="eyebrow reveal" data-reveal="3">1971 — STARDUST</p>
+
+      <div class="log reveal" data-reveal="4">
+        <p class="log-line">Six researchers disappeared in 1971 after discovering something they were never meant to find.</p>
+        <p class="log-line">56 years later, the signal has returned.</p>
+        <p class="log-line log-warn">And MIRROR is still listening.</p>
+      </div>
+
+      <button class="cta reveal" id="ctaBtn" data-reveal="5">
+        <span class="cta-label">BEGIN INVESTIGATION</span>
+        <span class="cta-arrow">→</span>
+        <span class="cta-glow"></span>
+      </button>
+
+      <p class="meta reveal" data-reveal="6">2&nbsp;LEVELS&nbsp;/&nbsp;10&nbsp;CHALLENGES&nbsp;/&nbsp;1&nbsp;MYSTERY</p>
+
+      <p class="transmission-tag reveal" data-reveal="6">
+        <span class="k">LAST TRANSMISSION</span>
+        <span class="v">11:47&nbsp;PM</span>
+        <span class="cursor" aria-hidden="true"></span>
+      </p>
+    </section>
+
+    <!-- RIGHT: mirror -->
+    <section class="hero-right">
+
+      <!-- surrounding classified data chips -->
+      <div class="data-chip chip-signal reveal" data-reveal="4">
+        <span class="k">SIGNAL</span>
+        <span class="v is-warn">DETECTED</span>
+      </div>
+      <div class="data-chip chip-archive reveal" data-reveal="6">
+        <span class="k">ARCHIVE</span>
+        <span class="v">RECOVERED</span>
+      </div>
+
+      <div class="mirror-scene reveal-mirror" id="mirrorScene" data-reveal="2">
+
+        <div class="mirror" id="mirror">
+          <div class="mirror-frame">
+            <div class="mirror-frame-inner"></div>
+            <div class="mirror-glass" id="mirrorGlass">
+
+              <div class="glass-base"></div>
+
+              <div class="glass-crack" aria-hidden="true">
+                <svg viewBox="0 0 100 140" preserveAspectRatio="none">
+                  <path d="M 62 0 L 57 22 L 66 31 L 54 46 L 60 58 L 48 74 L 53 90 L 41 108 L 46 122 L 36 140" />
+                  <path d="M 57 22 L 44 27" />
+                  <path d="M 54 46 L 68 50" />
+                  <path d="M 48 74 L 35 78" />
+                </svg>
+              </div>
+
+              <!-- reflected content, flipped, blurred, distorted, delayed -->
+              <div class="reflection" id="reflection">
+                <h2 class="r-title">STARDUST</h2>
+                <p class="r-subtitle">Mirror&nbsp;Protocol</p>
+                <p class="r-tag">The&nbsp;Final&nbsp;Mission</p>
+                <p class="r-eyebrow">1971 — STARDUST</p>
+                <div class="r-cta">BEGIN INVESTIGATION →</div>
+              </div>
+
+              <div class="glass-glare" id="glare"></div>
+              <div class="glass-chroma"></div>
+              <div class="glass-sheen"></div>
+            </div>
+          </div>
+          <div class="mirror-shadow"></div>
+          <div class="mirror-stand"></div>
+        </div>
+
+      </div>
+
+      <div class="mirror-status reveal" id="mirrorStatus" data-reveal="6">
+        <span class="status-light" id="statusLight"></span>
+        <span class="status-label">MIRROR</span>
+        <span class="status-value" id="statusValue">STATUS: DORMANT</span>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <span>STARDUST ARCHIVE</span>
+    <span>—</span>
+    <span>ACCESS RESTRICTED — PARTICIPANTS ONLY</span>
+  </footer>
+
+  <!-- SVG filters for glass refraction -->
+  <svg class="defs" width="0" height="0">
+    <filter id="glassDistort" x="-20%" y="-20%" width="140%" height="140%">
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="7" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+  <script src="startup-animation.js"></script>
+  <script src="script.js"></script>
+  <script src="session.js"></script>
+</body>
+</html>

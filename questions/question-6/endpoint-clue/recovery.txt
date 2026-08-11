@@ -1,0 +1,18 @@
+MIRROR RECOVERY NODE
+====================
+
+RECORD: 1971
+STATUS: PARTIAL
+
+The language changed.
+
+The message was not lost.
+It was translated.
+
+The first layer was never the final layer.
+
+Decode what follows:
+
+VGhlIGFyY2hpdmUgcmVtZW1iZXJzIHdoYXQgdGhlIGNyZXcgZm9yZ290Lg==
+
+END OF RECOVERY

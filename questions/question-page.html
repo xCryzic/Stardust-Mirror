@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>STARDUST — Questions</title>
+
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    .questions-shell {
+      min-height: 100vh;
+      padding: 9rem clamp(1.5rem, 5vw, 4rem) 6rem;
+    }
+
+    .questions-shell h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 6rem);
+      margin: 0;
+    }
+
+    .questions-intro {
+      font-family: var(--font-mono);
+      color: var(--dim);
+      max-width: 650px;
+      line-height: 1.8;
+    }
+
+    .question-list {
+      display: grid;
+      gap: 1rem;
+      max-width: 800px;
+      margin-top: 3rem;
+    }
+
+    .question-link {
+      display: block;
+      text-decoration: none;
+      border: 1px solid var(--hairline);
+      padding: 1.5rem;
+      background: rgba(10, 11, 14, .7);
+      transition: .3s;
+    }
+
+    .question-link:hover {
+      border-color: var(--accent);
+      transform: translateX(5px);
+    }
+
+    .question-number {
+      font-family: var(--font-mono);
+      font-size: .65rem;
+      color: var(--accent);
+    }
+
+    .question-name {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      letter-spacing: .08em;
+      margin-top: .4rem;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <header class="navbar">
+
+```
+<a href="../index.html" class="nav-brand-block">
+  <span class="nav-brand">STARDUST</span>
+  <span class="nav-brand-sub">Mirror&nbsp;Protocol</span>
+</a>
+
+<nav class="nav-links">
+
+  <a
+    href="../index.html"
+    class="nav-link"
+  >
+    HOME
+  </a>
+
+  <a
+    href="question-page.html"
+    class="nav-link is-active"
+  >
+    QUESTIONS
+  </a>
+
+  <a
+    href="../leaderboard.html"
+    class="nav-link"
+  >
+    LEADERBOARD
+  </a>
+
+  <a
+    href="../login.html"
+    class="nav-link nav-login"
+    id="navLogin"
+  >
+    LOGIN
+  </a>
+
+</nav>
+```
+
+  </header>
+
+  <main class="questions-shell">
+
+```
+<p class="eyebrow">
+  CLASSIFIED CHALLENGE ARCHIVE
+</p>
+
+<h1>
+  QUESTIONS
+</h1>
+
+<p class="questions-intro">
+  The archive is fragmented. Select a recovered challenge to establish a
+  connection with MIRROR.
+</p>
+
+
+<div class="question-list">
+
+  <!-- Q1 -->
+  <a
+    class="question-link"
+    href="question-1/question-1.html"
+  >
+    <div class="question-number">
+      Q01 // SIGNAL RECOVERY
+    </div>
+
+    <div class="question-name">
+      MIRROR // SIGNAL RECOVERY
+    </div>
+  </a>
+
+
+  <!-- Q2 -->
+  <a
+    class="question-link"
+    href="question-2/question-2.html"
+  >
+    <div class="question-number">
+      Q02 // ECHOES OF THE ARCHIVE
+    </div>
+
+    <div class="question-name">
+      MIRROR // ECHOES OF THE ARCHIVE
+    </div>
+  </a>
+
+
+  <!-- Q3 -->
+  <a
+    class="question-link"
+    href="question-3/question-3.html"
+  >
+    <div class="question-number">
+      Q03 // THE LAST LOG
+    </div>
+
+    <div class="question-name">
+      MIRROR // THE LAST LOG
+    </div>
+  </a>
+
+
+  <!-- Q4 -->
+  <a
+    class="question-link"
+    href="question-4/question-4.html"
+  >
+    <div class="question-number">
+      Q04 // GHOST IN THE BUFFER
+    </div>
+
+    <div class="question-name">
+      MIRROR // GHOST IN THE BUFFER
+    </div>
+  </a>
+    <a
+    class="question-link"
+    href="question-6/question-6.html"
+  >
+    <div class="question-number">
+      Q06 // RECOVERY NODE 1971
+    </div>
+
+    <div class="question-name">
+      MIRROR // RECOVERY NODE 1971
+    </div>
+  </a>
+  </main>
+
+  <script src="../session.js"></script>
+
+</body>
+</html>

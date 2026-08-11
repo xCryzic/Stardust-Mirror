@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Q01 — First Trace</title>
+
+  <link rel="stylesheet" href="question-1.css">
+</head>
+
+<body class="question-page">
+
+  <div class="scanlines"></div>
+  <div class="noise"></div>
+
+  <main class="terminal">
+
+<!-- TOP BAR -->
+<header class="topbar">
+
+  <div class="brand">
+    <span class="dot"></span>
+    STARDUST // MIRROR PROTOCOL
+  </div>
+
+  <div class="record">
+    RECORD 01
+  </div>
+
+</header>
+
+
+<!-- MAIN CONTENT -->
+<section class="content">
+
+  <div class="classification">
+    FIRST RECOVERED TRACE // 1971
+  </div>
+
+
+  <h1>
+    FIRST<br>
+    <span>TRACE</span>
+  </h1>
+
+
+  <div class="divider"></div>
+
+
+  <!-- QUESTION -->
+  <section class="briefing">
+
+    <p class="label">
+      RECOVERED RECORD
+    </p>
+
+    <p id="questionText">
+      Establishing connection to the recovered record...
+    </p>
+
+    <p>
+      The archive contains information that does not appear
+      on the visible record.
+    </p>
+
+    <p>
+      Something survived the system's first transmission.
+    </p>
+
+  </section>
+
+
+  <!-- TERMINAL -->
+  <section class="terminal-message">
+
+    <div class="terminal-header">
+
+      <span>
+        MIRROR_SYSTEM
+      </span>
+
+      <span id="backendStatus">
+        CONNECTING...
+      </span>
+
+    </div>
+
+
+    <div class="terminal-body">
+
+      <p>&gt; RECORD ACCESS GRANTED</p>
+
+      <p>&gt; VISIBLE DATA: INCOMPLETE</p>
+
+      <p>&gt; MIRROR STATUS: LISTENING</p>
+
+      <p class="blink">
+        &gt; SEARCH THE SYSTEM FOR THE RECOVERED TRANSMISSION_
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- HINT -->
+  <div class="hint">
+
+    <span class="hint-label">
+      HINT //
+    </span>
+
+    <span id="hintText">
+      The system may reveal more than the screen does.
+    </span>
+
+  </div>
+
+
+  <!-- ANSWER -->
+  <section class="answer-section">
+
+    <div class="answer-label">
+      TRANSMISSION RESPONSE
+    </div>
+
+    <form id="answerForm" autocomplete="off">
+
+      <input
+        id="answerInput"
+        name="answer"
+        type="text"
+        placeholder="ENTER RECOVERED TRANSMISSION"
+        spellcheck="false"
+        autocomplete="off"
+        required
+      >
+
+      <button type="submit">
+        SUBMIT
+      </button>
+
+    </form>
+
+    <div
+      id="answerMessage"
+      class="q-status"
+      aria-live="polite"
+    ></div>
+
+    <div
+  id="nextQuestionContainer"
+  style="display: none;"
+>
+  <a
+    id="nextQuestionButton"
+    class="next-question-button"
+    href="/questions/question-2"
+  >
+    NEXT QUESTION →
+  </a>
+</div>
+
+  </section>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+  <span>
+    STARDUST MIRROR PROTOCOL
+  </span>
+
+  <span>
+    1971 → 2027
+  </span>
+
+</footer>
+```
+
+  </main>
+
+  <script src="question-1.js"></script>
+
+</body>
+</html>
