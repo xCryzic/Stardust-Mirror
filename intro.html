@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>STARDUST // INITIALIZING</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            overflow: hidden;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            background: #000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <video
+        id="introVideo"
+        autoplay
+        playsinline
+        controls
+    >
+        <source src="/intro.mp4" type="video/mp4">
+        Your browser does not support video playback.
+    </video>
+
+    <script>
+        const video =
+            document.getElementById("introVideo");
+
+        video.addEventListener("ended", function () {
+
+            window.location.href =
+                "login.html";
+
+        });
+    </script>
+
+</body>
+</html>

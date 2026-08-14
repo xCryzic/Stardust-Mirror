@@ -1021,3 +1021,638 @@ body.subpage{ background: radial-gradient(ellipse at 50% 0%, var(--bg-2) 0%, var
   font-size: .75rem;
   letter-spacing: .08em;
 }
+
+/* =========================================
+   INVESTIGATION VIDEO
+========================================= */
+
+.investigation-video-overlay {
+    position: fixed;
+    inset: 0;
+
+    display: none;
+
+    width: 100vw;
+    height: 100vh;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #000;
+
+    z-index: 99999;
+
+    overflow: hidden;
+}
+
+.investigation-video-overlay.active {
+    display: flex;
+}
+
+.investigation-video-overlay video {
+    width: 100vw;
+    height: 100vh;
+
+    object-fit: cover;
+
+    display: block;
+
+    background: #000;
+}
+/* =========================================================
+   STARDUST // SCI-FI ARCHIVE GATE
+========================================================= */
+
+.mission-transition {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+
+    overflow: hidden;
+    pointer-events: none;
+
+    background: #02070a;
+
+    opacity: 0;
+    visibility: hidden;
+
+    perspective: 1400px;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.gate-backdrop {
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(18, 61, 76, .35) 0%,
+            rgba(2, 8, 12, .85) 48%,
+            #010306 100%
+        );
+
+    opacity: 0;
+}
+
+
+/* =========================================================
+   DOOR STRUCTURE
+========================================================= */
+
+.sci-gate {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    width: 51%;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            90deg,
+            #05090c 0%,
+            #101a20 8%,
+            #18272e 18%,
+            #0b151a 45%,
+            #111d22 75%,
+            #05090c 100%
+        );
+
+    box-shadow:
+        inset 0 0 0 1px rgba(92, 190, 220, .18),
+        inset 0 0 50px rgba(0, 0, 0, .9),
+        0 0 60px rgba(0, 0, 0, .8);
+
+    transition:
+        transform 1.35s cubic-bezier(.76, 0, .18, 1);
+}
+
+
+.gate-left {
+    left: 0;
+
+    transform-origin: left center;
+    transform: translateX(0);
+}
+
+.gate-right {
+    right: 0;
+
+    transform-origin: right center;
+    transform: translateX(0);
+}
+
+
+/* =========================================================
+   METAL PANELS
+========================================================= */
+
+.gate-shell {
+    position: absolute;
+    inset: 0;
+
+    padding: 7vh 5vw;
+
+    box-sizing: border-box;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0,
+            transparent 55px,
+            rgba(255,255,255,.025) 56px,
+            transparent 58px
+        );
+}
+
+
+/* large mechanical panels */
+
+.gate-panel {
+    position: absolute;
+
+    top: 12%;
+    bottom: 12%;
+
+    border: 1px solid rgba(121, 207, 228, .16);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(80, 115, 125, .12),
+            rgba(5, 12, 16, .5)
+        );
+
+    box-shadow:
+        inset 0 0 25px rgba(0,0,0,.7);
+}
+
+
+.gate-left .gate-panel {
+    left: 8%;
+    right: 3%;
+}
+
+.gate-right .gate-panel {
+    left: 3%;
+    right: 8%;
+}
+
+
+.panel-outer {
+    clip-path: polygon(
+        0 5%,
+        90% 5%,
+        100% 12%,
+        100% 88%,
+        90% 95%,
+        0 95%
+    );
+}
+
+
+.panel-mid {
+    top: 19%;
+    bottom: 19%;
+
+    opacity: .7;
+
+    clip-path: polygon(
+        0 8%,
+        93% 8%,
+        100% 18%,
+        100% 82%,
+        93% 92%,
+        0 92%
+    );
+}
+
+
+.panel-inner {
+    top: 27%;
+    bottom: 27%;
+
+    opacity: .45;
+
+    clip-path: polygon(
+        0 12%,
+        94% 12%,
+        100% 25%,
+        100% 75%,
+        94% 88%,
+        0 88%
+    );
+}
+
+
+/* =========================================================
+   MECHANICAL GROOVES
+========================================================= */
+
+.gate-groove {
+    position: absolute;
+
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(83, 210, 238, .7),
+            transparent
+        );
+
+    box-shadow:
+        0 0 8px rgba(53, 196, 230, .5);
+}
+
+
+.gate-left .gate-groove {
+    left: 10%;
+    right: 0;
+}
+
+.gate-right .gate-groove {
+    left: 0;
+    right: 10%;
+}
+
+
+.groove-1 {
+    top: 29%;
+}
+
+.groove-2 {
+    top: 50%;
+}
+
+.groove-3 {
+    top: 71%;
+}
+
+
+/* =========================================================
+   EDGE LIGHT
+========================================================= */
+
+.gate-light {
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+
+    width: 3px;
+
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(73, 220, 255, .8) 20%,
+        rgba(73, 220, 255, .15) 50%,
+        rgba(73, 220, 255, .8) 80%,
+        transparent
+    );
+
+    box-shadow:
+        0 0 12px rgba(46, 210, 255, .7),
+        0 0 35px rgba(46, 210, 255, .25);
+}
+
+
+.gate-left .gate-light {
+    right: 0;
+}
+
+.gate-right .gate-light {
+    left: 0;
+}
+
+
+/* =========================================================
+   WARNING LABEL
+========================================================= */
+
+.gate-warning {
+    position: absolute;
+
+    bottom: 12%;
+
+    font-family: "Space Mono", monospace;
+
+    font-size: 9px;
+    letter-spacing: 3px;
+
+    color: rgba(190, 220, 228, .35);
+}
+
+
+.gate-left .gate-warning {
+    right: 10%;
+}
+
+.gate-right .gate-warning {
+    left: 10%;
+}
+
+
+.gate-warning span {
+    display: inline-block;
+
+    width: 6px;
+    height: 6px;
+
+    margin-right: 8px;
+
+    background: #ff633c;
+
+    box-shadow: 0 0 8px #ff633c;
+}
+
+
+/* =========================================================
+   CENTER SEAM
+========================================================= */
+
+.gate-seam {
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 50%;
+
+    width: 8px;
+
+    transform: translateX(-50%);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #050a0d 35%,
+            #16282e 50%,
+            #050a0d 65%,
+            transparent
+        );
+
+    z-index: 20;
+
+    box-shadow:
+        0 0 25px rgba(50, 190, 220, .2);
+}
+
+
+.seam-light {
+    position: absolute;
+
+    top: 20%;
+    bottom: 20%;
+    left: 50%;
+
+    width: 1px;
+
+    transform: translateX(-50%);
+
+    background: #62dfff;
+
+    box-shadow:
+        0 0 8px #62dfff,
+        0 0 20px rgba(98,223,255,.7);
+}
+
+
+/* =========================================================
+   TEXT
+========================================================= */
+
+.gate-text {
+    position: absolute;
+
+    left: 7%;
+    top: 50%;
+
+    transform:
+        translate(-120%, -50%);
+
+    z-index: 100;
+
+    font-family: "Space Mono", monospace;
+
+    opacity: 0;
+
+    text-align: left;
+
+    transition:
+        transform .9s cubic-bezier(.16, 1, .3, 1),
+        opacity .5s ease;
+}
+
+
+.gate-text-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    font-size: clamp(13px, 1.2vw, 18px);
+
+    letter-spacing: 4px;
+
+    color: #b9f3ff;
+
+    text-shadow:
+        0 0 8px rgba(75, 220, 255, .8),
+        0 0 25px rgba(75, 220, 255, .3);
+}
+
+
+.gate-text-prefix {
+    color: #ff6845;
+
+    text-shadow:
+        0 0 10px rgba(255, 90, 55, .8);
+}
+
+
+/* title */
+
+.gate-title {
+    margin-top: 15px;
+
+    font-family: "Oswald", sans-serif;
+
+    font-size: clamp(20px, 2.4vw, 38px);
+
+    font-weight: 500;
+
+    letter-spacing: 6px;
+
+    color: rgba(225, 248, 255, .82);
+}
+
+
+.gate-title span {
+    color: #ff6845;
+
+    margin: 0 7px;
+}
+
+
+/* =========================================================
+   PROGRESS BARS
+========================================================= */
+
+.gate-progress {
+    display: flex;
+
+    gap: 5px;
+
+    margin-top: 18px;
+}
+
+
+.gate-progress span {
+    width: 24px;
+    height: 2px;
+
+    background: rgba(98, 223, 255, .25);
+
+    box-shadow:
+        0 0 5px rgba(98, 223, 255, .2);
+}
+
+
+/* =========================================================
+   OPENING STATE
+========================================================= */
+
+.mission-transition.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+}
+
+
+.mission-transition.active .gate-backdrop {
+    opacity: 1;
+
+    transition: opacity .35s ease;
+}
+
+
+.mission-transition.active .gate-text {
+    opacity: 1;
+
+    transform:
+        translate(0, -50%);
+
+    transition-delay: .25s;
+}
+
+
+/* =========================================================
+   DOORS SLIDE OPEN
+========================================================= */
+
+.mission-transition.opening .gate-left {
+    transform:
+        translateX(-100%);
+}
+
+
+.mission-transition.opening .gate-right {
+    transform:
+        translateX(100%);
+}
+
+
+.mission-transition.opening .gate-seam {
+    opacity: 0;
+
+    transition:
+        opacity .35s ease;
+}
+
+
+.mission-transition.opening .gate-text {
+    transform:
+        translate(-120%, -50%);
+
+    opacity: 0;
+
+    transition:
+        transform .55s cubic-bezier(.7, 0, .84, 0),
+        opacity .3s ease;
+}
+
+
+/* =========================================================
+   CINEMATIC LIGHT FLASH
+========================================================= */
+
+.mission-transition.opening::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: 200;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(112, 232, 255, .35),
+            transparent 45%
+        );
+
+    opacity: 0;
+
+    animation: gateFlash .8s ease-out forwards;
+}
+
+
+@keyframes gateFlash {
+
+    0% {
+        opacity: 0;
+    }
+
+    35% {
+        opacity: .35;
+    }
+
+    100% {
+        opacity: 0;
+    }
+
+}
+
+
+/* =========================================================
+   MICRO MECHANICAL LIGHT FLICKER
+========================================================= */
+
+.mission-transition.active .gate-light {
+    animation:
+        gateLightPulse 1.4s ease-in-out infinite;
+}
+
+
+@keyframes gateLightPulse {
+
+    0%,
+    100% {
+        opacity: .55;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+}
+/* =========================================================
+   QUESTION LOCK SYSTEM
+========================================================= */

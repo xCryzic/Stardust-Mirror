@@ -7,6 +7,7 @@
   const dust = document.getElementById("startupDust");
   const logo = document.getElementById("startupLogo");
   const video = document.getElementById("startupVideo");
+  const skipButton = document.getElementById("skipStartup");
 
   if (!overlay || !stage || !star || !dust || !logo || !video) return;
 
@@ -105,7 +106,20 @@
 
     raf = requestAnimationFrame(loop);
   }
+// SKIP INTRO
+skipButton.addEventListener("click", () => {
+    cancelAnimationFrame(raf);
 
+    if (video) {
+        video.pause();
+    }
+
+    overlay.classList.add("is-complete");
+
+    window.dispatchEvent(
+        new CustomEvent("stardust-startup-complete")
+    );
+});
   // Initialize once fonts are loaded
   document.fonts.ready.then(() => {
     // 1. Fire text animation when the video ends natively

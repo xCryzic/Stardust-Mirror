@@ -62,8 +62,13 @@
             "logged-in"
           );
 
+          if (window.location.pathname.includes("/questions")) {
+            window.location.href = "/login";
+          }
+
           return;
         }
+
 
 
         /*

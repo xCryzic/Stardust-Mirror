@@ -12,21 +12,36 @@
 </head>
 <body>
 <!-- STARDUST CINEMATIC STARTUP -->
-  <div id="startupOverlay" class="startup-overlay" aria-hidden="true">
+<div id="startupOverlay" class="startup-overlay" aria-hidden="true">
+
     <div id="startupStage" class="startup-stage">
-      
-      <!-- Video added here -->
-      <video id="startupVideo" src="start-up.mp4" autoplay muted playsinline></video>
-      
-      <div id="startupStar" class="startup-text">STAR</div>
-      <div id="startupDust" class="startup-text">DUST</div>
-      
-      <!-- Canvas has been removed -->
-      
-      <img id="startupLogo" src="logo.webp" alt="Stardust Logo">
+
+        <video
+            id="startupVideo"
+            src="/dust.mp4"
+            autoplay
+            muted
+            playsinline
+        ></video>
+
+        <div id="startupStar" class="startup-text">STAR</div>
+        <div id="startupDust" class="startup-text">DUST</div>
+
+        <img
+            id="startupLogo"
+            src="/logo.png"
+            alt="Stardust Logo"
+        >
+
+        <!-- SKIP BUTTON -->
+        <button id="skipStartup">
+            SKIP INTRO →
+        </button>
+
     </div>
-  </div>
-  </div>
+
+</div>
+
 
   <div class="vignette" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
@@ -173,9 +188,105 @@
       <feDisplacementMap in="SourceGraphic" in2="noise" scale="7" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
   </svg>
+<!-- =========================================
+     STARDUST SCI-FI GATE TRANSITION
+========================================= -->
+<div id="missionTransition" class="mission-transition">
 
+    <!-- dark background -->
+    <div class="gate-backdrop"></div>
+
+    <!-- LEFT DOOR -->
+    <div class="sci-gate gate-left">
+        <div class="gate-shell">
+            <div class="gate-panel panel-outer"></div>
+            <div class="gate-panel panel-mid"></div>
+            <div class="gate-panel panel-inner"></div>
+
+            <div class="gate-groove groove-1"></div>
+            <div class="gate-groove groove-2"></div>
+            <div class="gate-groove groove-3"></div>
+
+            <div class="gate-light"></div>
+
+            <div class="gate-warning">
+                <span></span>
+                MIRROR
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT DOOR -->
+    <div class="sci-gate gate-right">
+        <div class="gate-shell">
+            <div class="gate-panel panel-outer"></div>
+            <div class="gate-panel panel-mid"></div>
+            <div class="gate-panel panel-inner"></div>
+
+            <div class="gate-groove groove-1"></div>
+            <div class="gate-groove groove-2"></div>
+            <div class="gate-groove groove-3"></div>
+
+            <div class="gate-light"></div>
+
+            <div class="gate-warning">
+                <span></span>
+                MIRROR
+            </div>
+        </div>
+    </div>
+
+    <!-- CENTER SEAM -->
+    <div class="gate-seam">
+        <div class="seam-light"></div>
+    </div>
+
+    <!-- TEXT -->
+    <div class="gate-text">
+
+        <div class="gate-text-line">
+            <span class="gate-text-prefix">></span>
+            <span>ACCESSING ARCHIVE</span>
+        </div>
+
+        <div class="gate-title">
+            STARDUST
+            <span>//</span>
+            MIRROR PROTOCOL
+        </div>
+
+        <div class="gate-progress">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+    </div>
+
+</div>
+  <!-- INVESTIGATION VIDEO -->
+<div id="investigationVideoOverlay" class="investigation-video-overlay">
+
+    <video
+        id="investigationVideo"
+        playsinline
+        preload="auto"
+    >
+        <source
+            src="/investigation-intro.mp4"
+            type="video/mp4"
+        >
+    </video>
+
+</div>
   <script src="startup-animation.js"></script>
   <script src="script.js"></script>
   <script src="session.js"></script>
+
 </body>
 </html>
