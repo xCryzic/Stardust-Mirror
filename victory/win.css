@@ -1,0 +1,514 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+
+body {
+    background: #010202;
+    color: #d7e2df;
+
+    font-family:
+        "Courier New",
+        Courier,
+        monospace;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   STARFIELD
+========================================================= */
+
+.stars {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    background-image:
+        radial-gradient(
+            1px 1px at 10% 20%,
+            rgba(255,255,255,.35),
+            transparent
+        ),
+        radial-gradient(
+            1px 1px at 30% 70%,
+            rgba(255,255,255,.25),
+            transparent
+        ),
+        radial-gradient(
+            1px 1px at 70% 30%,
+            rgba(255,255,255,.3),
+            transparent
+        ),
+        radial-gradient(
+            1px 1px at 90% 80%,
+            rgba(255,255,255,.2),
+            transparent
+        );
+
+    background-size:
+        300px 300px,
+        400px 400px,
+        500px 500px,
+        600px 600px;
+
+    opacity: .45;
+}
+
+
+/* =========================================================
+   NOISE
+========================================================= */
+
+.noise {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 10;
+
+    opacity: .035;
+
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(255,255,255,.15) 3px
+        );
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.victory-shell {
+    width: min(950px, 90%);
+
+    margin: 0 auto;
+
+    min-height: 100vh;
+
+    padding:
+        90px 0
+        100px;
+}
+
+
+/* =========================================================
+   TERMINAL
+========================================================= */
+
+.victory-terminal {
+    position: relative;
+
+    padding:
+        50px 45px;
+
+    border:
+        1px solid
+        rgba(150,180,175,.12);
+
+    background:
+        rgba(3,5,5,.72);
+
+    box-shadow:
+        0 0 80px
+        rgba(80,120,110,.04);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.system-line {
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    color: #53615e;
+
+    margin-bottom: 18px;
+}
+
+
+.status {
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    color: #53615e;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding-bottom: 30px;
+
+    border-bottom:
+        1px solid
+        rgba(150,180,175,.1);
+}
+
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #7d8e89;
+
+    box-shadow:
+        0 0 10px
+        rgba(125,142,137,.6);
+}
+
+
+/* =========================================================
+   STORY
+========================================================= */
+
+.story {
+    max-width: 780px;
+
+    margin-top: 55px;
+}
+
+
+.story-line-render {
+    min-height: 28px;
+
+    margin-bottom: 20px;
+
+    line-height: 1.9;
+
+    letter-spacing: .7px;
+
+    font-size:
+        clamp(
+            13px,
+            1.5vw,
+            17px
+        );
+
+    animation:
+        appear
+        .9s
+        ease
+        forwards;
+}
+
+
+.story-line-render.system {
+    color: #53615e;
+}
+
+
+.story-line-render.title {
+    color: #d9c99b;
+
+    font-size:
+        clamp(
+            18px,
+            3vw,
+            28px
+        );
+
+    letter-spacing: 4px;
+
+    text-shadow:
+        0 0 15px
+        rgba(217,201,155,.15);
+}
+
+
+.story-line-render.year {
+    color: #8e9d98;
+
+    font-size: 12px;
+
+    letter-spacing: 4px;
+}
+
+
+.story-line-render.story-line {
+    color: #b9c4c0;
+}
+
+
+.story-line-render.fragment {
+    color: #8e9d98;
+
+    margin-left: 20px;
+
+    letter-spacing: 3px;
+}
+
+
+.story-line-render.mirror {
+    color: #c5d1cd;
+}
+
+
+.story-line-render.emotional {
+    color: #c5a8a0;
+
+    text-shadow:
+        0 0 12px
+        rgba(197,168,160,.12);
+}
+
+
+.story-line-render.final {
+    color: #ded2aa;
+
+    font-size: 18px;
+
+    text-shadow:
+        0 0 14px
+        rgba(222,210,170,.13);
+}
+
+
+.story-line-render.success {
+    color: #91b99d;
+}
+
+
+.story-line-render.complete {
+    margin-top: 25px;
+
+    color: #d9c99b;
+
+    font-size:
+        clamp(
+            24px,
+            5vw,
+            45px
+        );
+
+    letter-spacing: 7px;
+
+    text-shadow:
+        0 0 25px
+        rgba(217,201,155,.2);
+}
+
+
+/* =========================================================
+   CONTINUE
+========================================================= */
+
+.continue {
+    margin-top: 70px;
+
+    text-align: center;
+
+    animation:
+        appear
+        1.5s
+        ease
+        forwards;
+}
+
+
+.divider {
+    width: 100%;
+
+    height: 1px;
+
+    background:
+        rgba(150,180,175,.12);
+
+    margin-bottom: 40px;
+}
+
+
+.continue p {
+    color: #53615e;
+
+    font-size: 9px;
+
+    letter-spacing: 4px;
+}
+
+
+.continue h2 {
+    margin-top: 12px;
+
+    color: #91b99d;
+
+    font-size:
+        clamp(
+            28px,
+            5vw,
+            48px
+        );
+
+    letter-spacing: 7px;
+
+    font-weight: normal;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.leaderboard-button,
+.archive-button {
+    display: block;
+
+    width: fit-content;
+
+    margin:
+        30px auto
+        0;
+
+    padding:
+        13px 22px;
+
+    border:
+        1px solid
+        rgba(180,200,195,.25);
+
+    color: #aebbb7;
+
+    text-decoration: none;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    transition:
+        .25s ease;
+}
+
+
+.leaderboard-button:hover,
+.archive-button:hover {
+    color: #e0e8e4;
+
+    border-color:
+        rgba(220,230,225,.65);
+
+    background:
+        rgba(255,255,255,.035);
+
+    transform:
+        translateY(-2px);
+}
+
+
+.archive-button {
+    border-color:
+        rgba(150,180,175,.12);
+
+    color: #586560;
+
+    margin-top: 14px;
+}
+
+
+/* =========================================================
+   HIDDEN
+========================================================= */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+@keyframes appear {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(8px);
+
+        filter:
+            blur(3px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+        filter:
+            blur(0);
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .victory-shell {
+        width: 92%;
+
+        padding:
+            40px 0
+            60px;
+    }
+
+
+    .victory-terminal {
+        padding:
+            30px 22px;
+    }
+
+
+    .story {
+        margin-top: 35px;
+    }
+
+
+    .story-line-render {
+        font-size: 13px;
+
+        line-height: 1.8;
+
+        margin-bottom: 17px;
+    }
+
+
+    .story-line-render.final {
+        font-size: 15px;
+    }
+
+
+    .story-line-render.complete {
+        font-size: 24px;
+
+        letter-spacing: 4px;
+    }
+
+}

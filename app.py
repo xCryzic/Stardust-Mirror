@@ -28,7 +28,13 @@ BASE_DIR = Path(__file__).resolve().parent
 DATABASE = BASE_DIR / "stardust.db"
 
 app = Flask(__name__, static_folder=None)
-
+@app.route("/favicon.ico")
+def favicon():
+    return send_from_directory(
+        BASE_DIR,
+        "favicon.ico",
+        mimetype="image/vnd.microsoft.icon"
+    )
 app.secret_key = os.getenv(
     "SECRET_KEY",
     "stardust-dev-secret-key",
@@ -229,26 +235,10 @@ FLAGS = {
     4: os.getenv("QUESTION_4_FLAG", "").strip(),
     5: os.getenv("QUESTION_5_FLAG", "").strip(),
     6: os.getenv("QUESTION_6_FLAG", "").strip(),
-
-    7: os.getenv(
-        "QUESTION_7_FLAG",
-        "STARDUST{STATION_ONE_RECOVERED}",
-    ).strip(),
-
-    8: os.getenv(
-        "QUESTION_8_FLAG",
-        "STARDUST{STAT1ON_TW0_REC0V3RED}",
-    ).strip(),
-
-    9: os.getenv(
-        "QUESTION_9_FLAG",
-        "flag{THE_CLOCK_LIES}",
-    ).strip(),
-
-    10: os.getenv(
-        "QUESTION_10_FLAG",
-        "",
-    ).strip(),
+    7: os.getenv("QUESTION_7_FLAG", "").strip(),
+    8: os.getenv("QUESTION_8_FLAG", "").strip(),
+    9: os.getenv("QUESTION_9_FLAG", "").strip(),
+    10: os.getenv("QUESTION_10_FLAG", "").strip(),
 }
 
 
@@ -1222,43 +1212,49 @@ DO NOT TRUST THE LABELS.
 
         return jsonify({
 
-            "success": True,
+        "success": True,
 
-            "authenticated": True,
+        "authenticated": True,
 
-            "locked": False,
+        "locked": False,
 
-            "id": 10,
+        "id": 10,
 
-            "title": (
-                "MIRROR // FINAL CONNECTION"
+        "title": (
+            "MIRROR // FINAL CONNECTION"
+        ),
+
+        "question": (
+            QUESTIONS[10]["question"]
+        ),
+
+        "hint": (
+            QUESTIONS[10]["hint"]
+        ),
+
+        # Safe puzzle ciphertext.
+        # This is NOT the actual flag.
+        "ciphertext": (
+            "LAEJXHAL{ZTII_ESS_FHBVFYL_KGHGR}"
+        ),
+
+        "already_solved": already_solved,
+
+        "points": POINTS[10],
+
+        "next": None,
+
+        "core": {
+
+            "status": "UNSTABLE",
+
+            "connection": "ACTIVE",
+
+            "message": (
+                "MIRROR CORE CONNECTION ESTABLISHED."
             ),
-
-            "question": (
-                QUESTIONS[10]["question"]
-            ),
-
-            "hint": (
-                QUESTIONS[10]["hint"]
-            ),
-
-            "already_solved": already_solved,
-
-            "points": POINTS[10],
-
-            "next": None,
-
-            "core": {
-
-                "status": "UNSTABLE",
-
-                "connection": "ACTIVE",
-
-                "message": (
-                    "MIRROR CORE CONNECTION ESTABLISHED."
-                ),
-            },
-        })
+        },
+    })
 
 
     # ========================================================

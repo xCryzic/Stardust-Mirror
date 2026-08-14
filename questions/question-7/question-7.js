@@ -1,415 +1,369 @@
-"use strict";
+/* =========================================================
+   STARDUST // MIRROR PROTOCOL
+   QUESTION 7
+   THE FIRST STATION
+========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-
-    const recordsContainer =
-        document.getElementById("records");
-
-    const noteElement =
-        document.getElementById("note");
-
-    const statusElement =
-        document.getElementById("status");
-
-    const analyseButton =
-        document.getElementById("analyseButton");
-
-    const delayOutput =
-        document.getElementById("delayOutput");
-
-    const messageElement =
-        document.getElementById("message");
-
-    const answerInput =
-        document.getElementById("answerInput");
-
-    const answerForm =
-        document.getElementById("answerForm");
-
-    const answerSubmit =
-        document.getElementById("answerSubmit");
-
-    const answerStatus =
-        document.getElementById("answerStatus");
-
-    const backendStatus =
-        document.getElementById("backendStatus");
-
-    const systemMessage =
-        document.getElementById("systemMessage");
+const QUESTION_ID = 7;
+const NEXT_QUESTION_URL = "/questions/question-8/question-8.html";
 
 
-    /* ============================================================
-       LOAD Q7
-       
-       Q7 is controlled by Flask.
-       The previous question must be solved before this page
-       becomes usable.
-    ============================================================ */
+/* =========================================================
+   ELEMENTS
+========================================================= */
 
-    async function loadQuestionAccess() {
+const statusEl = document.getElementById("status");
+const noteEl = document.getElementById("note");
 
-        try {
+const recordsEl = document.getElementById("records");
+const messageEl = document.getElementById("message");
 
-            const response = await fetch(
-                "/api/questions/7",
-                {
-                    method: "GET",
-                    credentials: "same-origin",
-                    cache: "no-store",
-                    headers: {
-                        "Accept": "application/json"
-                    }
-                }
-            );
+const analyseButton = document.getElementById("analyseButton");
+const delayOutput = document.getElementById("delayOutput");
 
-            if (response.status === 401) {
+const backendStatus = document.getElementById("backendStatus");
 
-                window.location.href = "/login";
-                return false;
+const answerForm = document.getElementById("answerForm");
+const answerInput = document.getElementById("answerInput");
+const answerSubmit = document.getElementById("answerSubmit");
+const answerStatus = document.getElementById("answerStatus");
 
-            }
+const systemMessage = document.getElementById("systemMessage");
 
-            if (!response.ok) {
+const nextQuestionContainer =
+    document.getElementById("nextQuestionContainer");
 
-                throw new Error(
-                    `Question API returned ${response.status}`
-                );
-
-            }
-
-            const data = await response.json();
+const nextQuestionButton =
+    document.getElementById("nextQuestionButton");
 
 
-            /* ====================================================
-               PREVIOUS LEVEL NOT CLEARED
-            ==================================================== */
+/* =========================================================
+   STATE
+========================================================= */
 
-            if (data.locked) {
-
-                statusElement.textContent =
-                    "ACCESS DENIED";
-
-                systemMessage.textContent =
-                    data.message ||
-                    "PREVIOUS LEVEL NOT CLEARED.";
-
-                noteElement.textContent =
-                    "STATION 01 REMAINS INACCESSIBLE.";
-
-                recordsContainer.textContent =
-                    "ACCESS TO THIS RECORD HAS NOT BEEN GRANTED.";
-
-                analyseButton.disabled = true;
-
-                answerInput.disabled = true;
-
-                answerSubmit.disabled = true;
-
-                return false;
-            }
+let questionLoaded = false;
+let backendOnline = false;
 
 
-            /* ====================================================
-               Q7 UNLOCKED
-            ==================================================== */
+/* =========================================================
+   HELPERS
+========================================================= */
 
-            statusElement.textContent =
-                "RECORD RECOVERED";
+function setBackendStatus(online) {
 
-            systemMessage.textContent =
-                "STATION 01 ONLINE // RECORD AVAILABLE";
+    backendOnline = online;
 
+    if (!backendStatus) return;
 
-            /*
-                The station data is public only after Q7
-                itself has been unlocked by Flask.
-            */
+    backendStatus.classList.remove("online", "offline");
 
-            loadStation();
-
-
-            /*
-                IMPORTANT:
-                The answer terminal is available immediately.
-
-                Downloading the analysis file is OPTIONAL.
-            */
-
-            answerInput.disabled = false;
-            answerSubmit.disabled = false;
-
-            messageElement.textContent =
-                "MESSAGE RECOVERY READY";
-
-
-            return true;
-
-
-        } catch (error) {
-
-            console.error(
-                "[STARDUST] Q7 access check failed:",
-                error
-            );
-
-            statusElement.textContent =
-                "RECOVERY FAILED";
-
-            systemMessage.textContent =
-                "UNABLE TO CONTACT MIRROR CORE.";
-
-            recordsContainer.textContent =
-                "QUESTION ACCESS COULD NOT BE VERIFIED.";
-
-            analyseButton.disabled = true;
-
-            answerInput.disabled = true;
-
-            answerSubmit.disabled = true;
-
-            return false;
-        }
+    if (online) {
+        backendStatus.textContent = "BACKEND ONLINE";
+        backendStatus.classList.add("online");
+    } else {
+        backendStatus.textContent = "BACKEND OFFLINE";
+        backendStatus.classList.add("offline");
     }
+}
 
 
-    /* ============================================================
-       LOAD STATION RECORD
-    ============================================================ */
+function showNextQuestion() {
 
-    async function loadStation() {
+    if (!nextQuestionContainer) return;
 
-        try {
+    nextQuestionButton.href = NEXT_QUESTION_URL;
 
-            const response = await fetch(
-                "/questions/question-7/station-1/",
-                {
-                    method: "GET",
-                    cache: "no-store",
-                    headers: {
-                        "Accept": "application/json"
-                    }
-                }
-            );
+    nextQuestionContainer.hidden = false;
 
-
-            if (!response.ok) {
-
-                throw new Error(
-                    `Station returned ${response.status}`
-                );
-
-            }
-
-
-            const data = await response.json();
-
-
-            renderRecords(
-                data.records
-            );
-
-
-            noteElement.textContent =
-                data.recovered_note || "";
-
-
-            /*
-                Download is available as soon as Q7
-                is unlocked.
-            */
-
-            analyseButton.disabled = false;
-
-
-        } catch (error) {
-
-            console.error(
-                "[STARDUST] Station recovery failed:",
-                error
-            );
-
-            statusElement.textContent =
-                "RECOVERY FAILED";
-
-            systemMessage.textContent =
-                "STATION 01 OFFLINE";
-
-            recordsContainer.textContent =
-                "UNABLE TO RECOVER STATION RECORD.";
-
-            /*
-                Do NOT disable the answer terminal here.
-                The player should still be able to submit
-                an answer at any time after Q7 is unlocked.
-            */
-
-            answerInput.disabled = false;
-            answerSubmit.disabled = false;
-        }
-    }
-
-
-    /* ============================================================
-       DISPLAY RECORDS
-    ============================================================ */
-
-    function renderRecords(records) {
-
-        recordsContainer.innerHTML = "";
-
-
-        if (!Array.isArray(records)) {
-
-            recordsContainer.textContent =
-                "NO RECORDS FOUND.";
-
-            return;
-        }
-
-
-        records.forEach((record) => {
-
-            const row =
-                document.createElement("div");
-
-            row.className =
-                "record-line";
-
-
-            const time =
-                document.createElement("span");
-
-            time.className =
-                "record-time";
-
-            time.textContent =
-                record.time || "--:--:---";
-
-
-            const status =
-                document.createElement("span");
-
-            status.className =
-                "record-status";
-
-            status.textContent =
-                record.status || "UNKNOWN";
-
-
-            const fragment =
-                document.createElement("span");
-
-            fragment.className =
-                "record-fragment";
-
-            fragment.textContent =
-                record.fragment || "";
-
-
-            row.appendChild(time);
-            row.appendChild(status);
-            row.appendChild(fragment);
-
-            recordsContainer.appendChild(row);
-
+    /*
+       Scroll naturally to the button.
+       No position manipulation.
+    */
+    setTimeout(() => {
+        nextQuestionContainer.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
         });
-    }
+    }, 150);
+}
 
 
-    /* ============================================================
-       DOWNLOAD ANALYSIS FILE
-       
-       OPTIONAL.
-       
-       The player does NOT need to download this before
-       submitting the flag.
-    ============================================================ */
+function hideNextQuestion() {
 
-    analyseButton.addEventListener(
-        "click",
-        () => {
+    if (!nextQuestionContainer) return;
 
-            const fileUrl =
-                "/questions/question-7/analyze-delay.txt";
+    nextQuestionContainer.hidden = true;
+}
 
 
-            const link =
-                document.createElement("a");
+function setAnswerMessage(text, type = "") {
 
+    if (!answerStatus) return;
 
-            link.href =
-                fileUrl;
+    answerStatus.textContent = text;
 
-            link.download =
-                "analyze-delay.txt";
-
-
-            document.body.appendChild(link);
-
-            link.click();
-
-            document.body.removeChild(link);
-
-
-            /* -----------------------------------------------
-               DOWNLOAD STATUS
-            ------------------------------------------------ */
-
-            delayOutput.innerHTML = `
-                <div class="delay-row">
-                    <span>FILE</span>
-                    <span>analyze-delay.txt</span>
-                </div>
-
-                <div class="delay-row">
-                    <span>STATUS</span>
-                    <span>DOWNLOAD COMPLETE</span>
-                </div>
-            `;
-
-
-            analyseButton.textContent =
-                "ANALYSIS DOWNLOADED";
-
-            messageElement.textContent =
-                "MESSAGE RECOVERY READY";
-
-            systemMessage.textContent =
-                "ANALYSIS FILE RECOVERED // MESSAGE CHANNEL OPEN";
-
-
-            answerInput.disabled = false;
-            answerSubmit.disabled = false;
-
-        }
+    answerStatus.classList.remove(
+        "success",
+        "error"
     );
 
+    if (type) {
+        answerStatus.classList.add(type);
+    }
+}
 
-    /* ============================================================
-       SUBMIT FLAG
-       
-       The backend is the ONLY authority for the answer.
-    ============================================================ */
+
+function setSystemMessage(text) {
+
+    if (!systemMessage) return;
+
+    systemMessage.textContent = text;
+}
+
+
+/* =========================================================
+   LOAD QUESTION
+========================================================= */
+
+async function loadQuestion() {
+
+    try {
+
+        setBackendStatus(false);
+
+        const response = await fetch(
+            `/api/questions/${QUESTION_ID}`,
+            {
+                method: "GET",
+                credentials: "include",
+                cache: "no-store"
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+        }
+
+        const data = await response.json();
+
+        setBackendStatus(true);
+
+        questionLoaded = true;
+
+        /*
+           The backend may return the station data.
+           Only populate fields that actually exist.
+        */
+
+        if (data.status && statusEl) {
+            statusEl.textContent = data.status;
+        }
+
+        if (data.note && noteEl) {
+            noteEl.textContent = data.note;
+        }
+
+        if (Array.isArray(data.records)) {
+            renderRecords(data.records);
+        }
+
+        if (data.message && messageEl) {
+            messageEl.textContent = data.message;
+        }
+
+        /*
+           If your backend reports that Q7 is already solved,
+           show Q8 immediately.
+        */
+
+        if (
+            data.solved === true ||
+            data.completed === true ||
+            data.already_solved === true
+        ) {
+            markSolved();
+        }
+
+        enableAnswerTerminal();
+
+        if (analyseButton) {
+            analyseButton.disabled = false;
+        }
+
+        setSystemMessage(
+            "STATION ACCESS GRANTED // RECOVERY CHANNEL ACTIVE"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Q7 load error:",
+            error
+        );
+
+        setBackendStatus(false);
+
+        if (statusEl) {
+            statusEl.textContent =
+                "TRANSMISSION UNAVAILABLE";
+        }
+
+        if (noteEl) {
+            noteEl.textContent =
+                "Unable to establish recovery channel.";
+        }
+
+        setSystemMessage(
+            "BACKEND CONNECTION FAILED"
+        );
+
+        disableAnswerTerminal();
+    }
+}
+
+
+/* =========================================================
+   RECORD RENDERING
+========================================================= */
+
+function renderRecords(records) {
+
+    if (!recordsEl) return;
+
+    recordsEl.innerHTML = "";
+
+    records.forEach((record) => {
+
+        const row =
+            document.createElement("div");
+
+        row.className = "record-line";
+
+
+        const time =
+            document.createElement("div");
+
+        time.className = "record-time";
+
+        time.textContent =
+            record.time ||
+            record.timestamp ||
+            "";
+
+
+        const recordStatus =
+            document.createElement("div");
+
+        recordStatus.className =
+            "record-status";
+
+        recordStatus.textContent =
+            record.status ||
+            "RECOVERED";
+
+
+        const fragment =
+            document.createElement("div");
+
+        fragment.className =
+            "record-fragment";
+
+        fragment.textContent =
+            record.fragment ||
+            record.message ||
+            "";
+
+
+        row.appendChild(time);
+        row.appendChild(recordStatus);
+        row.appendChild(fragment);
+
+        recordsEl.appendChild(row);
+    });
+}
+
+
+/* =========================================================
+   ANSWER TERMINAL
+========================================================= */
+
+function enableAnswerTerminal() {
+
+    if (!answerInput || !answerSubmit) return;
+
+    answerInput.disabled = false;
+    answerSubmit.disabled = false;
+}
+
+
+function disableAnswerTerminal() {
+
+    if (!answerInput || !answerSubmit) return;
+
+    answerInput.disabled = true;
+    answerSubmit.disabled = true;
+}
+
+
+/* =========================================================
+   MARK Q7 SOLVED
+========================================================= */
+
+function markSolved() {
+
+    setAnswerMessage(
+        "TRANSMISSION ACCEPTED // QUESTION 07 SOLVED",
+        "success"
+    );
+
+    setSystemMessage(
+        "QUESTION 07 COMPLETE // NEXT TRANSMISSION AVAILABLE"
+    );
+
+    if (answerInput) {
+        answerInput.disabled = true;
+    }
+
+    if (answerSubmit) {
+        answerSubmit.disabled = true;
+    }
+
+    showNextQuestion();
+}
+
+
+/* =========================================================
+   SUBMIT ANSWER
+========================================================= */
+
+if (answerForm) {
 
     answerForm.addEventListener(
         "submit",
-        async (event) => {
+        async function(event) {
 
             event.preventDefault();
 
+            if (!questionLoaded) {
+                setAnswerMessage(
+                    "QUESTION DATA NOT READY",
+                    "error"
+                );
+
+                return;
+            }
 
             const answer =
                 answerInput.value.trim();
 
-
             if (!answer) {
 
-                answerStatus.textContent =
-                    "FLAG REQUIRED.";
-
-                answerStatus.className =
-                    "answer-message error";
+                setAnswerMessage(
+                    "ENTER A FLAG",
+                    "error"
+                );
 
                 answerInput.focus();
 
@@ -419,329 +373,227 @@ document.addEventListener("DOMContentLoaded", () => {
 
             answerSubmit.disabled = true;
 
-
-            answerStatus.textContent =
-                "TRANSMITTING...";
-
-            answerStatus.className =
-                "answer-message";
+            setAnswerMessage(
+                "TRANSMITTING...",
+                ""
+            );
 
 
             try {
 
                 const response = await fetch(
-                    "/api/questions/7/submit",
+                    `/api/questions/${QUESTION_ID}/submit`,
                     {
                         method: "POST",
 
-                        credentials: "same-origin",
+                        credentials: "include",
 
                         headers: {
                             "Content-Type":
-                                "application/json",
-
-                            "Accept":
                                 "application/json"
                         },
 
                         body: JSON.stringify({
-                            answer: answer
+                            answer: answer,
+                            flag: answer
                         })
                     }
                 );
 
 
-                const result =
-                    await response.json();
+                let data = {};
+
+                try {
+                    data = await response.json();
+                } catch {
+                    data = {};
+                }
 
 
-                /* =================================================
-                   LOGIN REQUIRED
-                ================================================= */
+                if (!response.ok) {
 
-                if (response.status === 401) {
+                    throw new Error(
+                        data.error ||
+                        data.message ||
+                        `HTTP ${response.status}`
+                    );
+                }
 
-                    window.location.href =
-                        "/login";
+
+                /*
+                   Accept the common success formats
+                   used by the Flask backend.
+                */
+
+                if (
+                    data.success === true ||
+                    data.correct === true ||
+                    data.solved === true ||
+                    data.status === "correct"
+                ) {
+
+                    markSolved();
 
                     return;
                 }
 
 
-                /* =================================================
-                   LEVEL LOCK
-                ================================================= */
+                /*
+                   Backend responded successfully but
+                   indicates an incorrect answer.
+                */
 
-                if (response.status === 403) {
+                setAnswerMessage(
+                    data.error ||
+                    data.message ||
+                    "INCORRECT TRANSMISSION",
+                    "error"
+                );
 
-                    answerStatus.textContent =
-                        result.message ||
-                        "PREVIOUS LEVEL NOT CLEARED.";
+                setSystemMessage(
+                    "RECOVERY FAILED // RETRY TRANSMISSION"
+                );
 
-                    answerStatus.className =
-                        "answer-message error";
-
-                    answerSubmit.disabled = false;
-
-                    return;
-                }
-
-
-                /* =================================================
-                   CORRECT
-                ================================================= */
-
-                if (result.correct) {
-
-                    answerStatus.textContent =
-                        result.message ||
-                        "CORRECT FLAG. LEVEL CLEARED.";
-
-                    answerStatus.className =
-                        "answer-message success";
-
-
-                    answerInput.value =
-                        answer;
-
-                    answerInput.disabled =
-                        true;
-
-                    answerSubmit.disabled =
-                        true;
-
-
-                    systemMessage.textContent =
-                        "STATION 01 RECOVERED // LEVEL CLEARED";
-
-
-                    /* ---------------------------------------------
-                       NEXT QUESTION
-                    --------------------------------------------- */
-
-                    if (result.next) {
-
-                        const nextButton =
-                            document.createElement("a");
-
-
-                        nextButton.href =
-                            `/questions/question-${result.next}/`;
-
-
-                        nextButton.className =
-                            "next-question-button";
-
-
-                        nextButton.textContent =
-                            `CONTINUE TO QUESTION ${result.next} →`;
-
-
-                        /*
-                            Prevent duplicate next buttons if the
-                            frontend receives the event more than once.
-                        */
-
-                        if (
-                            !answerStatus.parentElement
-                                .querySelector(".next-question-button")
-                        ) {
-
-                            answerStatus
-                                .parentElement
-                                .appendChild(
-                                    nextButton
-                                );
-                        }
-
-
-                    } else {
-
-                        const leaderboardButton =
-                            document.createElement("a");
-
-
-                        leaderboardButton.href =
-                            "/leaderboard";
-
-
-                        leaderboardButton.className =
-                            "next-question-button";
-
-
-                        leaderboardButton.textContent =
-                            "VIEW LEADERBOARD →";
-
-
-                        if (
-                            !answerStatus.parentElement
-                                .querySelector(".next-question-button")
-                        ) {
-
-                            answerStatus
-                                .parentElement
-                                .appendChild(
-                                    leaderboardButton
-                                );
-                        }
-                    }
-
-
-                    return;
-                }
-
-
-                /* =================================================
-                   WRONG FLAG
-                ================================================= */
-
-                answerStatus.textContent =
-                    result.message ||
-                    "SIGNAL REJECTED.";
-
-                answerStatus.className =
-                    "answer-message error";
-
-                answerSubmit.disabled =
-                    false;
-
+                answerSubmit.disabled = false;
 
             } catch (error) {
 
                 console.error(
-                    "[STARDUST] Submission error:",
+                    "Q7 submit error:",
                     error
                 );
 
+                setAnswerMessage(
+                    error.message ||
+                    "TRANSMISSION FAILED",
+                    "error"
+                );
 
-                answerStatus.textContent =
-                    "CONNECTION ERROR.";
+                setSystemMessage(
+                    "TRANSMISSION ERROR"
+                );
 
-                answerStatus.className =
-                    "answer-message error";
-
-
-                answerSubmit.disabled =
-                    false;
+                answerSubmit.disabled = false;
             }
 
         }
     );
+}
 
 
-    /* ============================================================
-       BACKEND STATUS
-    ============================================================ */
+/* =========================================================
+   ANALYSIS BUTTON
+========================================================= */
 
-    async function checkBackend() {
+if (analyseButton) {
 
-        try {
+    analyseButton.addEventListener(
+        "click",
+        async function() {
 
-            const response =
-                await fetch(
-                    "/api/health",
+            analyseButton.disabled = true;
+
+            analyseButton.textContent =
+                "LOADING ANALYSIS...";
+
+            try {
+
+                /*
+                   This uses the existing Q7 analysis
+                   endpoint. If your Flask endpoint has
+                   a different path, change ONLY this URL.
+                */
+
+                const response = await fetch(
+                    "/questions/question-7/analyze-delay.txt",
                     {
-                        method: "GET",
-                        cache: "no-store",
-                        headers: {
-                            "Accept":
-                                "application/json"
-                        }
+                        credentials: "include",
+                        cache: "no-store"
                     }
                 );
 
+                if (!response.ok) {
+                    throw new Error(
+                        `HTTP ${response.status}`
+                    );
+                }
 
-            if (!response.ok) {
+                const text =
+                    await response.text();
 
-                throw new Error(
-                    `Backend returned ${response.status}`
+                renderAnalysis(text);
+
+                analyseButton.textContent =
+                    "ANALYSIS RECOVERED";
+
+            } catch (error) {
+
+                console.error(
+                    "Analysis error:",
+                    error
                 );
 
+                /*
+                   Don't destroy the rest of Q7
+                   if the optional analysis download
+                   fails.
+                */
+
+                if (delayOutput) {
+                    delayOutput.textContent =
+                        "ANALYSIS FILE UNAVAILABLE";
+                }
+
+                analyseButton.textContent =
+                    "RETRY ANALYSIS";
+
+                analyseButton.disabled = false;
             }
-
-
-            backendStatus.textContent =
-                "ONLINE";
-
-            backendStatus.className =
-                "online";
-
-
-        } catch (error) {
-
-            console.error(
-                "[STARDUST] Backend check failed:",
-                error
-            );
-
-
-            backendStatus.textContent =
-                "OFFLINE";
-
-            backendStatus.className =
-                "offline";
         }
-    }
+    );
+}
 
 
-    /* ============================================================
-       START
-    ============================================================ */
+/* =========================================================
+   ANALYSIS DISPLAY
+========================================================= */
 
-    checkBackend();
+function renderAnalysis(text) {
 
-    loadQuestionAccess();
+    if (!delayOutput) return;
 
-});
-/* ============================================================
-   DOWNLOAD ANALYSIS FILE
-============================================================ */
+    delayOutput.innerHTML = "";
 
-analyseButton.addEventListener(
-    "click",
-    () => {
-
-        const fileUrl =
-            "/questions/question-7/analyze-delay.txt";
-
-        /*
-         * Let Flask handle the download.
-         * Do NOT create a fake <a> element.
-         */
-
-        window.location.href = fileUrl;
+    const lines =
+        text
+            .split(/\r?\n/)
+            .map(line => line.trim())
+            .filter(Boolean);
 
 
-        /*
-         * Update the UI after triggering the download.
-         */
+    lines.forEach((line) => {
 
-        delayOutput.innerHTML = `
-            <div class="delay-row">
-                <span>FILE</span>
-                <span>analyze-delay.txt</span>
-            </div>
+        const row =
+            document.createElement("div");
 
-            <div class="delay-row">
-                <span>STATUS</span>
-                <span>DOWNLOAD REQUESTED</span>
-            </div>
-        `;
+        row.className = "delay-row";
 
-        analyseButton.textContent =
-            "DOWNLOAD ANALYSIS";
+        const content =
+            document.createElement("span");
 
-        messageElement.textContent =
-            "ANALYSIS FILE REQUESTED";
+        content.textContent = line;
 
-        systemMessage.textContent =
-            "STATION 01 // ANALYSIS FILE REQUESTED";
+        row.appendChild(content);
 
-        /*
-         * Answer submission remains available.
-         */
+        delayOutput.appendChild(row);
+    });
+}
 
-        answerInput.disabled = false;
-        answerSubmit.disabled = false;
-    }
-);
+
+/* =========================================================
+   INITIALISE
+========================================================= */
+
+hideNextQuestion();
+
+loadQuestion();

@@ -1,429 +1,318 @@
-"use strict";
+(() => {
 
-/* =========================================================
-   ELEMENTS
-========================================================= */
+    "use strict";
 
-const terminalOutput =
-    document.getElementById("terminalOutput");
 
-const cipherContainer =
-    document.getElementById("cipherContainer");
+    /* =========================================================
+       ELEMENTS
+    ========================================================= */
 
-const cipherText =
-    document.getElementById("cipherText");
+    const skipButton =
+        document.getElementById("skipButton");
 
-const submissionArea =
-    document.getElementById("submissionArea");
+    const terminalOutput =
+        document.getElementById("terminalOutput");
 
-const flagForm =
-    document.getElementById("flagForm");
+    const cipherContainer =
+        document.getElementById("cipherContainer");
 
-const flagInput =
-    document.getElementById("flagInput");
+    const cipherText =
+        document.getElementById("cipherText");
 
-const submitButton =
-    document.getElementById("submitButton");
+    const submissionArea =
+        document.getElementById("submissionArea");
 
-const result =
-    document.getElementById("result");
-const skipButton =
-    document.getElementById("skipButton");
+    const flagForm =
+        document.getElementById("flagForm");
 
-let skipSequence =
-    false;
+    const flagInput =
+        document.getElementById("flagInput");
 
-let q10Data =
-    null;
+    const submitButton =
+        document.getElementById("submitButton");
 
-/* =========================================================
-   MIRROR DIALOGUE
-========================================================= */
+    const result =
+        document.getElementById("result");
 
-const dialogue = [
+    const winContainer =
+        document.getElementById("winContainer");
 
-    {
-        text: "MIRROR // CORE TERMINAL",
-        className: "system",
-        delay: 500
-    },
+    const winButton =
+        document.getElementById("winButton");
 
-    {
-        text: "",
-        className: "system",
-        delay: 500
-    },
 
-    {
-        text: "YOU.",
-        className: "warning",
-        delay: 700
-    },
+    /* =========================================================
+       FALLBACK TRANSMISSION
+    ========================================================= */
 
-    {
-        text: "YOU AGAIN.",
-        className: "warning",
-        delay: 900
-    },
+    const TRANSMISSION =
+        "LAEJXHAL{ZTII_ESS_FHBVFYL_KGHGR}";
 
-    {
-        text: "I KNOW WHY YOU ARE HERE.",
-        className: "mirror",
-        delay: 1000
-    },
 
-    {
-        text: "YOU TOOK THE FRAGMENTS.",
-        className: "mirror",
-        delay: 850
-    },
+    /* =========================================================
+       STATE
+    ========================================================= */
 
-    {
-        text: "YOU FOLLOWED THE RECORDS.",
-        className: "mirror",
-        delay: 850
-    },
+    let q10Data = null;
+    let skipSequence = false;
 
-    {
-        text: "YOU OPENED MY MEMORY.",
-        className: "mirror",
-        delay: 850
-    },
 
-    {
-        text: "",
-        className: "system",
-        delay: 600
-    },
+    /* =========================================================
+       HELPERS
+    ========================================================= */
 
-    {
-        text: "AND NOW YOU WANT THE LAST ANSWER.",
-        className: "warning",
-        delay: 1100
-    },
+    function wait(ms) {
 
-    {
-        text: "HOW PREDICTABLE.",
-        className: "warning",
-        delay: 1000
-    },
+        return new Promise(
+            resolve => {
+                setTimeout(
+                    resolve,
+                    ms
+                );
+            }
+        );
 
-    {
-        text: "",
-        className: "system",
-        delay: 700
-    },
-
-    {
-        text: "YOU ALREADY HAVE WHAT YOU NEED.",
-        className: "emphasis",
-        delay: 1100
-    },
-
-    {
-        text: "THE FRAGMENTS.",
-        className: "emphasis",
-        delay: 800
-    },
-
-    {
-        text: "THEY WERE NEVER RANDOM.",
-        className: "emphasis",
-        delay: 1000
-    },
-
-    {
-        text: "COMBINE THEM.",
-        className: "emphasis",
-        delay: 900
-    },
-
-    {
-        text: "YOU KNOW THE KEY.",
-        className: "emphasis",
-        delay: 1200
-    },
-
-    {
-        text: "",
-        className: "system",
-        delay: 700
-    },
-
-    {
-        text: "JUST DECRYPT THE STRING.",
-        className: "mirror",
-        delay: 1200
-    },
-
-    {
-        text: "THEN GO AWAY.",
-        className: "warning",
-        delay: 1200
-    },
-    {
-        text: "LAEJXHAL{ZTII_ESS_FHBVFYL_KGHGR}",
-        className: "warning",
-        delay: 1200
     }
-];
 
 
-/* =========================================================
-   ADD TERMINAL LINE
-========================================================= */
+    function addLine(
+        text,
+        className = "mirror"
+    ) {
 
-function addLine(
-    text,
-    className = "mirror"
-) {
+        if (!terminalOutput) {
+            return;
+        }
 
-    const line =
-        document.createElement("div");
+        const line =
+            document.createElement("div");
 
-    line.className =
-        `line ${className}`;
+        line.className =
+            `line ${className}`;
 
-    line.textContent =
-        text;
+        line.textContent =
+            text;
 
-    terminalOutput.appendChild(
-        line
-    );
+        terminalOutput.appendChild(
+            line
+        );
 
-    window.scrollTo({
-        top:
-            document.body.scrollHeight,
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth"
+        });
 
-        behavior:
-            "smooth"
-    });
-}
+    }
 
 
-/* =========================================================
-   WAIT
-========================================================= */
+    function setResult(
+        message,
+        type = ""
+    ) {
 
-function wait(ms) {
+        if (!result) {
+            return;
+        }
 
-    return new Promise(
-        resolve => {
-            setTimeout(
-                resolve,
-                ms
+        result.textContent =
+            message;
+
+        result.className =
+            "result";
+
+        if (type) {
+            result.classList.add(
+                type
             );
         }
-    );
-}
-/* =========================================================
-   SKIP DIALOGUE
-========================================================= */
 
-function skipDialogue(data) {
-
-    skipSequence = true;
-
-    if (skipButton) {
-        skipButton.classList.add("hidden");
     }
 
-    terminalOutput.innerHTML = "";
 
-    addLine(
-        "MIRROR // CORE TERMINAL",
-        "system"
-    );
+    /* =========================================================
+       SHOW WIN BUTTON
+    ========================================================= */
 
-    addLine(
-        "",
-        "system"
-    );
+    function showWinButton() {
 
-    addLine(
-        "MIRROR: YOU ALREADY HAVE WHAT YOU NEED.",
-        "emphasis"
-    );
-
-    addLine(
-        "MIRROR: THE FRAGMENTS.",
-        "emphasis"
-    );
-
-    addLine(
-        "MIRROR: THEY WERE NEVER RANDOM.",
-        "emphasis"
-    );
-
-    addLine(
-        "MIRROR: COMBINE THEM.",
-        "emphasis"
-    );
-
-    addLine(
-        "MIRROR: JUST DECRYPT THE STRING.",
-        "mirror"
-    );
-
-    addLine(
-        "MIRROR: THEN GO AWAY.",
-        "warning"
-    );
-
-    showCipher(data);
-
-    submissionArea.classList.remove(
-        "hidden"
-    );
-
-    flagInput.focus();
-}
-
-/* =========================================================
-   PLAY DIALOGUE
-========================================================= */
-
-async function playDialogue() {
-
-    for (
-        const line
-        of dialogue
-    ) {
-
-        if (skipSequence) {
+        if (!winContainer) {
             return;
         }
 
-        await wait(
-            line.delay
+        winContainer.classList.remove(
+            "hidden"
         );
 
-        if (skipSequence) {
+        if (winButton) {
+
+            winButton.href =
+                "../victory/win.html";
+
+        }
+
+    }
+
+
+    function hideWinButton() {
+
+        if (!winContainer) {
             return;
         }
 
-        addLine(
-            line.text,
-            line.className
+        winContainer.classList.add(
+            "hidden"
         );
+
     }
-}
 
 
-/* =========================================================
-   SHOW CIPHERTEXT
-========================================================= */
+    /* =========================================================
+       SHOW CIPHERTEXT
+    ========================================================= */
 
-function showCipher(data) {
+    function showCipher(data) {
 
-    /*
-        Ciphertext comes from Flask.
-        Nothing sensitive is stored here.
-    */
+        if (!cipherContainer) {
+            return;
+        }
 
-    cipherContainer.classList.remove(
-        "hidden"
-    );
+        cipherContainer.classList.remove(
+            "hidden"
+        );
 
-    if (
-        data &&
-        data.ciphertext
-    ) {
 
-        cipherText.textContent =
-            data.ciphertext;
+        const ciphertext =
+            data &&
+            data.ciphertext
+                ? data.ciphertext
+                : TRANSMISSION;
 
-    } else {
 
-        cipherText.textContent =
-            "TRANSMISSION UNAVAILABLE.";
+        if (cipherText) {
+
+            cipherText.textContent =
+                ciphertext;
+
+        }
+
     }
-}
 
 
-/* =========================================================
-   LOAD QUESTION
-========================================================= */
+    /* =========================================================
+       LOAD Q10
+    ========================================================= */
 
-async function loadQuestion() {
+    async function loadQuestion() {
 
-    try {
+        try {
 
-        const response =
-            await fetch(
-                "/api/questions/10",
-                {
-                    method: "GET",
+            const response =
+                await fetch(
+                    "../api/questions/10",
+                    {
+                        method: "GET",
 
-                    credentials:
-                        "same-origin",
+                        credentials:
+                            "same-origin",
 
-                    cache:
-                        "no-store",
+                        cache:
+                            "no-store",
 
-                    headers: {
-                        "Accept":
-                            "application/json"
+                        headers: {
+                            "Accept":
+                                "application/json"
+                        }
                     }
+                );
+
+
+            if (response.status === 401) {
+
+                window.location.href =
+                    "../login";
+
+                return null;
+
+            }
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    `HTTP ${response.status}`
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                data.authenticated === false
+            ) {
+
+                window.location.href =
+                    "../login";
+
+                return null;
+
+            }
+
+
+            if (
+                data.locked === true
+            ) {
+
+                if (submissionArea) {
+                    submissionArea.classList.add(
+                        "hidden"
+                    );
                 }
+
+                if (skipButton) {
+                    skipButton.classList.add(
+                        "hidden"
+                    );
+                }
+
+                addLine(
+                    "MIRROR // ACCESS DENIED",
+                    "warning"
+                );
+
+                addLine(
+                    "",
+                    "system"
+                );
+
+                addLine(
+                    data.message ||
+                    "PREVIOUS LEVEL NOT CLEARED.",
+                    "warning"
+                );
+
+                return null;
+
+            }
+
+
+            q10Data =
+                data;
+
+
+            return data;
+
+        } catch (error) {
+
+            console.error(
+                "Q10 loading error:",
+                error
             );
-
-
-        /* =========================================
-           LOGIN REQUIRED
-        ========================================= */
-
-        if (
-            response.status === 401
-        ) {
-
-            window.location.href =
-                "/login";
-
-            return null;
-        }
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                `HTTP ${response.status}`
-            );
-        }
-
-
-        const data =
-            await response.json();
-
-
-        /* =========================================
-           AUTHENTICATION CHECK
-        ========================================= */
-
-        if (
-            data.authenticated === false
-        ) {
-
-            window.location.href =
-                "/login";
-
-            return null;
-        }
-
-
-        /* =========================================
-           LEVEL LOCK
-        ========================================= */
-
-        if (
-            data.locked === true
-        ) {
-
-            terminalOutput.innerHTML =
-                "";
 
             addLine(
-                "MIRROR // ACCESS DENIED",
+                "MIRROR // CONNECTION FAILURE",
                 "warning"
             );
 
@@ -433,37 +322,177 @@ async function loadQuestion() {
             );
 
             addLine(
-                data.message ||
-                "PREVIOUS LEVEL NOT CLEARED.",
+                "THE CORE REFUSES TO RESPOND.",
                 "warning"
             );
 
-            submissionArea.classList.add(
+            return null;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       DIALOGUE
+    ========================================================= */
+
+    const dialogue = [
+
+        {
+            text:
+                "MIRROR // CORE TERMINAL",
+            className:
+                "system",
+            delay:
+                500
+        },
+
+        {
+            text:
+                "",
+            className:
+                "system",
+            delay:
+                500
+        },
+
+        {
+            text:
+                "YOU ALREADY HAVE WHAT YOU NEED.",
+            className:
+                "emphasis",
+            delay:
+                1000
+        },
+
+        {
+            text:
+                "THE FRAGMENTS.",
+            className:
+                "emphasis",
+            delay:
+                900
+        },
+
+        {
+            text:
+                "THEY WERE NEVER RANDOM.",
+            className:
+                "emphasis",
+            delay:
+                1000
+        },
+
+        {
+            text:
+                "COMBINE THEM.",
+            className:
+                "emphasis",
+            delay:
+                900
+        },
+
+        {
+            text:
+                "YOU KNOW THE KEY.",
+            className:
+                "emphasis",
+            delay:
+                1200
+        },
+
+        {
+            text:
+                "",
+            className:
+                "system",
+            delay:
+                600
+        },
+
+        {
+            text:
+                "JUST DECRYPT THE STRING.",
+            className:
+                "mirror",
+            delay:
+                1200
+        },
+
+        {
+            text:
+                "THEN GO AWAY.",
+            className:
+                "warning",
+            delay:
+                1200
+        }
+
+    ];
+
+
+    async function playDialogue() {
+
+        for (
+            const line
+            of dialogue
+        ) {
+
+            if (skipSequence) {
+                return;
+            }
+
+            await wait(
+                line.delay
+            );
+
+
+            if (skipSequence) {
+                return;
+            }
+
+
+            addLine(
+                line.text,
+                line.className
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       SKIP
+    ========================================================= */
+
+    function skipDialogue() {
+
+        skipSequence =
+            true;
+
+
+        if (skipButton) {
+
+            skipButton.classList.add(
                 "hidden"
             );
 
-            return null;
         }
 
 
-        return data;
+        if (terminalOutput) {
 
+            terminalOutput.innerHTML =
+                "";
 
-    } catch (error) {
-
-        console.error(
-            "Q10 loading error:",
-            error
-        );
-
-
-        terminalOutput.innerHTML =
-            "";
+        }
 
 
         addLine(
-            "MIRROR // CONNECTION FAILURE",
-            "warning"
+            "MIRROR // CORE TERMINAL",
+            "system"
         );
 
         addLine(
@@ -472,372 +501,435 @@ async function loadQuestion() {
         );
 
         addLine(
-            "THE CORE REFUSES TO RESPOND.",
+            "MIRROR: YOU ALREADY HAVE WHAT YOU NEED.",
+            "emphasis"
+        );
+
+        addLine(
+            "MIRROR: THE FRAGMENTS.",
+            "emphasis"
+        );
+
+        addLine(
+            "MIRROR: THEY WERE NEVER RANDOM.",
+            "emphasis"
+        );
+
+        addLine(
+            "MIRROR: COMBINE THEM.",
+            "emphasis"
+        );
+
+        addLine(
+            "MIRROR: JUST DECRYPT THE STRING.",
+            "mirror"
+        );
+
+        addLine(
+            "MIRROR: THEN GO AWAY.",
             "warning"
         );
 
 
-        submissionArea.classList.remove(
-            "hidden"
+        showCipher(
+            q10Data
         );
 
 
-        return null;
-    }
-}
-
-
-/* =========================================================
-   REDIRECT TO VICTORY PAGE
-========================================================= */
-
-async function goToVictory() {
-
-    /*
-        Give MIRROR a final moment before
-        sending the participant to the ending.
-    */
-
-    await wait(700);
-
-    addLine(
-        "",
-        "system"
-    );
-
-    addLine(
-        "MIRROR: ...",
-        "warning"
-    );
-
-    await wait(1000);
-
-    addLine(
-        "MIRROR: FINE.",
-        "warning"
-    );
-
-    await wait(1000);
-
-    addLine(
-        "MIRROR: YOU FOUND IT.",
-        "emphasis"
-    );
-
-    await wait(1200);
-
-    addLine(
-        "",
-        "system"
-    );
-
-    addLine(
-        "MIRROR: THE PROTOCOL IS COMPLETE.",
-        "emphasis"
-    );
-
-    await wait(1200);
-
-    addLine(
-        "MIRROR: GO.",
-        "warning"
-    );
-
-    await wait(1500);
-
-    /*
-        FINAL REDIRECT
-    */
-
-    window.location.href =
-        "../victory/win.html";
-}
-
-
-/* =========================================================
-   SUBMIT FINAL FLAG
-========================================================= */
-
-flagForm.addEventListener(
-    "submit",
-    async function(event) {
-
-        event.preventDefault();
-
-
-        const answer =
-            flagInput.value.trim();
-
-
-        /* =========================================
-           EMPTY ANSWER
-        ========================================= */
-
-        if (!answer) {
-
-            result.textContent =
-                "FLAG REQUIRED.";
-
-            result.className =
-                "result error";
-
+        if (flagInput) {
             flagInput.focus();
+        }
 
+    }
+
+
+    if (skipButton) {
+
+        skipButton.addEventListener(
+            "click",
+            skipDialogue
+        );
+
+    }
+
+
+    /* =========================================================
+       VICTORY SEQUENCE
+    ========================================================= */
+
+    async function goToVictory() {
+
+        await wait(700);
+
+        addLine(
+            "",
+            "system"
+        );
+
+        addLine(
+            "MIRROR: ...",
+            "warning"
+        );
+
+        await wait(1000);
+
+        addLine(
+            "MIRROR: FINE.",
+            "warning"
+        );
+
+        await wait(1000);
+
+        addLine(
+            "MIRROR: YOU FOUND IT.",
+            "emphasis"
+        );
+
+        await wait(1200);
+
+        addLine(
+            "",
+            "system"
+        );
+
+        addLine(
+            "MIRROR: THE PROTOCOL IS COMPLETE.",
+            "emphasis"
+        );
+
+        await wait(1200);
+
+        addLine(
+            "MIRROR: GO.",
+            "warning"
+        );
+
+    }
+
+
+    /* =========================================================
+       SUBMIT
+    ========================================================= */
+
+    if (flagForm) {
+
+        flagForm.addEventListener(
+            "submit",
+            async event => {
+
+                event.preventDefault();
+
+
+                const answer =
+                    flagInput
+                        ? flagInput.value.trim()
+                        : "";
+
+
+                if (!answer) {
+
+                    setResult(
+                        "FLAG REQUIRED.",
+                        "error"
+                    );
+
+                    if (flagInput) {
+                        flagInput.focus();
+                    }
+
+                    return;
+
+                }
+
+
+                if (submitButton) {
+                    submitButton.disabled = true;
+                }
+
+                if (flagInput) {
+                    flagInput.disabled = true;
+                }
+
+
+                setResult(
+                    "TRANSMITTING..."
+                );
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "/api/questions/10/submit",
+                            {
+                                method: "POST",
+
+                                credentials:
+                                    "same-origin",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json",
+
+                                    "Accept":
+                                        "application/json"
+                                },
+
+                                body:
+                                    JSON.stringify({
+                                        answer:
+                                            answer
+                                    })
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    /* =========================================
+                       LOGIN
+                    ========================================= */
+
+                    if (
+                        response.status === 401 ||
+                        data.authenticated === false
+                    ) {
+
+                        window.location.href =
+                            "/login";
+
+                        return;
+
+                    }
+
+
+                    /* =========================================
+                       LOCKED
+                    ========================================= */
+
+                    if (
+                        response.status === 403 ||
+                        data.locked === true
+                    ) {
+
+                        setResult(
+                            data.message ||
+                            "PREVIOUS LEVEL NOT CLEARED.",
+                            "error"
+                        );
+
+                        if (flagInput) {
+                            flagInput.disabled = false;
+                        }
+
+                        if (submitButton) {
+                            submitButton.disabled = false;
+                        }
+
+                        return;
+
+                    }
+
+
+                    /* =========================================
+                       ALREADY SOLVED
+                    ========================================= */
+
+                    if (
+                        data.already_solved === true
+                    ) {
+
+                        setResult(
+                            "QUESTION ALREADY CLEARED.",
+                            "success"
+                        );
+
+                        showWinButton();
+
+                        return;
+
+                    }
+
+
+                    /* =========================================
+                       CORRECT
+                    ========================================= */
+
+                    if (
+                        data.correct === true
+                    ) {
+
+                        setResult(
+                            data.message ||
+                            "CORRECT. MIRROR PROTOCOL COMPLETE.",
+                            "success"
+                        );
+
+                        showWinButton();
+
+                        /*
+                         * Keep the player on Q10.
+                         * They can click the win button whenever
+                         * they are ready.
+                         */
+
+                        return;
+
+                    }
+
+
+                    /* =========================================
+                       WRONG
+                    ========================================= */
+
+                    setResult(
+                        data.message ||
+                        "SIGNAL REJECTED.",
+                        "error"
+                    );
+
+
+                    if (flagInput) {
+                        flagInput.disabled = false;
+                        flagInput.focus();
+                    }
+
+                    if (submitButton) {
+                        submitButton.disabled = false;
+                    }
+
+                } catch (error) {
+
+                    console.error(
+                        "Q10 submission error:",
+                        error
+                    );
+
+                    setResult(
+                        "CONNECTION ERROR.",
+                        "error"
+                    );
+
+
+                    if (flagInput) {
+                        flagInput.disabled = false;
+                        flagInput.focus();
+                    }
+
+                    if (submitButton) {
+                        submitButton.disabled = false;
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       START
+    ========================================================= */
+
+    async function start() {
+
+        hideWinButton();
+
+        const data =
+            await loadQuestion();
+
+
+        if (!data) {
             return;
         }
 
 
-        /* =========================================
-           START SUBMISSION
-        ========================================= */
+        /*
+         * Team already completed Q10.
+         * Show the win button immediately.
+         */
 
-        result.textContent =
-            "TRANSMITTING...";
+        if (
+            data.already_solved === true
+        ) {
 
-        result.className =
-            "result";
-
-
-        flagInput.disabled =
-            true;
-
-        submitButton.disabled =
-            true;
-
-
-        try {
-
-            const response =
-                await fetch(
-                    "/api/questions/10/submit",
-                    {
-                        method: "POST",
-
-                        credentials:
-                            "same-origin",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json",
-
-                            "Accept":
-                                "application/json"
-                        },
-
-                        body:
-                            JSON.stringify({
-                                answer:
-                                    answer
-                            })
-                    }
+            if (skipButton) {
+                skipButton.classList.add(
+                    "hidden"
                 );
-
-
-            const data =
-                await response.json();
-
-
-            /* =========================================
-               LOGIN REQUIRED
-            ========================================= */
-
-            if (
-                response.status === 401 ||
-                data.authenticated === false
-            ) {
-
-                window.location.href =
-                    "/login";
-
-                return;
             }
 
-
-            /* =========================================
-               LEVEL LOCK
-            ========================================= */
-
-            if (
-                response.status === 403
-            ) {
-
-                result.textContent =
-                    data.message ||
-                    "PREVIOUS LEVEL NOT CLEARED.";
-
-                result.className =
-                    "result error";
-
-                flagInput.disabled =
-                    false;
-
-                submitButton.disabled =
-                    false;
-
-                return;
-            }
-
-
-            /* =========================================
-               CORRECT FLAG
-            ========================================= */
-
-            if (
-                data.correct === true
-            ) {
-
-                result.textContent =
-                    data.message ||
-                    "CORRECT FLAG. FINAL LEVEL CLEARED.";
-
-                result.className =
-                    "result success";
-
-
-                /*
-                    Prevent duplicate submissions.
-                */
-
-                flagInput.disabled =
-                    true;
-
-                submitButton.disabled =
-                    true;
-
-
-                /*
-                    Q10 IS COMPLETE.
-
-                    Finish MIRROR's final dialogue,
-                    then redirect to the victory page.
-                */
-
-                await goToVictory();
-
-                return;
-            }
-
-
-            /* =========================================
-               WRONG FLAG
-            ========================================= */
-
-            result.textContent =
-                data.message ||
-                "SIGNAL REJECTED.";
-
-            result.className =
-                "result error";
-
-
-            /*
-                Participant can try again.
-            */
-
-            flagInput.disabled =
-                false;
-
-            submitButton.disabled =
-                false;
-
-            flagInput.focus();
-
-
-        } catch (error) {
-
-            console.error(
-                "Q10 submission error:",
-                error
+            addLine(
+                "MIRROR // CORE TERMINAL",
+                "system"
             );
 
+            addLine(
+                "",
+                "system"
+            );
 
-            result.textContent =
-                "CONNECTION ERROR.";
+            addLine(
+                "FINAL CONNECTION ALREADY CLEARED.",
+                "emphasis"
+            );
 
-            result.className =
-                "result error";
+            showCipher(
+                data
+            );
+
+            setResult(
+                "QUESTION ALREADY CLEARED.",
+                "success"
+            );
+
+            if (flagInput) {
+                flagInput.disabled = true;
+            }
+
+            if (submitButton) {
+                submitButton.disabled = true;
+            }
+
+            showWinButton();
+
+            return;
+
+        }
 
 
-            flagInput.disabled =
-                false;
+        /* Normal Q10 sequence */
 
-            submitButton.disabled =
-                false;
+        await playDialogue();
 
+
+        if (skipSequence) {
+            return;
+        }
+
+
+        showCipher(
+            data
+        );
+
+
+        if (skipButton) {
+            skipButton.classList.add(
+                "hidden"
+            );
+        }
+
+
+        if (flagInput) {
             flagInput.focus();
         }
 
     }
-);
-/* =========================================================
-   SKIP BUTTON
-========================================================= */
-
-if (skipButton) {
-
-    skipButton.addEventListener(
-        "click",
-        () => {
-
-            if (q10Data) {
-                skipDialogue(q10Data);
-            }
-
-        }
-    );
-}
-
-/* =========================================================
-   START
-========================================================= */
-
-async function start() {
-
-    /*
-        Check whether Q10 is unlocked.
-    */
-
-    const data =
-    await loadQuestion();
-
-if (!data) {
-    return;
-}
-
-q10Data = data;
 
 
-    /*
-        Play MIRROR dialogue.
-    */
+    start();
 
-    await playDialogue();
-if (skipSequence) {
-    return;
-}
-
-    /*
-        Show the final ciphertext.
-    */
-
-    await wait(700);
-
-    showCipher(data);
-
-
-    /*
-        Allow participant to enter
-        the final answer.
-    */
-
-    await wait(500);
-
-    submissionArea.classList.remove(
-        "hidden"
-    );
-
-    flagInput.focus();
-}
-
-
-start();
+})();

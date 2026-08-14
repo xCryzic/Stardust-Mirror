@@ -6,7 +6,10 @@
 
     <title>STARDUST // THE FIRST STATION</title>
 
-    <link rel="stylesheet" href="/questions/question-7/question-7.css">
+    <link
+        rel="stylesheet"
+        href="/questions/question-7/question-7.css"
+    >
 </head>
 
 <body>
@@ -15,9 +18,10 @@
 <div class="noise"></div>
 
 <main class="terminal">
-    <a href="/questions/question-page.html" class="back-button">
-    ← BACK TO QUESTIONS
-</a>
+
+    <!-- =====================================================
+         TOP BAR
+    ====================================================== -->
 
     <header class="topbar">
 
@@ -33,19 +37,37 @@
     </header>
 
 
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
     <section class="content">
+
+        <a
+            href="/questions/question-page.html"
+            class="back-button"
+        >
+            ← BACK TO QUESTIONS
+        </a>
+
 
         <div class="classification">
             CLASSIFICATION // RECOVERED TRANSMISSION
         </div>
+
 
         <h1>
             THE FIRST<br>
             <span>STATION</span>
         </h1>
 
+
         <div class="divider"></div>
 
+
+        <!-- =================================================
+             BRIEFING
+        ================================================== -->
 
         <section class="briefing">
 
@@ -66,16 +88,55 @@
 
         </section>
 
-        <div class="station-summary">
-            <div id="status" class="station-status">
+
+        <!-- =================================================
+             STATION STATUS
+        ================================================== -->
+
+        <section class="station-summary">
+
+            <div
+                id="status"
+                class="station-status"
+            >
                 CHECKING ACCESS...
             </div>
-            <div id="note" class="station-note"></div>
-        </div>
 
-        <div id="records" class="record-list"></div>
+            <div
+                id="note"
+                class="station-note"
+            ></div>
 
-        <div id="message" class="status-message"></div>
+        </section>
+
+
+        <!-- =================================================
+             RECOVERED RECORDS
+        ================================================== -->
+
+        <section class="records-panel">
+
+            <div class="section-label">
+                RECOVERED TRANSMISSION LOG
+            </div>
+
+            <div
+                id="records"
+                class="record-list"
+            ></div>
+
+        </section>
+
+
+        <div
+            id="message"
+            class="status-message"
+        ></div>
+
+
+        <!-- =================================================
+             ANALYSIS
+        ================================================== -->
 
         <section class="analysis">
 
@@ -98,18 +159,27 @@
                     DOWNLOAD ANALYSIS
                 </button>
 
-                <div id="delayOutput"></div>
+                <div
+                    id="delayOutput"
+                    class="delay-output"
+                ></div>
 
             </div>
 
         </section>
 
 
+        <!-- =================================================
+             ANSWER TERMINAL
+        ================================================== -->
+
         <section class="answer-section">
 
             <div class="terminal-header">
 
-                <span>ANSWER TERMINAL</span>
+                <span>
+                    ANSWER TERMINAL
+                </span>
 
                 <span id="backendStatus">
                     CHECKING BACKEND...
@@ -117,11 +187,13 @@
 
             </div>
 
+
             <div class="terminal-body">
 
                 <p>
                     Submit the recovered flag.
                 </p>
+
 
                 <form id="answerForm">
 
@@ -135,7 +207,8 @@
                             id="answerInput"
                             type="text"
                             autocomplete="off"
-                            placeholder="STARDUST{...}"
+                            spellcheck="false"
+                            placeholder="flag{...}"
                             disabled
                         >
 
@@ -149,6 +222,7 @@
 
                     </div>
 
+
                     <div
                         id="answerStatus"
                         class="answer-message"
@@ -161,7 +235,11 @@
         </section>
 
 
-        <div class="system-status">
+        <!-- =================================================
+             SYSTEM STATUS
+        ================================================== -->
+
+        <section class="system-status">
 
             <div class="status-label">
                 SYSTEM STATUS
@@ -171,22 +249,39 @@
                 WAITING FOR RECOVERY...
             </div>
 
-        </div>
-<div
-    id="nextQuestionContainer"
-    class="next-question-container"
-    hidden
->
-    <a
-        id="nextQuestionButton"
-        class="next-button"
-        href="#"
-    >
-        NEXT QUESTION →
-    </a>
-</div>
+        </section>
+
+
+        <!-- =================================================
+             NEXT QUESTION
+        ================================================== -->
+
+        <section
+            id="nextQuestionContainer"
+            class="next-question-container"
+            hidden
+        >
+
+            <div class="next-label">
+                TRANSMISSION RECOVERED
+            </div>
+
+            <a
+                id="nextQuestionButton"
+                class="next-button"
+                href="/questions/question-8/question-8.html"
+            >
+                PROCEED TO QUESTION 8 →
+            </a>
+
+        </section>
+
     </section>
 
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
 
     <footer>
 
@@ -201,6 +296,7 @@
     </footer>
 
 </main>
+
 
 <script src="/questions/question-7/question-7.js"></script>
 

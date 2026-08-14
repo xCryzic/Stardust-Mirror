@@ -1,0 +1,455 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>STARDUST // FRAGMENT RECOVERED</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+        }
+
+        body {
+            background: #050505;
+            color: #cfcfcf;
+            font-family: "Courier New", monospace;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            min-height: 100vh;
+        }
+
+        /* =========================
+           SCANLINES
+        ========================= */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            background:
+                repeating-linear-gradient(
+                    to bottom,
+                    rgba(255,255,255,0.025) 0px,
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px,
+                    transparent 4px
+                );
+
+            z-index: 10;
+        }
+
+        /* =========================
+           TERMINAL
+        ========================= */
+
+        .terminal {
+            width: min(900px, 90%);
+            padding: 45px;
+
+            background: #080808;
+
+            border: 1px solid #292929;
+
+            box-shadow:
+                0 0 50px rgba(255,255,255,0.025);
+
+            position: relative;
+        }
+
+        .terminal::before {
+            content: "";
+
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+
+            height: 2px;
+
+            background: #666;
+
+            opacity: 0.6;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding-bottom: 18px;
+
+            border-bottom: 1px solid #292929;
+
+            color: #666;
+
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        .system {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #aaa;
+
+            box-shadow:
+                0 0 8px #aaa;
+        }
+
+        .record {
+            color: #444;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .content {
+            padding: 55px 0 35px;
+        }
+
+        .classification {
+            color: #555;
+
+            font-size: 11px;
+            letter-spacing: 3px;
+
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin: 0;
+
+            color: #e4e4e4;
+
+            font-size: clamp(42px, 7vw, 75px);
+
+            line-height: 0.95;
+
+            letter-spacing: -3px;
+        }
+
+        h1 span {
+            color: #777;
+        }
+
+        .divider {
+            width: 100%;
+            height: 1px;
+
+            background: #292929;
+
+            margin: 30px 0;
+        }
+
+        /* =========================
+           MESSAGE
+        ========================= */
+
+        .message {
+            color: #888;
+
+            font-size: 14px;
+
+            line-height: 1.8;
+        }
+
+        .message strong {
+            color: #aaa;
+            font-weight: normal;
+        }
+
+        /* =========================
+           CODE BOX
+        ========================= */
+
+        .code-section {
+            margin-top: 35px;
+        }
+
+        .label {
+            color: #555;
+
+            font-size: 11px;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 12px;
+        }
+
+        .code-box {
+            padding: 20px;
+
+            border: 1px solid #292929;
+
+            background: #030303;
+
+            color: #bdbdbd;
+
+            font-size: 15px;
+
+            line-height: 1.7;
+
+            word-break: break-all;
+
+            box-shadow:
+                inset 0 0 20px rgba(255,255,255,0.015);
+        }
+
+        .code-box::before {
+            content: "> ";
+
+            color: #555;
+        }
+
+        /* =========================
+           FINAL MESSAGE
+        ========================= */
+
+        .warning {
+            margin-top: 35px;
+
+            padding: 20px;
+
+            border-left: 2px solid #555;
+
+            background: #0a0a0a;
+        }
+
+        .warning-title {
+            color: #aaa;
+
+            font-size: 13px;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 10px;
+        }
+
+        .warning-text {
+            color: #666;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            display: flex;
+
+            justify-content: space-between;
+
+            padding-top: 18px;
+
+            border-top: 1px solid #292929;
+
+            color: #444;
+
+            font-size: 10px;
+
+            letter-spacing: 1px;
+        }
+
+        /* =========================
+           CURSOR
+        ========================= */
+
+        .cursor {
+            display: inline-block;
+
+            width: 8px;
+            height: 14px;
+
+            background: #aaa;
+
+            margin-left: 4px;
+
+            vertical-align: middle;
+
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            45% {
+                opacity: 1;
+            }
+
+            46%,
+            100% {
+                opacity: 0.2;
+            }
+
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .terminal {
+                width: 94%;
+                padding: 28px;
+            }
+
+            .content {
+                padding: 40px 0 25px;
+            }
+
+            .header {
+                font-size: 9px;
+            }
+
+            .code-box {
+                font-size: 12px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <main class="terminal">
+
+        <header class="header">
+
+            <div class="system">
+                <span class="dot"></span>
+
+                STARDUST // MIRROR PROTOCOL
+            </div>
+
+            <div class="record">
+                FRAGMENT RECOVERED
+            </div>
+
+        </header>
+
+
+        <section class="content">
+
+            <div class="classification">
+                RESTRICTED SYSTEM // RECOVERY NODE
+            </div>
+
+
+            <h1>
+                YOU DID<br>
+                <span>IT.</span>
+            </h1>
+
+
+            <div class="divider"></div>
+
+
+            <div class="message">
+
+                <strong>
+                    &gt; RECOVERY SUCCESSFUL.
+                </strong>
+
+                <br><br>
+
+                A fragment of the original STARDUST
+                investigation has been recovered.
+
+                <br>
+
+                The system has released the following
+                transmission.
+
+            </div>
+
+
+            <section class="code-section">
+
+                <div class="label">
+                    RECOVERED TRANSMISSION
+                </div>
+
+                <div class="code-box">
+                    DHRFGVBA_6_SYNT=FGNEQHFG{GUR_PERJ_JNF_URER}
+                </div>
+
+            </section>
+
+
+            <section class="warning">
+
+                <div class="warning-title">
+                    MIRROR // SYSTEM NOTE
+                </div>
+
+                <div class="warning-text">
+
+                    But... He was Here...
+
+                    <br><br>
+
+                    Fragment - THE
+
+                    <span class="cursor"></span>
+
+                </div>
+
+            </section>
+
+        </section>
+
+
+        <footer>
+
+            <span>
+                STARDUST MIRROR PROTOCOL
+            </span>
+
+            <span>
+                1971 → 2027
+            </span>
+
+        </footer>
+
+    </main>
+
+</body>
+</html>
