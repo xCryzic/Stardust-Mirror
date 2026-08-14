@@ -1,0 +1,636 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Oswald:wght@400;500;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  }
+
+:root {
+--bg: #050505;
+--panel: #0a0a0a;
+--line: rgba(255, 255, 255, 0.12);
+--line-bright: rgba(255, 255, 255, 0.3);
+--white: #eeeeee;
+--silver: #bdbdbd;
+--dim: #666666;
+}
+
+/* =================================
+BASE
+================================= */
+
+html,
+body {
+width: 100%;
+min-height: 100%;
+}
+
+body.question-page {
+min-height: 100vh;
+
+background: var(--bg);
+color: var(--white);
+
+font-family: "JetBrains Mono", monospace;
+
+overflow-x: hidden;
+}
+
+/* =================================
+ATMOSPHERE
+================================= */
+
+.scanlines {
+position: fixed;
+inset: 0;
+
+z-index: 50;
+
+pointer-events: none;
+
+background:
+repeating-linear-gradient(
+to bottom,
+transparent 0,
+transparent 3px,
+rgba(255, 255, 255, 0.018) 4px
+);
+}
+
+.noise {
+position: fixed;
+
+inset: -50%;
+
+z-index: 49;
+
+pointer-events: none;
+
+opacity: 0.035;
+
+background-image:
+url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+
+animation:
+noiseMove 0.25s steps(2) infinite;
+}
+
+@keyframes noiseMove {
+
+0% {
+transform: translate(0, 0);
+}
+
+25% {
+transform: translate(2%, -1%);
+}
+
+50% {
+transform: translate(-1%, 2%);
+}
+
+75% {
+transform: translate(1%, 1%);
+}
+
+100% {
+transform: translate(-2%, -1%);
+}
+
+}
+
+/* =================================
+TERMINAL
+================================= */
+
+.terminal {
+position: relative;
+
+width: min(1100px, 92%);
+
+min-height: 100vh;
+
+margin: auto;
+
+display: flex;
+flex-direction: column;
+}
+
+/* =================================
+TOP BAR
+================================= */
+
+.topbar {
+height: 74px;
+
+display: flex;
+align-items: center;
+justify-content: space-between;
+
+border-bottom: 1px solid var(--line);
+
+color: var(--dim);
+
+font-size: 10px;
+
+letter-spacing: 0.18em;
+}
+
+.brand {
+display: flex;
+align-items: center;
+
+gap: 12px;
+}
+
+.dot {
+width: 7px;
+height: 7px;
+
+border-radius: 50%;
+
+background: #fff;
+
+box-shadow:
+0 0 8px rgba(255, 255, 255, 0.8);
+
+animation:
+pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+0%,
+100% {
+opacity: 0.45;
+}
+
+50% {
+opacity: 1;
+}
+
+}
+
+.record {
+letter-spacing: 0.22em;
+}
+
+/* =================================
+CONTENT
+================================= */
+
+.content {
+flex: 1;
+
+padding:
+clamp(70px, 10vw, 120px)
+0
+80px;
+}
+
+/* =================================
+CLASSIFICATION
+================================= */
+
+.classification {
+margin-bottom: 28px;
+
+color: var(--dim);
+
+font-size: 10px;
+
+letter-spacing: 0.3em;
+
+text-transform: uppercase;
+}
+
+/* =================================
+TITLE
+================================= */
+
+h1 {
+font-family: "Oswald", sans-serif;
+
+font-size:
+clamp(75px, 13vw, 155px);
+
+font-weight: 500;
+
+line-height: 0.82;
+
+letter-spacing: -0.035em;
+
+text-transform: uppercase;
+}
+
+h1 span {
+color: transparent;
+
+-webkit-text-stroke:
+1px rgba(255, 255, 255, 0.65);
+}
+
+/* =================================
+DIVIDER
+================================= */
+
+.divider {
+width: 100%;
+
+height: 1px;
+
+margin:
+clamp(55px, 8vw, 90px)
+0
+45px;
+
+background: var(--line);
+}
+
+/* =================================
+BRIEFING
+================================= */
+
+.briefing {
+max-width: 720px;
+
+color: var(--silver);
+
+font-size: 13px;
+
+line-height: 2;
+}
+
+.briefing .label {
+margin-bottom: 24px;
+
+color: var(--white);
+
+font-size: 10px;
+
+letter-spacing: 0.25em;
+}
+
+.briefing p:not(.label) {
+margin-bottom: 7px;
+}
+
+/* =================================
+TERMINAL MESSAGE
+================================= */
+
+.terminal-message {
+width: 100%;
+
+max-width: 800px;
+
+margin-top: 50px;
+
+border:
+1px solid var(--line);
+
+background:
+rgba(255, 255, 255, 0.015);
+}
+
+.terminal-header {
+height: 42px;
+
+padding:
+0 18px;
+
+display: flex;
+
+align-items: center;
+
+justify-content: space-between;
+
+border-bottom:
+1px solid var(--line);
+
+color: var(--dim);
+
+font-size: 9px;
+
+letter-spacing: 0.2em;
+}
+
+#backendStatus.online {
+color: #fff;
+}
+
+#backendStatus.offline {
+color: #555;
+}
+
+.terminal-body {
+padding: 25px 20px;
+
+color: #999;
+
+font-size: 10px;
+
+line-height: 2.1;
+}
+
+.terminal-body p {
+margin-bottom: 2px;
+}
+
+.terminal-body .blink {
+margin-top: 8px;
+
+color: #fff;
+}
+
+/* =================================
+HINT
+================================= */
+
+.hint {
+max-width: 800px;
+
+margin-top: 25px;
+
+color: var(--dim);
+
+font-size: 9px;
+
+line-height: 1.8;
+}
+
+.hint-label {
+color: #999;
+
+letter-spacing: 0.18em;
+}
+
+/* =================================
+ANSWER SECTION
+================================= */
+
+.answer-section {
+width: 100%;
+
+max-width: 800px;
+
+margin-top: 45px;
+}
+
+.answer-label {
+margin-bottom: 12px;
+
+color: var(--dim);
+
+font-size: 9px;
+
+letter-spacing: 0.2em;
+}
+
+#answerForm {
+display: flex;
+
+gap: 10px;
+}
+
+#answerInput {
+flex: 1;
+
+min-width: 0;
+
+padding:
+15px 16px;
+
+border:
+1px solid rgba(255, 255, 255, 0.16);
+
+outline: none;
+
+background:
+rgba(255, 255, 255, 0.025);
+
+color: #fff;
+
+font-family:
+"JetBrains Mono",
+monospace;
+
+font-size: 11px;
+
+letter-spacing: 0.04em;
+
+transition:
+border-color 0.25s ease,
+background 0.25s ease;
+}
+
+#answerInput::placeholder {
+color: #444;
+}
+
+#answerInput:focus {
+border-color:
+rgba(255, 255, 255, 0.45);
+
+background:
+rgba(255, 255, 255, 0.04);
+}
+
+#answerInput:disabled {
+opacity: 0.5;
+}
+
+#answerForm button {
+padding:
+0 25px;
+
+border:
+1px solid rgba(255, 255, 255, 0.3);
+
+background: transparent;
+
+color: #fff;
+
+font-family:
+"JetBrains Mono",
+monospace;
+
+font-size: 9px;
+
+letter-spacing: 0.18em;
+
+cursor: pointer;
+
+transition:
+background 0.25s ease,
+color 0.25s ease,
+border-color 0.25s ease;
+}
+
+#answerForm button:hover {
+border-color: #fff;
+
+background: #fff;
+
+color: #000;
+}
+
+#answerForm button:disabled {
+cursor: not-allowed;
+
+opacity: 0.4;
+}
+
+/* =================================
+STATUS
+================================= */
+
+.q-status {
+min-height: 22px;
+
+margin-top: 18px;
+
+color: var(--dim);
+
+font-size: 9px;
+
+letter-spacing: 0.12em;
+}
+
+.q-status.success {
+color: #fff;
+}
+
+.q-status.error {
+color: #666;
+}
+
+/* =================================
+FOOTER
+================================= */
+
+footer {
+min-height: 70px;
+
+display: flex;
+
+align-items: center;
+
+justify-content: space-between;
+
+border-top:
+1px solid var(--line);
+
+color: #555;
+
+font-size: 8px;
+
+letter-spacing: 0.18em;
+}
+
+/* =================================
+MOBILE
+================================= */
+
+@media (max-width: 700px) {
+
+.terminal {
+width: 90%;
+}
+
+.topbar {
+height: 62px;
+}
+
+.record {
+display: none;
+}
+
+.content {
+padding-top: 70px;
+}
+
+h1 {
+font-size: 20vw;
+}
+
+.briefing {
+font-size: 12px;
+}
+
+.terminal-body {
+font-size: 9px;
+}
+
+#answerForm {
+flex-direction: column;
+}
+
+#answerForm button {
+height: 48px;
+}
+
+footer {
+font-size: 7px;
+}
+
+}
+.next-question-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 22px;
+
+    border: 1px solid rgba(255,255,255,0.2);
+
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+
+    background: rgba(255,255,255,0.04);
+
+    transition: 0.3s;
+}
+
+.next-question-button:hover {
+    background: rgba(255,255,255,0.12);
+    transform: translateY(-2px);
+}
+
+/* =========================
+   BACK TO QUESTIONS
+========================= */
+
+.back-button {
+    display: inline-block;
+
+    margin: 20px 0 0 0;
+    padding: 10px 14px;
+
+    border: 1px solid #292929;
+
+    background: #080808;
+
+    color: #777;
+
+    text-decoration: none;
+
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+
+    letter-spacing: 1px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.back-button:hover {
+    background: #151515;
+
+    color: #fff;
+
+    border-color: #666;
+}

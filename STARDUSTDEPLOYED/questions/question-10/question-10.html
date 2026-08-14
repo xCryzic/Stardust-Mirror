@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>STARDUST // MIRROR CORE</title>
+
+    <link
+        rel="stylesheet"
+        href="/questions/question-10/question-10.css"
+    >
+</head>
+
+<body>
+
+    <div class="noise"></div>
+
+    <main class="terminal-shell">
+
+        <a
+            href="/questions/question-page.html"
+            class="back-button"
+        >
+            ← BACK TO QUESTIONS
+        </a>
+
+
+        <!-- HEADER -->
+
+        <header class="terminal-header">
+
+            <div class="system-status">
+                <span class="status-dot"></span>
+                MIRROR CORE
+            </div>
+
+            <div class="terminal-id">
+                SESSION // 10
+            </div>
+
+        </header>
+
+
+        <!-- TERMINAL -->
+
+        <section class="terminal">
+<button
+    id="skipButton"
+    class="skip-button"
+    type="button"
+>
+    SKIP SEQUENCE →
+</button>
+
+            <!-- MIRROR DIALOGUE -->
+
+            <div
+                id="terminalOutput"
+                class="terminal-output"
+            ></div>
+
+
+            <!-- FINAL CIPHERTEXT -->
+
+            <div
+                id="cipherContainer"
+                class="cipher-container hidden"
+            >
+
+                <div class="cipher-label">
+                    RECOVERED TRANSMISSION
+                </div>
+
+                <div
+                    id="cipherText"
+                    class="cipher-text"
+                >
+                    LOADING...
+                </div>
+
+            </div>
+
+
+            <!-- FINAL ANSWER -->
+
+            <!-- IMPORTANT:
+                 No "hidden" class here.
+                 The participant can always type the answer
+                 once Q10 has been unlocked.
+            -->
+
+            <div
+                id="submissionArea"
+                class="submission-area"
+            >
+
+                <div class="input-label">
+                    ENTER FINAL FLAG
+                </div>
+
+
+                <form id="flagForm">
+
+                    <div class="input-row">
+
+                        <span class="prompt">
+                            &gt;
+                        </span>
+
+                        <input
+                            id="flagInput"
+                            type="text"
+                            autocomplete="off"
+                            spellcheck="false"
+                            placeholder="STARDUST{...}"
+                        >
+
+                        <button
+                            id="submitButton"
+                            type="submit"
+                        >
+                            SUBMIT
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+                <div
+                    id="result"
+                    class="result"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+
+        <footer class="terminal-footer">
+
+            <span>
+                STARDUST // MIRROR PROTOCOL
+            </span>
+
+            <span>
+                CONNECTION:
+                <b>UNSTABLE</b>
+            </span>
+
+        </footer>
+
+    </main>
+
+
+    <script src="/questions/question-10/question-10.js"></script>
+
+</body>
+
+</html>
