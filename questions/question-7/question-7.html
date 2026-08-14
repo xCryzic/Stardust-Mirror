@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>STARDUST // THE FIRST STATION</title>
+
+    <link rel="stylesheet" href="/questions/question-7/question-7.css">
+</head>
+
+<body>
+
+<div class="scanlines"></div>
+<div class="noise"></div>
+
+<main class="terminal">
+    <a href="/questions/question-page.html" class="back-button">
+    ← BACK TO QUESTIONS
+</a>
+
+    <header class="topbar">
+
+        <div class="brand">
+            <span class="dot"></span>
+            <span>STARDUST // MIRROR PROTOCOL</span>
+        </div>
+
+        <div class="record">
+            RECORD 07 // STATION 01
+        </div>
+
+    </header>
+
+
+    <section class="content">
+
+        <div class="classification">
+            CLASSIFICATION // RECOVERED TRANSMISSION
+        </div>
+
+        <h1>
+            THE FIRST<br>
+            <span>STATION</span>
+        </h1>
+
+        <div class="divider"></div>
+
+
+        <section class="briefing">
+
+            <div class="label">
+                MISSION RECORD
+            </div>
+
+            <p>
+                The unknown signal was received by a private
+                ground station. The surviving transmission
+                contains a deliberate timing corruption.
+            </p>
+
+            <p>
+                Recover the analysis file, decode the timing,
+                and reconstruct the message.
+            </p>
+
+        </section>
+
+        <div class="station-summary">
+            <div id="status" class="station-status">
+                CHECKING ACCESS...
+            </div>
+            <div id="note" class="station-note"></div>
+        </div>
+
+        <div id="records" class="record-list"></div>
+
+        <div id="message" class="status-message"></div>
+
+        <section class="analysis">
+
+            <div class="section-label">
+                ANALYSIS
+            </div>
+
+            <div class="analysis-body">
+
+                <p>
+                    The surviving timing data may contain
+                    another layer of information.
+                </p>
+
+                <button
+                    id="analyseButton"
+                    type="button"
+                    disabled
+                >
+                    DOWNLOAD ANALYSIS
+                </button>
+
+                <div id="delayOutput"></div>
+
+            </div>
+
+        </section>
+
+
+        <section class="answer-section">
+
+            <div class="terminal-header">
+
+                <span>ANSWER TERMINAL</span>
+
+                <span id="backendStatus">
+                    CHECKING BACKEND...
+                </span>
+
+            </div>
+
+            <div class="terminal-body">
+
+                <p>
+                    Submit the recovered flag.
+                </p>
+
+                <form id="answerForm">
+
+                    <div class="input-row">
+
+                        <span class="prompt">
+                            &gt;
+                        </span>
+
+                        <input
+                            id="answerInput"
+                            type="text"
+                            autocomplete="off"
+                            placeholder="STARDUST{...}"
+                            disabled
+                        >
+
+                        <button
+                            id="answerSubmit"
+                            type="submit"
+                            disabled
+                        >
+                            TRANSMIT
+                        </button>
+
+                    </div>
+
+                    <div
+                        id="answerStatus"
+                        class="answer-message"
+                    ></div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <div class="system-status">
+
+            <div class="status-label">
+                SYSTEM STATUS
+            </div>
+
+            <div id="systemMessage">
+                WAITING FOR RECOVERY...
+            </div>
+
+        </div>
+<div
+    id="nextQuestionContainer"
+    class="next-question-container"
+    hidden
+>
+    <a
+        id="nextQuestionButton"
+        class="next-button"
+        href="#"
+    >
+        NEXT QUESTION →
+    </a>
+</div>
+    </section>
+
+
+    <footer>
+
+        <span>
+            STARDUST // 1971
+        </span>
+
+        <span>
+            MIRROR PROTOCOL
+        </span>
+
+    </footer>
+
+</main>
+
+<script src="/questions/question-7/question-7.js"></script>
+
+</body>
+</html>

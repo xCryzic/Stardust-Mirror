@@ -23,7 +23,7 @@ body {
 
 
 /* =========================
-   SCREEN EFFECTS
+SCREEN EFFECTS
 ========================= */
 
 .scanlines {
@@ -60,7 +60,7 @@ body {
 
 
 /* =========================
-   MAIN TERMINAL
+MAIN TERMINAL
 ========================= */
 
 .terminal {
@@ -78,7 +78,7 @@ body {
 
 
 /* =========================
-   TOP BAR
+TOP BAR
 ========================= */
 
 .topbar {
@@ -121,7 +121,7 @@ body {
 
 
 /* =========================
-   CONTENT
+CONTENT
 ========================= */
 
 .content {
@@ -163,7 +163,7 @@ h1 span {
 
 
 /* =========================
-   BRIEFING
+BRIEFING
 ========================= */
 
 .briefing {
@@ -174,6 +174,10 @@ h1 span {
     font-size: 15px;
 
     line-height: 1.8;
+}
+
+.briefing p {
+    margin: 8px 0;
 }
 
 .label {
@@ -188,10 +192,12 @@ h1 span {
 
 
 /* =========================
-   RIDDLE
+PANELS
 ========================= */
 
-.riddle {
+.riddle,
+.analysis,
+.recovered {
     margin-top: 40px;
 
     border: 1px solid #292929;
@@ -211,105 +217,123 @@ h1 span {
     letter-spacing: 2px;
 }
 
-.riddle-body {
+.riddle-body,
+.analysis-body,
+.recovered-body {
     padding: 25px;
 
-    color: #aaa;
+    color: #999;
 
-    font-size: 15px;
+    font-size: 14px;
 
-    line-height: 1.9;
-}
-
-.riddle-body p {
-    margin: 0;
-}
-
-.riddle-body p + p {
-    margin-top: 10px;
+    line-height: 1.8;
 }
 
 
 /* =========================
-   COORDINATES
+RECORDS
 ========================= */
 
-.navigation {
-    margin-top: 35px;
-
-    border: 1px solid #292929;
+#records {
+    margin-top: 20px;
 }
 
-.navigation-header {
-    display: flex;
-    justify-content: space-between;
+.record-line {
+    display: grid;
 
-    padding: 14px 18px;
+    grid-template-columns:
+        150px
+        150px
+        1fr;
 
-    border-bottom: 1px solid #292929;
+    gap: 20px;
 
-    color: #666;
+    padding: 12px 0;
 
-    font-size: 11px;
+    border-bottom: 1px solid #181818;
 
-    letter-spacing: 2px;
+    color: #777;
 }
 
-.navigation-body {
-    padding: 25px;
+.record-time {
+    color: #aaa;
 }
 
-.instruction {
-    margin-top: 0;
-
+.record-status {
     color: #555;
-
-    font-size: 11px;
-
-    letter-spacing: 1px;
 }
 
-.coordinates {
-    display: flex;
-    flex-wrap: wrap;
+.record-fragment {
+    color: #888;
+}
 
-    gap: 10px;
-
+#note {
     margin-top: 25px;
-}
-
-.coordinates span {
-    min-width: 42px;
-
-    padding: 10px 9px;
-
-    border: 1px solid #292929;
-
-    text-align: center;
 
     color: #aaa;
 
-    font-size: 15px;
-
     letter-spacing: 1px;
-
-    transition:
-        border-color 0.2s,
-        color 0.2s,
-        background 0.2s;
-}
-
-.coordinates span:hover {
-    border-color: #555;
-
-    color: #fff;
-
-    background: #0d0d0d;
 }
 
 
 /* =========================
-   ANSWER TERMINAL
+BUTTONS
+========================= */
+
+button {
+    padding: 15px 20px;
+
+    border: 1px solid #292929;
+
+    background: #111;
+
+    color: #aaa;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 12px;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+}
+
+button:hover {
+    background: #181818;
+
+    color: #fff;
+}
+
+button:disabled {
+    cursor: not-allowed;
+
+    opacity: 0.4;
+}
+
+
+/* =========================
+ANALYSIS OUTPUT
+========================= */
+
+#delayOutput {
+    margin-top: 20px;
+}
+
+.delay-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #181818;
+
+    color: #777;
+}
+
+
+/* =========================
+ANSWER TERMINAL
 ========================= */
 
 .answer-section {
@@ -353,13 +377,9 @@ h1 span {
     line-height: 1.8;
 }
 
-.terminal-body p {
-    margin: 5px 0;
-}
-
 
 /* =========================
-   INPUT
+INPUT
 ========================= */
 
 .input-row {
@@ -410,40 +430,9 @@ h1 span {
     color: #fff;
 }
 
-button {
-    padding: 15px 20px;
-
-    border: none;
-    border-left: 1px solid #292929;
-
-    background: #111;
-
-    color: #aaa;
-
-    font-family: "Courier New", monospace;
-
-    font-size: 12px;
-
-    letter-spacing: 1px;
-
-    cursor: pointer;
-}
-
-button:hover {
-    background: #181818;
-
-    color: #fff;
-}
-
-button:disabled {
-    cursor: not-allowed;
-
-    opacity: 0.4;
-}
-
 
 /* =========================
-   ANSWER MESSAGE
+ANSWER MESSAGE
 ========================= */
 
 .answer-message {
@@ -466,7 +455,7 @@ button:disabled {
 
 
 /* =========================
-   SYSTEM STATUS
+SYSTEM STATUS
 ========================= */
 
 .system-status {
@@ -497,7 +486,7 @@ button:disabled {
 
 
 /* =========================
-   FOOTER
+FOOTER
 ========================= */
 
 footer {
@@ -518,7 +507,7 @@ footer {
 
 
 /* =========================
-   MOBILE
+MOBILE
 ========================= */
 
 @media (max-width: 700px) {
@@ -541,10 +530,10 @@ footer {
         font-size: 10px;
     }
 
-    .navigation-header {
-        flex-direction: column;
+    .record-line {
+        grid-template-columns: 1fr;
 
-        gap: 8px;
+        gap: 5px;
     }
 
     .input-row {
@@ -553,6 +542,7 @@ footer {
 
     .prompt {
         display: flex;
+
         align-items: center;
     }
 
@@ -603,7 +593,6 @@ footer {
 
     border-color: #666;
 }
-
 .next-button {
 padding: 15px 22px;
 transform: translateY(-20px);

@@ -23,7 +23,7 @@ body {
 
 
 /* =========================
-   SCREEN EFFECTS
+SCREEN EFFECTS
 ========================= */
 
 .scanlines {
@@ -60,7 +60,7 @@ body {
 
 
 /* =========================
-   MAIN TERMINAL
+MAIN TERMINAL
 ========================= */
 
 .terminal {
@@ -78,7 +78,7 @@ body {
 
 
 /* =========================
-   TOP BAR
+TOP BAR
 ========================= */
 
 .topbar {
@@ -93,6 +93,7 @@ body {
     color: #777;
 
     font-size: 13px;
+
     letter-spacing: 1px;
 }
 
@@ -121,7 +122,7 @@ body {
 
 
 /* =========================
-   CONTENT
+CONTENT
 ========================= */
 
 .content {
@@ -134,6 +135,7 @@ body {
     color: #666;
 
     font-size: 12px;
+
     letter-spacing: 3px;
 }
 
@@ -163,7 +165,7 @@ h1 span {
 
 
 /* =========================
-   BRIEFING
+BRIEFING
 ========================= */
 
 .briefing {
@@ -174,6 +176,10 @@ h1 span {
     font-size: 15px;
 
     line-height: 1.8;
+}
+
+.briefing p {
+    margin: 8px 0;
 }
 
 .label {
@@ -188,10 +194,11 @@ h1 span {
 
 
 /* =========================
-   RIDDLE
+PANELS
 ========================= */
 
-.riddle {
+.analysis,
+.recovered {
     margin-top: 40px;
 
     border: 1px solid #292929;
@@ -211,105 +218,185 @@ h1 span {
     letter-spacing: 2px;
 }
 
-.riddle-body {
+.analysis-body,
+.recovered-body {
     padding: 25px;
 
-    color: #aaa;
+    color: #999;
 
-    font-size: 15px;
+    font-size: 14px;
 
-    line-height: 1.9;
-}
-
-.riddle-body p {
-    margin: 0;
-}
-
-.riddle-body p + p {
-    margin-top: 10px;
+    line-height: 1.8;
 }
 
 
 /* =========================
-   COORDINATES
+FRAGMENT
 ========================= */
 
-.navigation {
-    margin-top: 35px;
+.fragment {
+    margin-top: 18px;
 
-    border: 1px solid #292929;
+    padding: 15px;
+
+    border: 1px solid #242424;
+
+    background: #090909;
+
+    color: #777;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
 }
 
-.navigation-header {
+.fragment-word {
+    margin-top: 15px;
+
+    padding: 20px;
+
+    border: 1px solid #292929;
+
+    background: #090909;
+
+    color: #ccc;
+
+    font-size: 25px;
+
+    letter-spacing: 8px;
+
+    text-align: center;
+}
+
+
+/* =========================
+CAMERA GRID
+========================= */
+
+.camera-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+
+/* =========================
+CAMERA
+========================= */
+
+.camera {
+    border: 1px solid #292929;
+
+    background: #080808;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.camera:hover {
+    border-color: #555;
+
+    background: #0b0b0b;
+}
+
+.camera-header {
     display: flex;
+
     justify-content: space-between;
 
-    padding: 14px 18px;
+    padding: 12px 15px;
 
-    border-bottom: 1px solid #292929;
+    border-bottom: 1px solid #252525;
 
-    color: #666;
+    color: #777;
 
     font-size: 11px;
 
     letter-spacing: 2px;
 }
 
-.navigation-body {
-    padding: 25px;
+.camera-status {
+    color: #555;
 }
 
-.instruction {
-    margin-top: 0;
+.camera-body {
+    padding: 20px;
+}
+
+.camera-number {
+    margin-bottom: 15px;
+
+    color: #444;
+
+    font-size: 32px;
+
+    font-weight: bold;
+}
+
+.event {
+    padding: 8px 0;
+
+    border-bottom: 1px solid #151515;
+
+    color: #888;
+
+    font-size: 12px;
+
+    letter-spacing: 0.5px;
+}
+
+.camera .fragment {
+    margin-top: 18px;
+
+    color: #666;
+}
+
+.camera .fragment strong {
+    color: #ddd;
+
+    font-size: 16px;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================
+SYSTEM STATUS
+========================= */
+
+.system-status {
+    margin-top: 35px;
+
+    padding: 18px;
+
+    border-left: 2px solid #555;
+
+    background: #090909;
+}
+
+.status-label {
+    margin-bottom: 8px;
 
     color: #555;
 
     font-size: 11px;
 
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
 
-.coordinates {
-    display: flex;
-    flex-wrap: wrap;
+#systemMessage {
+    color: #999;
 
-    gap: 10px;
-
-    margin-top: 25px;
-}
-
-.coordinates span {
-    min-width: 42px;
-
-    padding: 10px 9px;
-
-    border: 1px solid #292929;
-
-    text-align: center;
-
-    color: #aaa;
-
-    font-size: 15px;
-
-    letter-spacing: 1px;
-
-    transition:
-        border-color 0.2s,
-        color 0.2s,
-        background 0.2s;
-}
-
-.coordinates span:hover {
-    border-color: #555;
-
-    color: #fff;
-
-    background: #0d0d0d;
+    font-size: 13px;
 }
 
 
 /* =========================
-   ANSWER TERMINAL
+ANSWER TERMINAL
 ========================= */
 
 .answer-section {
@@ -322,6 +409,7 @@ h1 span {
 
 .terminal-header {
     display: flex;
+
     justify-content: space-between;
 
     padding: 13px 18px;
@@ -340,7 +428,7 @@ h1 span {
 }
 
 #backendStatus.offline {
-    color: #666;
+    color: #555;
 }
 
 .terminal-body {
@@ -353,13 +441,9 @@ h1 span {
     line-height: 1.8;
 }
 
-.terminal-body p {
-    margin: 5px 0;
-}
-
 
 /* =========================
-   INPUT
+INPUT
 ========================= */
 
 .input-row {
@@ -410,11 +494,16 @@ h1 span {
     color: #fff;
 }
 
-button {
+
+/* =========================
+BUTTONS
+========================= */
+
+button,
+.next-button {
     padding: 15px 20px;
 
-    border: none;
-    border-left: 1px solid #292929;
+    border: 1px solid #292929;
 
     background: #111;
 
@@ -427,12 +516,19 @@ button {
     letter-spacing: 1px;
 
     cursor: pointer;
+
+    text-decoration: none;
+
+    display: inline-block;
 }
 
-button:hover {
+button:hover,
+.next-button:hover {
     background: #181818;
 
     color: #fff;
+
+    border-color: #666;
 }
 
 button:disabled {
@@ -443,7 +539,7 @@ button:disabled {
 
 
 /* =========================
-   ANSWER MESSAGE
+ANSWER MESSAGE
 ========================= */
 
 .answer-message {
@@ -466,38 +562,60 @@ button:disabled {
 
 
 /* =========================
-   SYSTEM STATUS
+NEXT
 ========================= */
 
-.system-status {
-    margin-top: 35px;
+.next-container {
+    margin-top: 25px;
 
-    padding: 18px;
+    padding-top: 20px;
 
-    border-left: 2px solid #555;
-
-    background: #090909;
-}
-
-.status-label {
-    margin-bottom: 8px;
-
-    color: #555;
-
-    font-size: 11px;
-
-    letter-spacing: 2px;
-}
-
-#systemMessage {
-    color: #999;
-
-    font-size: 13px;
+    border-top: 1px solid #181818;
 }
 
 
 /* =========================
-   FOOTER
+BACK BUTTON
+========================= */
+
+.back-button {
+    display: inline-block;
+
+    margin: 0 0 30px 0;
+
+    padding: 10px 14px;
+
+    border: 1px solid #292929;
+
+    background: #080808;
+
+    color: #777;
+
+    text-decoration: none;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 11px;
+
+    letter-spacing: 1px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.back-button:hover {
+    background: #151515;
+
+    color: #fff;
+
+    border-color: #666;
+}
+
+
+/* =========================
+FOOTER
 ========================= */
 
 footer {
@@ -518,7 +636,7 @@ footer {
 
 
 /* =========================
-   MOBILE
+MOBILE
 ========================= */
 
 @media (max-width: 700px) {
@@ -541,10 +659,8 @@ footer {
         font-size: 10px;
     }
 
-    .navigation-header {
-        flex-direction: column;
-
-        gap: 8px;
+    .camera-grid {
+        grid-template-columns: 1fr;
     }
 
     .input-row {
@@ -553,6 +669,7 @@ footer {
 
     .prompt {
         display: flex;
+
         align-items: center;
     }
 
@@ -565,62 +682,4 @@ footer {
 
         gap: 8px;
     }
-}
-
-/* =========================
-   BACK TO QUESTIONS
-========================= */
-
-.back-button {
-    display: inline-block;
-
-    margin: 20px 0 0 0;
-    padding: 10px 14px;
-
-    border: 1px solid #292929;
-
-    background: #080808;
-
-    color: #777;
-
-    text-decoration: none;
-
-    font-family: "Courier New", monospace;
-    font-size: 11px;
-
-    letter-spacing: 1px;
-
-    transition:
-        background 0.2s ease,
-        color 0.2s ease,
-        border-color 0.2s ease;
-}
-
-.back-button:hover {
-    background: #151515;
-
-    color: #fff;
-
-    border-color: #666;
-}
-
-.next-button {
-padding: 15px 22px;
-transform: translateY(-20px);
-border: 1px solid #555;
-
-background: #111;
-color: #eee;
-
-font-family: inherit;
-font-size: 12px;
-letter-spacing: 1px;
-
-cursor: pointer;
-}
-
-#answerForm button:hover,
-.next-button:hover {
-background: #1c1c1c;
-border-color: #888;
 }

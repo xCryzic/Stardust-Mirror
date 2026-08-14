@@ -325,6 +325,24 @@ color: #fff;
 color: #777;
 }
 
+.next-question-button {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 13px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.next-question-button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+}
+
 /* ------------------------------
 FOOTER
 ------------------------------ */
@@ -428,4 +446,40 @@ font-size: 7px;
   .answer-row {
     flex-direction: column;
   }
+}
+/* =========================
+   BACK TO QUESTIONS
+========================= */
+
+.back-button {
+    display: inline-block;
+
+    margin: 20px 0 0 0;
+    padding: 10px 14px;
+
+    border: 1px solid #292929;
+
+    background: #080808;
+
+    color: #777;
+
+    text-decoration: none;
+
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+
+    letter-spacing: 1px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.back-button:hover {
+    background: #151515;
+
+    color: #fff;
+
+    border-color: #666;
 }

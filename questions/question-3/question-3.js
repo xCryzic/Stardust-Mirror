@@ -19,17 +19,71 @@
       document.getElementById("answerInput");
 
     const answerMessage =
+      document.getElementById("message") ||
       document.getElementById("answerMessage");
 
     const nextContainer =
-      document.getElementById(
-        "nextQuestionContainer"
-      );
+      document.getElementById("nextQuestionContainer");
 
     const nextButton =
-      document.getElementById(
-        "nextQuestionButton"
-      );
+      document.getElementById("nextQuestionButton");
+
+    const questionId = 3;
+
+
+    /* =========================================
+       ALREADY SOLVED STATE
+    ========================================= */
+
+    const showAlreadyDoneState = (nextId) => {
+
+      if (!input || !answerMessage || !form) {
+        return;
+      }
+
+      input.value = "ALREADY CLEARED";
+      input.disabled = true;
+      input.setAttribute("readonly", "readonly");
+
+
+      const submitButton =
+        form.querySelector("button");
+
+
+      if (submitButton) {
+        submitButton.disabled = true;
+      }
+
+
+      answerMessage.textContent =
+        "MISSION STATUS: LEVEL ALREADY CLEARED.";
+
+      answerMessage.className =
+        "q-status success";
+
+
+      const nextHref =
+        nextId
+          ? `/questions/question-${nextId}/`
+          : "/leaderboard";
+
+
+      if (nextContainer) {
+        nextContainer.hidden = false;
+        nextContainer.style.display = "block";
+      }
+
+
+      if (nextButton) {
+        nextButton.href = nextHref;
+
+        nextButton.textContent =
+          nextId
+            ? `PROCEED TO QUESTION ${nextId} →`
+            : "VIEW LEADERBOARD →";
+      }
+
+    };
 
 
     /* =========================================
@@ -65,6 +119,7 @@
           "/login";
 
         return;
+
       }
 
 
@@ -104,7 +159,7 @@
 
       const response =
         await fetch(
-          "/api/questions/3",
+          `/api/questions/${questionId}`,
           {
             method: "GET",
 
@@ -136,6 +191,15 @@
 
         questionText.textContent =
           data.question;
+
+      }
+
+
+      if (data.already_solved) {
+
+        showAlreadyDoneState(
+          data.next
+        );
 
       }
 
@@ -201,6 +265,11 @@
         event.preventDefault();
 
 
+        if (!input || !answerMessage) {
+          return;
+        }
+
+
         const answer =
           input.value.trim();
 
@@ -218,6 +287,8 @@
         }
 
 
+        /* Disable while checking */
+
         input.disabled = true;
 
 
@@ -226,10 +297,7 @@
 
 
         if (submitButton) {
-
-          submitButton.disabled =
-            true;
-
+          submitButton.disabled = true;
         }
 
 
@@ -248,7 +316,7 @@
 
           const response =
             await fetch(
-              "/api/questions/3/submit",
+              `/api/questions/${questionId}/submit`,
               {
                 method: "POST",
 
@@ -273,10 +341,12 @@
 
 
           /* =====================================
-             NOT LOGGED IN
+             LOGIN EXPIRED
           ===================================== */
 
-          if (response.status === 401) {
+          if (
+            response.status === 401
+          ) {
 
             window.location.href =
               "/login";
@@ -287,14 +357,16 @@
 
 
           /* =====================================
-             ACCESS DENIED
+             PREVIOUS QUESTION NOT SOLVED
           ===================================== */
 
-          if (response.status === 403) {
+          if (
+            response.status === 403
+          ) {
 
             answerMessage.textContent =
               data.message ||
-              "MIRROR: ACCESS DENIED.";
+              "MIRROR: PREVIOUS LEVEL NOT CLEARED.";
 
             answerMessage.className =
               "q-status error";
@@ -308,69 +380,87 @@
              CORRECT ANSWER
           ===================================== */
 
-          if (data.correct) {
+          if (
+            response.ok &&
+            data.correct
+          ) {
 
-            answerMessage.textContent =
-              data.message ||
-              "MIRROR: TRANSMISSION VERIFIED.";
+            answerMessage.innerHTML =
+              `
+                <strong>✓ TRANSMISSION VERIFIED</strong>
+                <br>
+                ${data.message || "CORRECT FLAG."}
+                <br>
+                <span>
+                  +${data.points || 0} POINTS
+                </span>
+              `;
 
             answerMessage.className =
               "q-status success";
 
 
+            /* Keep answer visible */
+
             input.value =
               answer;
 
 
-            /* =================================
-               SHOW NEXT BUTTON
-            ================================= */
+            input.disabled = true;
+
+
+            if (submitButton) {
+              submitButton.disabled = true;
+            }
+
+
+            /* =====================================
+               NEXT QUESTION
+            ===================================== */
 
             if (nextContainer) {
 
-              nextContainer.hidden =
-                false;
+              nextContainer.hidden = false;
+              nextContainer.style.display = "block";
 
             }
+
+
+            const nextHref =
+              data.next
+                ? `/questions/question-${data.next}/`
+                : "/leaderboard";
 
 
             if (nextButton) {
 
-              if (data.next) {
+              nextButton.href =
+                nextHref;
 
-                nextButton.href =
-                  `/questions/question-${data.next}`;
 
-                nextButton.textContent =
-                  `PROCEED TO QUESTION ${data.next} →`;
-
-              } else {
-
-                nextButton.href =
-                  "/leaderboard";
-
-                nextButton.textContent =
-                  "VIEW LEADERBOARD →";
-
-              }
+              nextButton.textContent =
+                data.next
+                  ? `PROCEED TO QUESTION ${data.next} →`
+                  : "VIEW LEADERBOARD →";
 
             }
 
 
-          } else {
-
-            /* =================================
-               WRONG ANSWER
-            ================================= */
-
-            answerMessage.textContent =
-              data.message ||
-              "MIRROR: TRANSMISSION REJECTED.";
-
-            answerMessage.className =
-              "q-status error";
+            return;
 
           }
+
+
+          /* =====================================
+             WRONG ANSWER
+          ===================================== */
+
+          answerMessage.textContent =
+            data.message ||
+            "MIRROR: TRANSMISSION REJECTED.";
+
+          answerMessage.className =
+            "q-status error";
 
 
         } catch (error) {
@@ -390,19 +480,23 @@
 
         } finally {
 
-          input.disabled =
-            false;
+          if (
+            !answerMessage.classList.contains(
+              "success"
+            )
+          ) {
+
+            input.disabled = false;
 
 
-          if (submitButton) {
+            if (submitButton) {
+              submitButton.disabled = false;
+            }
 
-            submitButton.disabled =
-              false;
+
+            input.focus();
 
           }
-
-
-          input.focus();
 
         }
 
@@ -426,8 +520,8 @@
       setInterval(
         () => {
 
-          visible =
-            !visible;
+          visible = !visible;
+
 
           blink.style.opacity =
             visible

@@ -1,208 +1,336 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>STARDUST — Questions</title>
+    <title>STARDUST — Questions</title>
 
-  <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style.css">
 
-  <style>
-    .questions-shell {
-      min-height: 100vh;
-      padding: 9rem clamp(1.5rem, 5vw, 4rem) 6rem;
-    }
+    <style>
+        .questions-shell {
+            min-height: 100vh;
+            padding: 9rem clamp(1.5rem, 5vw, 4rem) 6rem;
+        }
 
-    .questions-shell h1 {
-      font-family: var(--font-display);
-      font-size: clamp(3rem, 8vw, 6rem);
-      margin: 0;
-    }
+        .questions-shell h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 6rem);
+            margin: 0;
+        }
 
-    .questions-intro {
-      font-family: var(--font-mono);
-      color: var(--dim);
-      max-width: 650px;
-      line-height: 1.8;
-    }
+        .questions-intro {
+            font-family: var(--font-mono);
+            color: var(--dim);
+            max-width: 650px;
+            margin-bottom: 3rem;
+        }
 
-    .question-list {
-      display: grid;
-      gap: 1rem;
-      max-width: 800px;
-      margin-top: 3rem;
-    }
+        .question-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 900px;
+        }
 
-    .question-link {
-      display: block;
-      text-decoration: none;
-      border: 1px solid var(--hairline);
-      padding: 1.5rem;
-      background: rgba(10, 11, 14, .7);
-      transition: .3s;
-    }
+        .question-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 1.5rem 1.7rem;
+            transition:
+                border-color 0.2s ease,
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
 
-    .question-link:hover {
-      border-color: var(--accent);
-      transform: translateX(5px);
-    }
+        .question-link:hover {
+            border-color: var(--accent);
+            transform: translateX(5px);
+        }
 
-    .question-number {
-      font-family: var(--font-mono);
-      font-size: .65rem;
-      color: var(--accent);
-    }
+        .question-number {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--accent);
+        }
 
-    .question-name {
-      font-family: var(--font-display);
-      font-size: 1.7rem;
-      letter-spacing: .08em;
-      margin-top: .4rem;
-    }
-  </style>
-
+        .question-name {
+            font-family: var(--font-display);
+            font-size: 1.7rem;
+            letter-spacing: 0.08em;
+            margin-top: 0.4rem;
+        }
+    </style>
 </head>
 
 <body>
 
-  <header class="navbar">
+    <!-- =====================================================
+         NAVIGATION
+    ====================================================== -->
 
-```
-<a href="../index.html" class="nav-brand-block">
-  <span class="nav-brand">STARDUST</span>
-  <span class="nav-brand-sub">Mirror&nbsp;Protocol</span>
-</a>
+    <header class="navbar">
 
-<nav class="nav-links">
+        <a href="../index.html" class="nav-brand-block">
+            <span class="nav-brand">STARDUST</span>
+            <span class="nav-brand-sub">
+                Mirror&nbsp;Protocol
+            </span>
+        </a>
 
-  <a
-    href="../index.html"
-    class="nav-link"
-  >
-    HOME
-  </a>
+        <nav class="nav-links">
 
-  <a
-    href="question-page.html"
-    class="nav-link is-active"
-  >
-    QUESTIONS
-  </a>
+            <a href="../index.html" class="nav-link">
+                HOME
+            </a>
 
-  <a
-    href="../leaderboard.html"
-    class="nav-link"
-  >
-    LEADERBOARD
-  </a>
+            <a href="question-page.html"
+               class="nav-link is-active">
+                QUESTIONS
+            </a>
 
-  <a
-    href="../login.html"
-    class="nav-link nav-login"
-    id="navLogin"
-  >
-    LOGIN
-  </a>
+            <a href="../leaderboard.html"
+               class="nav-link">
+                LEADERBOARD
+            </a>
 
-</nav>
-```
+            <a href="../login.html"
+               class="nav-link nav-login"
+               id="navLogin">
+                LOGIN
+            </a>
 
-  </header>
+        </nav>
 
-  <main class="questions-shell">
-
-```
-<p class="eyebrow">
-  CLASSIFIED CHALLENGE ARCHIVE
-</p>
-
-<h1>
-  QUESTIONS
-</h1>
-
-<p class="questions-intro">
-  The archive is fragmented. Select a recovered challenge to establish a
-  connection with MIRROR.
-</p>
+    </header>
 
 
-<div class="question-list">
+    <!-- =====================================================
+         QUESTIONS
+    ====================================================== -->
 
-  <!-- Q1 -->
-  <a
-    class="question-link"
-    href="question-1/question-1.html"
-  >
-    <div class="question-number">
-      Q01 // SIGNAL RECOVERY
-    </div>
+    <main class="questions-shell">
 
-    <div class="question-name">
-      MIRROR // SIGNAL RECOVERY
-    </div>
-  </a>
+        <p class="eyebrow">
+            CLASSIFIED CHALLENGE ARCHIVE
+        </p>
 
+        <h1>
+            QUESTIONS
+        </h1>
 
-  <!-- Q2 -->
-  <a
-    class="question-link"
-    href="question-2/question-2.html"
-  >
-    <div class="question-number">
-      Q02 // ECHOES OF THE ARCHIVE
-    </div>
-
-    <div class="question-name">
-      MIRROR // ECHOES OF THE ARCHIVE
-    </div>
-  </a>
+        <p class="questions-intro">
+            The archive is fragmented. Select a recovered
+            challenge to establish a connection with MIRROR.
+        </p>
 
 
-  <!-- Q3 -->
-  <a
-    class="question-link"
-    href="question-3/question-3.html"
-  >
-    <div class="question-number">
-      Q03 // THE LAST LOG
-    </div>
-
-    <div class="question-name">
-      MIRROR // THE LAST LOG
-    </div>
-  </a>
+        <div class="question-list">
 
 
-  <!-- Q4 -->
-  <a
-    class="question-link"
-    href="question-4/question-4.html"
-  >
-    <div class="question-number">
-      Q04 // GHOST IN THE BUFFER
-    </div>
+            <!-- =================================================
+                 Q1
+            ================================================== -->
 
-    <div class="question-name">
-      MIRROR // GHOST IN THE BUFFER
-    </div>
-  </a>
-    <a
-    class="question-link"
-    href="question-6/question-6.html"
-  >
-    <div class="question-number">
-      Q06 // RECOVERY NODE 1971
-    </div>
+            <a class="question-link"
+            data-question="1"
+               href="question-1/question-1.html">
 
-    <div class="question-name">
-      MIRROR // RECOVERY NODE 1971
-    </div>
-  </a>
-  </main>
+                <div class="question-number">
+                    Q01 // SIGNAL RECOVERY
+                </div>
 
-  <script src="../session.js"></script>
+                <div class="question-name">
+                    MIRROR // SIGNAL RECOVERY
+                </div>
+
+            </a>
+
+
+            <!-- =================================================
+                 Q2
+            ================================================== -->
+
+            <a class="question-link"
+                data-question="2"
+               href="question-2/question-2.html">
+
+                <div class="question-number">
+                    Q02 // ECHOES OF THE ARCHIVE
+                </div>
+
+                <div class="question-name">
+                    MIRROR // ECHOES OF THE ARCHIVE
+                </div>
+
+            </a>
+
+
+            <!-- =================================================
+                 Q3
+            ================================================== -->
+
+            <a class="question-link"
+                data-question="3"
+               href="question-3/question-3.html">
+
+                <div class="question-number">
+                    Q03 // THE LAST LOG
+                </div>
+
+                <div class="question-name">
+                    MIRROR // THE LAST LOG
+                </div>
+
+            </a>
+
+
+            <!-- =================================================
+                 Q4
+            ================================================== -->
+
+            <a class="question-link"
+                data-question="4"
+               href="question-4/question-4.html">
+
+                <div class="question-number">
+                    Q04 // GHOST IN THE BUFFER
+                </div>
+
+                <div class="question-name">
+                    MIRROR // GHOST IN THE BUFFER
+                </div>
+
+            </a>
+
+
+            <!-- =================================================
+                 Q5
+            ================================================== -->
+
+            <a class="question-link"
+                data-question="5"
+               href="question-5/question-5.html">
+
+                <div class="question-number">
+                    Q05 // MIRROR SPEAKS
+                </div>
+
+                <div class="question-name">
+                    MIRROR // MIRROR SPEAKS
+                </div>
+
+            </a>
+
+
+            <!-- =================================================
+                 Q6
+            ================================================== -->
+
+            <a class="question-link"
+                data-question="6"
+               href="question-6/question-6.html">
+
+                <div class="question-number">
+                    Q06 // THE LAST COORDINATES
+                </div>
+
+                <div class="question-name">
+                    MIRROR // THE LAST COORDINATES
+                </div>
+
+            </a>
+
+
+            <!-- =================================================
+                 Q7
+            ================================================== -->
+
+            <a class="question-link"
+                data-question="7"
+               href="question-7/question-7.html">
+
+                <div class="question-number">
+                    Q07 // THE FIRST STATION
+                </div>
+
+                <div class="question-name">
+                    MIRROR // THE FIRST STATION
+                </div>
+
+            </a>
+
+
+            <!-- =================================================
+                 Q8
+            ================================================== -->
+
+            <a class="question-link"
+                data-question="8"
+               href="question-8/question-8.html">
+
+                <div class="question-number">
+                    Q08 // STATION TWO
+                </div>
+
+                <div class="question-name">
+                    MIRROR // STATION TWO
+                </div>
+
+            </a>
+
+
+            <!-- =================================================
+                 Q9
+            ================================================== -->
+
+            <a class="question-link"
+                data-question="9"
+               href="question-9/question-9.html">
+
+                <div class="question-number">
+                    Q09 // THE CAMERA ROOM
+                </div>
+
+                <div class="question-name">
+                    MIRROR //   THE CAMERA ROOM
+                </div>
+
+            </a>
+
+
+            <!-- =================================================
+                 Q10
+            ================================================== -->
+
+            <a class="question-link"
+                data-question="10"
+               href="question-10/question-10.html">
+
+                <div class="question-number">
+                    Q10 // BACK HOME
+                </div>
+
+                <div class="question-name">
+                    MIRROR // BACK HOME
+                </div>
+
+            </a>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         SESSION
+    ====================================================== -->
+
+    <script src="../session.js"></script>
 
 </body>
 </html>

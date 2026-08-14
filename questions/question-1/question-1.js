@@ -4,10 +4,10 @@
   document.addEventListener("DOMContentLoaded", async () => {
 
     const nextQuestionContainer =
-  document.getElementById("nextQuestionContainer");
+      document.getElementById("nextQuestionContainer");
 
-const nextQuestionButton =
-  document.getElementById("nextQuestionButton");
+    const nextQuestionButton =
+      document.getElementById("nextQuestionButton");
 
     const questionText =
       document.getElementById("questionText");
@@ -17,6 +17,7 @@ const nextQuestionButton =
 
     const backendStatus =
       document.getElementById("backendStatus");
+
     const form =
       document.getElementById("answerForm");
 
@@ -25,15 +26,38 @@ const nextQuestionButton =
 
     const answerMessage =
       document.getElementById("answerMessage");
-      const nextQuestionContainer =
-  document.getElementById(
-    "nextQuestionContainer"
-  );
 
-const nextQuestionButton =
-  document.getElementById(
-    "nextQuestionButton"
-  );
+    const questionId = 1;
+
+    const showAlreadyDoneState = (nextId) => {
+      if (!input || !answerMessage || !form) {
+        return;
+      }
+
+      input.value = "ALREADY CLEARED";
+      input.disabled = true;
+      input.readOnly = true;
+
+      const submitButton = form.querySelector("button");
+      if (submitButton) {
+        submitButton.disabled = true;
+      }
+
+      answerMessage.textContent = "MISSION STATUS: LEVEL ALREADY CLEARED.";
+      answerMessage.className = "q-status success";
+
+      const nextHref = nextId ? `/questions/question-${nextId}/` : "/questions/question-2/";
+
+      if (nextQuestionContainer) {
+        nextQuestionContainer.style.display = "block";
+      }
+
+      if (nextQuestionButton) {
+        nextQuestionButton.href = nextHref;
+        nextQuestionButton.textContent = "NEXT QUESTION →";
+      }
+    };
+
 
 
     /* =========================================
@@ -41,7 +65,7 @@ const nextQuestionButton =
        Q1 INTENDED SOLVE
     ========================================= */
 
-console.log(
+    console.log(
       "%c╔══════════════════════════════════════╗",
       "color:#777;"
     );
@@ -186,6 +210,28 @@ console.log(
     }
 
 
+    try {
+      const questionResponse = await fetch(
+        `/api/questions/${questionId}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+
+      if (questionResponse.ok) {
+        const questionData = await questionResponse.json();
+        if (questionData.already_solved) {
+          showAlreadyDoneState(questionData.next);
+        }
+      }
+
+    } catch (error) {
+      console.error("[STARDUST] Question status check failed:", error);
+    }
+
     /* =========================================
        ANSWER SUBMISSION
     ========================================= */
@@ -299,39 +345,35 @@ console.log(
           ===================================== */
 
           if (data.correct) {
-if (nextQuestionContainer) {
-  nextQuestionContainer.style.display = "block";
-}
-
-
-            /*
-             * DO NOT USE localStorage HERE.
-             *
-             * Flask has already saved:
-             *
-             * - submission
-             * - solve
-             * - score
-             * - current_level
-             */
-
-            input.value = answer;
-
-
-            /*
-             * Tell the player that the next
-             * level is available.
-             */
-
-            if (data.next) {
-
-              answerMessage.textContent =
-                `${data.message || "MIRROR: TRANSMISSION VERIFIED."} NEXT LEVEL UNLOCKED.`;
-
+            if (nextQuestionContainer) {
+              nextQuestionContainer.style.display = "block";
             }
 
+            input.value = answer;
+            input.disabled = true;
 
+            const submitButton = form.querySelector("button");
+            if (submitButton) {
+              submitButton.disabled = true;
+            }
+
+            const nextHref = data.next
+              ? `/questions/question-${data.next}/`
+              : "/leaderboard";
+
+            answerMessage.textContent =
+              data.message
+                ? `Correct Answer. ${data.message}`
+                : "Correct Answer.";
+            answerMessage.className = "q-status success";
+
+            if (nextQuestionButton) {
+              nextQuestionButton.href = nextHref;
+              nextQuestionButton.textContent =
+                data.next ? "NEXT QUESTION →" : "VIEW LEADERBOARD →";
+            }
           } else {
+
 
             /* ===================================
                WRONG ANSWER
@@ -361,14 +403,15 @@ if (nextQuestionContainer) {
 
 
         } finally {
+          if (!answerMessage.classList.contains("success")) {
+            input.disabled = false;
 
-          input.disabled = false;
+            if (submitButton) {
+              submitButton.disabled = false;
+            }
 
-          if (submitButton) {
-            submitButton.disabled = false;
+            input.focus();
           }
-
-          input.focus();
         }
 
       }

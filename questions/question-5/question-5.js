@@ -23,9 +23,13 @@
       document.getElementById("message");
 
     const nextButton =
-      document.getElementById("nextButton");
+      document.getElementById("nextButton") ||
+      document.getElementById("nextQuestionButton");
 
-    const questionId = 4;
+    const nextContainer =
+      document.getElementById("nextQuestionContainer");
+
+    const questionId = 5;
 
 
     /* =========================================
@@ -65,6 +69,12 @@
           : "/leaderboard";
 
 
+      if (nextContainer) {
+        nextContainer.hidden = false;
+        nextContainer.style.display = "block";
+      }
+
+
       if (nextButton) {
 
         nextButton.style.display =
@@ -75,9 +85,19 @@
             ? `PROCEED TO QUESTION ${nextId} →`
             : "VIEW LEADERBOARD →";
 
-        nextButton.onclick = () => {
-          window.location.href = nextHref;
-        };
+
+        if (nextButton.tagName === "A") {
+
+          nextButton.href =
+            nextHref;
+
+        } else {
+
+          nextButton.onclick = () => {
+            window.location.href = nextHref;
+          };
+
+        }
 
       }
 
@@ -415,34 +435,45 @@
                NEXT QUESTION
             ===================================== */
 
+            const nextId =
+              data.next;
+
+
+            const nextHref =
+              nextId
+                ? `/questions/question-${nextId}/`
+                : "/leaderboard";
+
+
+            if (nextContainer) {
+
+              nextContainer.hidden = false;
+              nextContainer.style.display = "block";
+
+            }
+
+
             if (nextButton) {
 
               nextButton.style.display =
                 "inline-block";
 
 
-              if (data.next) {
+              nextButton.textContent =
+                nextId
+                  ? `PROCEED TO QUESTION ${nextId} →`
+                  : "VIEW LEADERBOARD →";
 
-                nextButton.textContent =
-                  `PROCEED TO QUESTION ${data.next} →`;
 
-                nextButton.onclick = () => {
+              if (nextButton.tagName === "A") {
 
-                  window.location.href =
-                    `/questions/question-${data.next}/`;
-
-                };
+                nextButton.href =
+                  nextHref;
 
               } else {
 
-                nextButton.textContent =
-                  "VIEW LEADERBOARD →";
-
                 nextButton.onclick = () => {
-
-                  window.location.href =
-                    "/leaderboard";
-
+                  window.location.href = nextHref;
                 };
 
               }
