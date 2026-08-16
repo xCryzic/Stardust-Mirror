@@ -1,0 +1,623 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    background: #050505;
+    color: #d5d5d5;
+
+    font-family: "Courier New", monospace;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    padding: 40px 0;
+}
+
+
+/* =========================
+SCREEN EFFECTS
+========================= */
+
+.scanlines {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 20;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.025) 0,
+            rgba(255,255,255,0.025) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+}
+
+.noise {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 19;
+
+    opacity: 0.03;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+}
+
+
+/* =========================
+MAIN TERMINAL
+========================= */
+
+.terminal {
+    width: min(1100px, 92%);
+
+    margin: 0 auto;
+
+    background: #080808;
+
+    border: 1px solid #292929;
+
+    box-shadow:
+        0 0 45px rgba(255,255,255,0.025);
+}
+
+
+/* =========================
+TOP BAR
+========================= */
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 18px 24px;
+
+    border-bottom: 1px solid #292929;
+
+    color: #777;
+
+    font-size: 13px;
+
+    letter-spacing: 1px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+
+    background: #aaa;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 8px #aaa;
+}
+
+.record {
+    color: #555;
+}
+
+
+/* =========================
+CONTENT
+========================= */
+
+.content {
+    padding: 60px 70px;
+}
+
+.classification {
+    margin-bottom: 20px;
+
+    color: #666;
+
+    font-size: 12px;
+
+    letter-spacing: 3px;
+}
+
+h1 {
+    margin: 0;
+
+    color: #e5e5e5;
+
+    font-size: clamp(45px, 8vw, 90px);
+
+    line-height: 0.9;
+
+    letter-spacing: -3px;
+}
+
+h1 span {
+    color: #777;
+}
+
+.divider {
+    height: 1px;
+
+    margin: 35px 0;
+
+    background: #303030;
+}
+
+
+/* =========================
+BRIEFING
+========================= */
+
+.briefing {
+    max-width: 780px;
+
+    color: #999;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+}
+
+.briefing p {
+    margin: 8px 0;
+}
+
+.label {
+    margin-bottom: 22px;
+
+    color: #ddd;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================
+PANELS
+========================= */
+
+.analysis,
+.recovered {
+    margin-top: 40px;
+
+    border: 1px solid #292929;
+
+    background: #060606;
+}
+
+.section-label {
+    padding: 14px 18px;
+
+    border-bottom: 1px solid #292929;
+
+    color: #666;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+}
+
+.analysis-body,
+.recovered-body {
+    padding: 25px;
+
+    color: #999;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================
+RECOVERED TRANSMISSION
+========================= */
+
+#systemMessage {
+    margin-top: 20px;
+
+    color: #777;
+
+    letter-spacing: 1px;
+}
+
+.download-button {
+    display: inline-block;
+
+    margin-top: 25px;
+
+    padding: 15px 20px;
+
+    border: 1px solid #292929;
+
+    background: #111;
+
+    color: #aaa;
+
+    text-decoration: none;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 12px;
+
+    letter-spacing: 1px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.download-button:hover {
+    background: #181818;
+
+    color: #fff;
+
+    border-color: #666;
+}
+
+
+/* =========================
+ANALYSIS PROTOCOL
+========================= */
+
+.protocol {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #181818;
+
+    color: #777;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+}
+
+.protocol span:nth-child(even) {
+    color: #aaa;
+}
+
+
+/* =========================
+ANSWER TERMINAL
+========================= */
+
+.answer-section {
+    margin-top: 35px;
+
+    border: 1px solid #292929;
+
+    background: #030303;
+}
+
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 13px 18px;
+
+    border-bottom: 1px solid #252525;
+
+    color: #777;
+
+    font-size: 12px;
+
+    letter-spacing: 1px;
+}
+
+#backendStatus.online {
+    color: #aaa;
+}
+
+#backendStatus.offline {
+    color: #666;
+}
+
+.terminal-body {
+    padding: 24px;
+
+    color: #777;
+
+    font-size: 13px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================
+INPUT
+========================= */
+
+.input-row {
+    display: flex;
+
+    align-items: center;
+
+    margin-top: 20px;
+
+    border: 1px solid #292929;
+
+    background: #050505;
+}
+
+.prompt {
+    padding-left: 14px;
+
+    color: #777;
+
+    font-size: 16px;
+}
+
+#answerInput {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 15px 12px;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: #ddd;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 14px;
+}
+
+#answerInput::placeholder {
+    color: #444;
+}
+
+#answerInput:focus {
+    color: #fff;
+}
+
+
+/* =========================
+BUTTONS
+========================= */
+
+button,
+.next-button {
+    padding: 15px 20px;
+
+    border: 1px solid #292929;
+
+    background: #111;
+
+    color: #aaa;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 12px;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    display: inline-block;
+}
+
+button:hover,
+.next-button:hover {
+    background: #181818;
+
+    color: #fff;
+
+    border-color: #666;
+}
+
+button:disabled {
+    cursor: not-allowed;
+
+    opacity: 0.4;
+}
+
+
+/* =========================
+ANSWER MESSAGE
+========================= */
+
+.answer-message {
+    min-height: 24px;
+
+    margin-top: 15px;
+
+    font-size: 12px;
+
+    letter-spacing: 0.5px;
+}
+
+.answer-message.success {
+    color: #aaa;
+}
+
+.answer-message.error {
+    color: #777;
+}
+
+
+/* =========================
+NEXT QUESTION
+========================= */
+
+.next-container {
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #181818;
+}
+
+
+/* =========================
+SYSTEM STATUS
+========================= */
+
+.system-status {
+    margin-top: 35px;
+
+    padding: 18px;
+
+    border-left: 2px solid #555;
+
+    background: #090909;
+}
+
+.status-label {
+    margin-bottom: 8px;
+
+    color: #555;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+}
+
+#systemMessage {
+    color: #999;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+BACK BUTTON
+========================= */
+
+.back-button {
+    display: inline-block;
+
+    margin: 0 0 30px 0;
+
+    padding: 10px 14px;
+
+    border: 1px solid #292929;
+
+    background: #080808;
+
+    color: #777;
+
+    text-decoration: none;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 11px;
+
+    letter-spacing: 1px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.back-button:hover {
+    background: #151515;
+
+    color: #fff;
+
+    border-color: #666;
+}
+
+
+/* =========================
+FOOTER
+========================= */
+
+footer {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 18px 24px;
+
+    border-top: 1px solid #292929;
+
+    color: #4d4d4d;
+
+    font-size: 11px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================
+MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    body {
+        padding: 20px 0;
+    }
+
+    .terminal {
+        width: 94%;
+    }
+
+    .content {
+        padding: 40px 25px;
+    }
+
+    .topbar {
+        padding: 15px;
+
+        font-size: 10px;
+    }
+
+    .input-row {
+        align-items: stretch;
+    }
+
+    .prompt {
+        display: flex;
+
+        align-items: center;
+    }
+
+    button {
+        padding: 12px;
+    }
+
+    footer {
+        flex-direction: column;
+
+        gap: 8px;
+    }
+}
