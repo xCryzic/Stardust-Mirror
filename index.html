@@ -1,403 +1,992 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>STARDUST — Mirror Protocol // A School Cybersecurity CTF</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>STARDUST — MIRROR PROTOCOL</title>
+
+  <!-- =========================================================
+       FONTS
+  ========================================================== -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- =========================================================
+       LANDING PAGE CSS
+       ONLY AFFECTS LANDING PAGE
+  ========================================================== -->
+
+  <link rel="stylesheet" href="landing.css">
+
+  <!-- =========================================================
+       STARTUP ANIMATION CSS
+       KEEP SEPARATE
+  ========================================================== -->
+
   <link rel="stylesheet" href="startup-animation.css">
+
 </head>
+
+
 <body>
-<!-- STARDUST CINEMATIC STARTUP -->
-<div id="startupOverlay" class="startup-overlay" aria-hidden="true">
 
-    <div id="startupStage" class="startup-stage">
 
-        <video
-            id="startupVideo"
-            src="/dust.mp4"
-            autoplay
-            muted
-            playsinline
-        ></video>
+<!-- =========================================================
+     STARTUP ANIMATION
+     DO NOT CHANGE
+========================================================= -->
 
-        <div id="startupStar" class="startup-text">STAR</div>
-        <div id="startupDust" class="startup-text">DUST</div>
+<div
+  id="startupOverlay"
+  class="startup-overlay"
+  aria-hidden="true"
+>
 
-        <img
-            id="startupLogo"
-            src="/logo.png"
-            alt="Stardust Logo"
-        >
+  <div
+    id="startupStage"
+    class="startup-stage"
+  >
 
-        <!-- SKIP BUTTON -->
-        <button id="skipStartup">
-            SKIP INTRO →
-        </button>
+    <video
+      id="startupVideo"
+      src="/dust.mp4"
+      autoplay
+      muted
+      playsinline
+    ></video>
 
+
+    <div
+      id="startupStar"
+      class="startup-text"
+    >
+      STAR
     </div>
+
+
+    <div
+      id="startupDust"
+      class="startup-text"
+    >
+      DUST
+    </div>
+
+
+    <img
+      id="startupLogo"
+      src="/logo.png"
+      alt="Stardust Logo"
+    >
+
+
+    <button
+      id="skipStartup"
+      type="button"
+    >
+      SKIP INTRO →
+    </button>
+
+  </div>
 
 </div>
 
 
-  <div class="vignette" aria-hidden="true"></div>
-  <div class="grain" aria-hidden="true"></div>
-  <div class="scanlines" aria-hidden="true"></div>
-  <div class="streaks" aria-hidden="true">
-    <span></span><span></span><span></span>
-  </div>
-  <div class="dust" id="dust" aria-hidden="true"></div>
 
-  <div class="vignette" aria-hidden="true"></div>
+<!-- =========================================================
+     LANDING ATMOSPHERE
+========================================================= -->
 
-  <header class="navbar">
-    <a href="index.html" class="nav-brand-block">
-      <span class="nav-brand">STARDUST</span>
-      <span class="nav-brand-sub">Mirror&nbsp;Protocol</span>
-    </a>
-    <nav class="nav-links">
-      <a href="index.html" class="nav-link is-active">HOME</a>
-      <a href="questions/question-page.html" class="nav-link">QUESTIONS</a>
-      <a href="leaderboard.html" class="nav-link">LEADERBOARD</a>
-      <a href="login.html" class="nav-link nav-login" id="navLogin">
-        LOGIN
-      </a>
-    </nav>
-    <span class="nav-status">
-      <span class="stat-line">MISSION&nbsp;01&nbsp;/ ARCHIVE</span>
-      <span class="stat-line"><i class="dot"></i> <span class="stat-online">SYSTEM&nbsp;STATUS: ONLINE</span></span>
+<div
+  class="landing-noise"
+  aria-hidden="true"
+></div>
+
+<div
+  class="landing-grid"
+  aria-hidden="true"
+></div>
+
+<div
+  class="landing-vignette"
+  aria-hidden="true"
+></div>
+
+
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+
+<header class="navbar">
+
+  <a
+    href="index.html"
+    class="nav-brand-block"
+  >
+
+    <span class="nav-brand">
+      STARDUST
     </span>
-  </header>
 
-  <!-- classified telemetry strip -->
-  <div class="telemetry reveal" data-reveal="1" aria-hidden="true">
-    <span class="telemetry-item"><span class="k">MISSION</span><span class="v">STARDUST</span></span>
-    <span class="telemetry-item"><span class="k">YEAR</span><span class="v">1971</span></span>
-    <span class="telemetry-item"><span class="k">CREW</span><span class="v">06</span></span>
-    <span class="telemetry-item"><span class="k">STATUS</span><span class="v is-warn">LOST</span></span>
-    <span class="telemetry-item"><span class="k">SIGNAL</span><span class="v is-accent">DETECTED</span></span>
-    <span class="telemetry-item"><span class="k">ARCHIVE</span><span class="v">RECOVERED</span></span>
+    <span class="nav-brand-sub">
+      MIRROR PROTOCOL
+    </span>
+
+  </a>
+
+
+  <nav class="nav-links">
+
+    <a
+      href="index.html"
+      class="nav-link is-active"
+    >
+      HOME
+    </a>
+
+
+    <a
+      href="/questions/question-page.html"
+      class="nav-link"
+    >
+      QUESTIONS
+    </a>
+
+
+    <a
+      href="leaderboard.html"
+      class="nav-link"
+    >
+      LEADERBOARD
+    </a>
+
+
+    <a
+      href="login.html"
+      class="nav-link nav-login"
+      id="navLogin"
+    >
+      LOGIN
+    </a>
+
+  </nav>
+
+
+  <div class="nav-status">
+
+    <span>
+      ARCHIVE // 1971
+    </span>
+
+    <span class="system-status">
+      <i></i>
+      SYSTEM ONLINE
+    </span>
+
   </div>
 
-  <main class="hero">
+</header>
 
-    <!-- LEFT: content -->
-    <section class="hero-left">
-      <h1 class="title" id="mainTitle">
-        <span class="reveal-left" data-reveal="2">STARDUST</span>
-      </h1>
-      <p class="subtitle reveal" data-reveal="2">Mirror&nbsp;Protocol</p>
-      <p class="mission-tag reveal" data-reveal="3">The Final Mission</p>
 
-      <p class="eyebrow reveal" data-reveal="3">1971 — STARDUST</p>
 
-      <div class="log reveal" data-reveal="4">
-        <p class="log-line">Six researchers disappeared in 1971 after discovering something they were never meant to find.</p>
-        <p class="log-line">56 years later, the signal has returned.</p>
-        <p class="log-line log-warn">And MIRROR is still listening.</p>
+<!-- =========================================================
+     TOP CLASSIFICATION
+========================================================= -->
+
+<section class="classification-bar">
+
+  <span>
+    UNITED RESEARCH DIRECTORATE
+  </span>
+
+  <span>
+    FILE NO. 1971-06
+  </span>
+
+  <span>
+    ACCESS LEVEL // RESTRICTED
+  </span>
+
+</section>
+
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<main class="hero">
+
+
+  <!-- =======================================================
+       LEFT INFORMATION
+  ======================================================== -->
+
+  <section class="hero-info">
+
+
+    <div class="case-label">
+
+      <span>
+        CASE 01
+      </span>
+
+      <i></i>
+
+      <span>
+        STARDUST
+      </span>
+
+    </div>
+
+
+    <h1
+      class="title"
+      id="mainTitle"
+    >
+      STARDUST
+    </h1>
+
+
+    <div class="title-sub">
+      MIRROR PROTOCOL
+    </div>
+
+
+    <div class="hero-rule"></div>
+
+
+    <p class="hero-intro">
+
+      Six researchers disappeared in 1971
+      after discovering something they were
+      never meant to find.
+
+    </p>
+
+
+
+    <!-- =====================================================
+         INCIDENT LOG
+    ====================================================== -->
+
+    <div class="incident-log">
+
+      <div class="log-heading">
+
+        <span>
+          INCIDENT LOG
+        </span>
+
+        <span>
+          RECOVERED
+        </span>
+
       </div>
 
-      <button class="cta reveal" id="ctaBtn" data-reveal="5">
-        <span class="cta-label">BEGIN INVESTIGATION</span>
-        <span class="cta-arrow">→</span>
-        <span class="cta-glow"></span>
-      </button>
 
-      <p class="meta reveal" data-reveal="6">2&nbsp;LEVELS&nbsp;/&nbsp;10&nbsp;CHALLENGES&nbsp;/&nbsp;1&nbsp;MYSTERY</p>
+      <div class="log-row">
 
-      <p class="transmission-tag reveal" data-reveal="6">
-        <span class="k">LAST TRANSMISSION</span>
-        <span class="v">11:47&nbsp;PM</span>
-        <span class="cursor" aria-hidden="true"></span>
-      </p>
-      
-    </section>
+        <span>
+          22:14:03
+        </span>
 
-    <!-- RIGHT: mirror -->
-    <section class="hero-right">
+        <span>
+          SIGNAL DETECTED
+        </span>
 
-      <!-- surrounding classified data chips -->
-      <div class="data-chip chip-signal reveal" data-reveal="4">
-        <span class="k">SIGNAL</span>
-        <span class="v is-warn">DETECTED</span>
-      </div>
-      <div class="data-chip chip-archive reveal" data-reveal="6">
-        <span class="k">ARCHIVE</span>
-        <span class="v">RECOVERED</span>
       </div>
 
-      <div class="mirror-scene reveal-mirror" id="mirrorScene" data-reveal="2">
 
-        <div class="mirror" id="mirror">
-          <div class="mirror-frame">
-            <div class="mirror-frame-inner"></div>
-            <div class="mirror-glass" id="mirrorGlass">
+      <div class="log-row">
 
-              <div class="glass-base"></div>
+        <span>
+          22:31:47
+        </span>
 
-              <div class="glass-crack" aria-hidden="true">
-                <svg viewBox="0 0 100 140" preserveAspectRatio="none">
-                  <path d="M 62 0 L 57 22 L 66 31 L 54 46 L 60 58 L 48 74 L 53 90 L 41 108 L 46 122 L 36 140" />
-                  <path d="M 57 22 L 44 27" />
-                  <path d="M 54 46 L 68 50" />
-                  <path d="M 48 74 L 35 78" />
-                </svg>
+        <span>
+          CREW CONTACT LOST
+        </span>
+
+      </div>
+
+
+      <div class="log-row">
+
+        <span>
+          23:47:11
+        </span>
+
+        <span>
+          UNKNOWN TRANSMISSION
+        </span>
+
+      </div>
+
+
+      <div class="log-row critical">
+
+        <span>
+          23:47:13
+        </span>
+
+        <span>
+          "MIRROR"
+        </span>
+
+      </div>
+
+
+      <div class="log-row">
+
+        <span>
+          23:47:14
+        </span>
+
+        <span>
+          SIGNAL LOST
+        </span>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         BEGIN INVESTIGATION
+    ====================================================== -->
+
+    <button
+      class="cta"
+      id="ctaBtn"
+      type="button"
+    >
+
+      <span class="cta-number">
+        01
+      </span>
+
+      <span class="cta-label">
+        BEGIN INVESTIGATION
+      </span>
+
+      <span class="cta-arrow">
+        →
+      </span>
+
+      <span class="cta-glow"></span>
+
+    </button>
+
+
+
+    <div class="hero-meta">
+
+      <span>
+        10 CHALLENGES
+      </span>
+
+      <span>
+        //
+      </span>
+
+      <span>
+        1 MYSTERY
+      </span>
+
+      <span>
+        //
+      </span>
+
+      <span>
+        UNKNOWN OUTCOME
+      </span>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =======================================================
+       MIRROR
+  ======================================================== -->
+
+  <section class="hero-mirror">
+
+
+    <div class="mirror-topline">
+
+      <span>
+        OPTICAL ANALYSIS UNIT
+      </span>
+
+      <span>
+        MIR-01
+      </span>
+
+    </div>
+
+
+
+    <div
+      class="mirror-scene"
+      id="mirrorScene"
+    >
+
+      <div
+        class="mirror"
+        id="mirror"
+      >
+
+
+        <div class="mirror-frame">
+
+          <div class="mirror-frame-inner"></div>
+
+
+          <div
+            class="mirror-glass"
+            id="mirrorGlass"
+          >
+
+            <div class="glass-base"></div>
+
+
+
+            <!-- =================================================
+                 REFLECTION
+            ================================================== -->
+
+            <div
+              class="reflection"
+              id="reflection"
+            >
+
+              <span class="reflection-small">
+                MIRROR PROTOCOL
+              </span>
+
+              <h2>
+                STARDUST
+              </h2>
+
+              <span class="reflection-sub">
+                PROJECT 1971
+              </span>
+
+              <div class="reflection-signal">
+                SIGNAL ACTIVE
               </div>
 
-              <!-- reflected content, flipped, blurred, distorted, delayed -->
-              <div class="reflection" id="reflection">
-                <h2 class="r-title">STARDUST</h2>
-                <p class="r-subtitle">Mirror&nbsp;Protocol</p>
-                <p class="r-tag">The&nbsp;Final&nbsp;Mission</p>
-                <p class="r-eyebrow">1971 — STARDUST</p>
-                <div class="r-cta">BEGIN INVESTIGATION →</div>
-              </div>
-
-              <div class="glass-glare" id="glare"></div>
-              <div class="glass-chroma"></div>
-              <div class="glass-sheen"></div>
             </div>
+
+
+
+            <!-- =================================================
+                 MIRROR CRACK
+            ================================================== -->
+
+            <div
+              class="glass-crack"
+              aria-hidden="true"
+            >
+
+              <svg
+                viewBox="0 0 100 140"
+                preserveAspectRatio="none"
+              >
+
+                <path
+                  d="M 62 0 L 57 22 L 66 31 L 54 46 L 60 58 L 48 74 L 53 90 L 41 108 L 46 122 L 36 140"
+                />
+
+                <path
+                  d="M 57 22 L 44 27"
+                />
+
+                <path
+                  d="M 54 46 L 68 50"
+                />
+
+                <path
+                  d="M 48 74 L 35 78"
+                />
+
+              </svg>
+
+            </div>
+
+
+
+            <div
+              class="glass-glare"
+              id="glare"
+            ></div>
+
+
+            <div class="glass-chroma"></div>
+
+
+            <div class="glass-sheen"></div>
+
           </div>
-          <div class="mirror-shadow"></div>
-          <div class="mirror-stand"></div>
+
         </div>
 
+
+
+        <div class="mirror-shadow"></div>
+
+
+        <div class="mirror-stand"></div>
+
       </div>
 
-      <div class="mirror-status reveal" id="mirrorStatus" data-reveal="6">
-        <span class="status-light" id="statusLight"></span>
-        <span class="status-label">MIRROR</span>
-        <span class="status-value" id="statusValue">STATUS: DORMANT</span>
+    </div>
+
+
+
+    <!-- =====================================================
+         MIRROR STATUS
+    ====================================================== -->
+
+    <div
+      class="mirror-status"
+      id="mirrorStatus"
+    >
+
+      <span
+        class="status-light"
+        id="statusLight"
+      ></span>
+
+      <span class="status-label">
+        MIRROR
+      </span>
+
+      <span
+        class="status-value"
+        id="statusValue"
+      >
+        STATUS: DORMANT
+      </span>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         TECHNICAL READINGS
+    ====================================================== -->
+
+    <div class="mirror-readings">
+
+
+      <div>
+
+        <span>
+          SIGNAL
+        </span>
+
+        <strong>
+          DETECTED
+        </strong>
+
       </div>
 
-    </section>
 
-  </main>
+      <div>
+
+        <span>
+          CREW
+        </span>
+
+        <strong>
+          06 / LOST
+        </strong>
+
+      </div>
+
+
+      <div>
+
+        <span>
+          ARCHIVE
+        </span>
+
+        <strong>
+          RECOVERED
+        </strong>
+
+      </div>
+
+
+      <div>
+
+        <span>
+          STATUS
+        </span>
+
+        <strong>
+          UNKNOWN
+        </strong>
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+</main>
+
+
+
 <!-- =========================================================
      MISSION BRIEF
-     ========================================================= -->
+========================================================= -->
 
 <section class="mission-brief-section">
 
-    <div class="brief-orbit brief-orbit-1"></div>
-    <div class="brief-orbit brief-orbit-2"></div>
+  <div
+    class="brief-orbit brief-orbit-1"
+  ></div>
 
-    <div class="mission-brief">
-
-        <div class="brief-header">
-
-            <div class="brief-status">
-                <span class="brief-dot"></span>
-                <span>TRANSMISSION RECEIVED</span>
-            </div>
-
-            <span class="brief-code">MSN-01 // CLASSIFIED</span>
-
-        </div>
+  <div
+    class="brief-orbit brief-orbit-2"
+  ></div>
 
 
-        <div class="brief-title">
-
-            <span class="brief-symbol">◆</span>
-
-            <div>
-                <span class="brief-kicker">
-                    STARDUST ARCHIVE
-                </span>
-
-                <h2>MISSION BRIEFING</h2>
-            </div>
-
-        </div>
+  <div class="mission-brief">
 
 
-        <div class="brief-divider">
-            <span></span>
-            <i></i>
-            <span></span>
-        </div>
+    <!-- HEADER -->
+
+    <div class="brief-header">
+
+      <div class="brief-status">
+
+        <span class="brief-dot"></span>
+
+        TRANSMISSION RECEIVED
+
+      </div>
 
 
-        <div class="brief-body">
-
-            <p>
-                In 1971, six researchers vanished while investigating
-                an anomalous signal buried beneath the STARDUST archive.
-            </p>
-
-            <p>
-                Their final transmission contained only one word:
-            </p>
-
-
-            <div class="brief-signal">
-
-                <span>FINAL TRANSMISSION</span>
-
-                <strong>“MIRROR”</strong>
-
-                <i></i>
-
-            </div>
-
-
-            <p>
-                56 years later, the signal has resurfaced. Your team
-                has been granted temporary access to the recovered
-                archive.
-            </p>
-
-            <p>
-                Decode the fragments, uncover what happened to the
-                original crew, and determine what MIRROR has been
-                waiting for.
-            </p>
-
-        </div>
-
-
-        <div class="brief-footer">
-
-            <span>
-                THREAT LEVEL:
-                <b>UNKNOWN</b>
-            </span>
-
-            <span>
-                ARCHIVE:
-                <b>CLASSIFIED</b>
-            </span>
-
-            <span>
-                CREW:
-                <b>06 / LOST</b>
-            </span>
-
-            <span class="brief-live">
-                <i></i>
-                SIGNAL ACTIVE
-            </span>
-
-        </div>
+      <span class="brief-code">
+        MSN-01 // CLASSIFIED
+      </span>
 
     </div>
+
+
+
+    <!-- TITLE -->
+
+    <div class="brief-title">
+
+      <span class="brief-symbol">
+        ◆
+      </span>
+
+
+      <div>
+
+        <span class="brief-kicker">
+          STARDUST ARCHIVE
+        </span>
+
+        <h2>
+          MISSION BRIEFING
+        </h2>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- DIVIDER -->
+
+    <div class="brief-divider">
+
+      <span></span>
+
+      <i></i>
+
+      <span></span>
+
+    </div>
+
+
+
+    <!-- BODY -->
+
+    <div class="brief-body">
+
+      <p>
+        In 1971, six researchers vanished while
+        investigating an anomalous signal buried
+        beneath the STARDUST archive.
+      </p>
+
+
+      <p>
+        Their final transmission contained only
+        one word:
+      </p>
+
+
+      <div class="brief-signal">
+
+        <span>
+          FINAL TRANSMISSION
+        </span>
+
+        <strong>
+          "MIRROR"
+        </strong>
+
+        <i></i>
+
+      </div>
+
+
+      <p>
+        Fifty-six years later, the signal has
+        resurfaced. Your team has been granted
+        temporary access to the recovered archive.
+      </p>
+
+
+      <p>
+        Decode the fragments, uncover what happened
+        to the original crew, and determine what
+        MIRROR has been waiting for.
+      </p>
+
+    </div>
+
+
+
+    <!-- FOOTER -->
+
+    <div class="brief-footer">
+
+      <span>
+        THREAT LEVEL:
+        <b>UNKNOWN</b>
+      </span>
+
+
+      <span>
+        ARCHIVE:
+        <b>CLASSIFIED</b>
+      </span>
+
+
+      <span>
+        CREW:
+        <b>06 / LOST</b>
+      </span>
+
+
+      <span class="brief-live">
+
+        <i></i>
+
+        SIGNAL ACTIVE
+
+      </span>
+
+    </div>
+
+  </div>
 
 </section>
-  <footer class="foot">
-    <span>STARDUST ARCHIVE</span>
-    <span>—</span>
-    <span>ACCESS RESTRICTED — PARTICIPANTS ONLY</span>
-  </footer>
 
-  <!-- SVG filters for glass refraction -->
-  <svg class="defs" width="0" height="0">
-    <filter id="glassDistort" x="-20%" y="-20%" width="140%" height="140%">
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="7" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-  </svg>
-<!-- =========================================
-     STARDUST SCI-FI GATE TRANSITION
-========================================= -->
-<div id="missionTransition" class="mission-transition">
 
-    <!-- dark background -->
-    <div class="gate-backdrop"></div>
 
-    <!-- LEFT DOOR -->
-    <div class="sci-gate gate-left">
-        <div class="gate-shell">
-            <div class="gate-panel panel-outer"></div>
-            <div class="gate-panel panel-mid"></div>
-            <div class="gate-panel panel-inner"></div>
+<!-- =========================================================
+     FOOTER
+========================================================= -->
 
-            <div class="gate-groove groove-1"></div>
-            <div class="gate-groove groove-2"></div>
-            <div class="gate-groove groove-3"></div>
+<footer class="foot">
 
-            <div class="gate-light"></div>
+  <span>
+    STARDUST RESEARCH ARCHIVE
+  </span>
 
-            <div class="gate-warning">
-                <span></span>
-                MIRROR
-            </div>
-        </div>
-    </div>
+  <span>
+    //
+  </span>
 
-    <!-- RIGHT DOOR -->
-    <div class="sci-gate gate-right">
-        <div class="gate-shell">
-            <div class="gate-panel panel-outer"></div>
-            <div class="gate-panel panel-mid"></div>
-            <div class="gate-panel panel-inner"></div>
+  <span>
+    FILE 1971-06
+  </span>
 
-            <div class="gate-groove groove-1"></div>
-            <div class="gate-groove groove-2"></div>
-            <div class="gate-groove groove-3"></div>
+  <span>
+    //
+  </span>
 
-            <div class="gate-light"></div>
+  <span>
+    ACCESS RESTRICTED
+  </span>
 
-            <div class="gate-warning">
-                <span></span>
-                MIRROR
-            </div>
-        </div>
-    </div>
+</footer>
 
-    <!-- CENTER SEAM -->
-    <div class="gate-seam">
-        <div class="seam-light"></div>
-    </div>
 
-    <!-- TEXT -->
-    <div class="gate-text">
 
-        <div class="gate-text-line">
-            <span class="gate-text-prefix">></span>
-            <span>ACCESSING ARCHIVE</span>
-        </div>
+<!-- =========================================================
+     SCI-FI GATE TRANSITION
+     EXISTING ANIMATION STRUCTURE
+========================================================= -->
 
-        <div class="gate-title">
-            STARDUST
-            <span>//</span>
-            MIRROR PROTOCOL
-        </div>
+<div
+  id="missionTransition"
+  class="mission-transition"
+>
 
-        <div class="gate-progress">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+
+  <!-- BACKDROP -->
+
+  <div class="gate-backdrop"></div>
+
+
+
+  <!-- =======================================================
+       LEFT DOOR
+  ======================================================== -->
+
+  <div class="sci-gate gate-left">
+
+    <div class="gate-shell">
+
+      <div class="gate-panel panel-outer"></div>
+
+      <div class="gate-panel panel-mid"></div>
+
+      <div class="gate-panel panel-inner"></div>
+
+
+      <div class="gate-groove groove-1"></div>
+
+      <div class="gate-groove groove-2"></div>
+
+      <div class="gate-groove groove-3"></div>
+
+
+      <div class="gate-light"></div>
+
+
+      <div class="gate-warning">
+
+        <span></span>
+
+        MIRROR
+
+      </div>
 
     </div>
+
+  </div>
+
+
+
+  <!-- =======================================================
+       RIGHT DOOR
+  ======================================================== -->
+
+  <div class="sci-gate gate-right">
+
+    <div class="gate-shell">
+
+      <div class="gate-panel panel-outer"></div>
+
+      <div class="gate-panel panel-mid"></div>
+
+      <div class="gate-panel panel-inner"></div>
+
+
+      <div class="gate-groove groove-1"></div>
+
+      <div class="gate-groove groove-2"></div>
+
+      <div class="gate-groove groove-3"></div>
+  </div>
 
 </div>
-  <!-- INVESTIGATION VIDEO -->
-<div id="investigationVideoOverlay" class="investigation-video-overlay">
 
-    <video
-        id="investigationVideo"
-        playsinline
-        preload="auto"
+
+
+<!-- =========================================================
+     INVESTIGATION VIDEO
+     
+     BEGIN INVESTIGATION
+     ↓
+     GATE
+     ↓
+     VIDEO
+     ↓
+     QUESTIONS
+========================================================= -->
+
+<div
+  id="investigationVideoOverlay"
+  class="investigation-video-overlay"
+  aria-hidden="true"
+>
+
+  <video
+    id="investigationVideo"
+    playsinline
+    preload="auto"
+  >
+
+    <source
+      src="/investigation-intro.mp4"
+      type="video/mp4"
     >
-        <source
-            src="/investigation-intro.mp4"
-            type="video/mp4"
-        >
-    </video>
+
+  </video>
 
 </div>
-  <script src="startup-animation.js"></script>
-  <script src="script.js"></script>
-  <script src="session.js"></script>
+
+
+
+<!-- =========================================================
+     SCRIPTS
+     
+     IMPORTANT:
+     Startup animation stays separate from landing logic.
+========================================================= -->
+
+<script src="startup-animation.js"></script>
+
+<script src="script.js"></script>
+
+<script src="session.js"></script>
+
 
 </body>
 </html>

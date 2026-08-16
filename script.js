@@ -67,13 +67,11 @@
       },
       {
         sel: '#mirrorScene',
-        delay: 1150,
-        mirror: true
+        delay: 1150
       },
       {
         sel: '#reflection',
-        delay: 1750,
-        reflection: true
+        delay: 1750
       },
       {
         sel: '[data-reveal="3"]',
@@ -100,9 +98,7 @@
         document
           .querySelectorAll(step.sel)
           .forEach(el => {
-
             el.classList.add("in");
-
           });
 
       }, reduceMotion ? 0 : step.delay);
@@ -126,9 +122,9 @@
     const reflection =
       document.getElementById("reflection");
 
-    if (!mirror || !glass || !reflection)
+    if (!mirror || !glass || !reflection) {
       return;
-
+    }
 
     let glareX = 0.5;
     let glareY = 0.5;
@@ -152,12 +148,10 @@
         glass.getBoundingClientRect();
 
       const nx =
-        (e.clientX - rect.left) /
-        rect.width;
+        (e.clientX - rect.left) / rect.width;
 
       const ny =
-        (e.clientY - rect.top) /
-        rect.height;
+        (e.clientY - rect.top) / rect.height;
 
 
       glareX =
@@ -192,7 +186,6 @@
 
       targetTiltX =
         -1.6 + (py - 0.5) * -4;
-
     }
 
 
@@ -244,21 +237,14 @@
 
 
       requestAnimationFrame(tick);
-
     }
 
 
     if (!reduceMotion) {
-
       requestAnimationFrame(tick);
-
     } else {
-
-      reflection.style.transform =
-        "scaleX(-1)";
-
+      reflection.style.transform = "scaleX(-1)";
     }
-
   }
 
 
@@ -278,11 +264,13 @@
       document.getElementById("statusLight");
 
 
-    if (!panel || !value || !light)
+    if (!panel || !value || !light) {
       return;
+    }
 
-    if (reduceMotion)
+    if (reduceMotion) {
       return;
+    }
 
 
     const dormantText =
@@ -294,33 +282,25 @@
 
     function glitch() {
 
-      panel.classList.add(
-        "is-glitching"
-      );
+      panel.classList.add("is-glitching");
 
-      value.textContent =
-        glitchText;
+      value.textContent = glitchText;
 
 
       window.setTimeout(() => {
 
-        value.textContent =
-          dormantText;
+        value.textContent = dormantText;
 
-        panel.classList.remove(
-          "is-glitching"
-        );
+        panel.classList.remove("is-glitching");
 
       }, 140 + Math.random() * 120);
-
     }
 
 
     function scheduleNext() {
 
       const wait =
-        25000 +
-        Math.random() * 30000;
+        25000 + Math.random() * 30000;
 
 
       window.setTimeout(() => {
@@ -329,12 +309,10 @@
         scheduleNext();
 
       }, wait);
-
     }
 
 
     scheduleNext();
-
   }
 
 
@@ -344,60 +322,83 @@
 
   function startInvestigationVideo() {
 
-    const videoOverlay =
+    const overlay =
       document.getElementById(
         "investigationVideoOverlay"
       );
 
-    const investigationVideo =
+    const video =
       document.getElementById(
         "investigationVideo"
       );
 
 
-    if (!videoOverlay ||
-        !investigationVideo) {
+    if (!overlay || !video) {
 
       console.error(
         "[STARDUST] Investigation video elements missing."
       );
 
-      return;
+      // If the video isn't available, don't trap the player.
+      window.location.href = "/questions/question-page.html";
 
+      return;
     }
 
 
     console.log(
-      "[STARDUST] Starting investigation video."
+      "[STARDUST] Investigation video starting."
     );
 
 
-    videoOverlay.classList.add(
-      "active"
+    // Make absolutely sure the overlay is visible.
+    overlay.classList.add("active");
+
+    // Prevent scrolling behind the video.
+    document.body.classList.add(
+      "investigation-video-playing"
     );
 
 
-    investigationVideo.currentTime = 0;
+    // Always start from the beginning.
+    try {
+      video.currentTime = 0;
+    } catch (error) {
+      console.warn(
+        "[STARDUST] Could not reset video:",
+        error
+      );
+    }
 
 
-    investigationVideo
-      .play()
-      .then(() => {
+    const playPromise =
+      video.play();
 
-        console.log(
-          "[STARDUST] Investigation video playing."
-        );
 
-      })
-      .catch(error => {
+    if (playPromise !== undefined) {
 
-        console.error(
-          "[STARDUST] Video playback error:",
-          error
-        );
+      playPromise
+        .then(() => {
 
-      });
+          console.log(
+            "[STARDUST] Investigation video playing."
+          );
 
+        })
+        .catch(error => {
+
+          console.error(
+            "[STARDUST] Video playback failed:",
+            error
+          );
+
+          // Don't leave the user stuck on a black screen.
+          setTimeout(() => {
+            window.location.href = "/questions/question-page.html";
+          }, 300);
+
+        });
+    }
   }
 
 
@@ -413,16 +414,16 @@
       );
 
 
+    // If the gate doesn't exist, skip it.
     if (!gate) {
 
       console.warn(
-        "[STARDUST] Mission gate not found. Starting video directly."
+        "[STARDUST] Mission gate not found."
       );
 
       startInvestigationVideo();
 
       return;
-
     }
 
 
@@ -433,49 +434,39 @@
 
     /*
       STEP 1
-      Bring the gate onto the screen.
+      Bring gate onto screen.
     */
 
-    gate.classList.add(
-      "active"
-    );
+    gate.classList.add("active");
 
 
     /*
       STEP 2
-      Give the text time to slide in.
+      Let the gate sit for a moment,
+      then open it.
     */
 
     window.setTimeout(() => {
 
-      gate.classList.add(
-        "opening"
-      );
+      gate.classList.add("opening");
 
     }, 1100);
 
 
     /*
       STEP 3
-      Once the doors have opened,
-      transition into the investigation video.
+      Once the gate animation is finished,
+      hide it and start the investigation video.
     */
 
     window.setTimeout(() => {
 
-      gate.classList.remove(
-        "active"
-      );
-
-      gate.classList.remove(
-        "opening"
-      );
-
+      gate.classList.remove("active");
+      gate.classList.remove("opening");
 
       startInvestigationVideo();
 
     }, 2600);
-
   }
 
 
@@ -486,98 +477,96 @@
   function initCTA() {
 
     const btn =
-      document.getElementById(
-        "ctaBtn"
-      );
+      document.getElementById("ctaBtn");
 
     const mirror =
-      document.getElementById(
-        "mirror"
+      document.getElementById("mirror");
+
+
+    if (!btn) {
+      return;
+    }
+
+
+    btn.addEventListener("click", () => {
+
+      console.log(
+        "[STARDUST] BEGIN INVESTIGATION clicked."
       );
 
 
-    if (!btn)
-      return;
+      /*
+        Prevent double clicking.
+      */
+
+      if (
+        btn.classList.contains("pressed") ||
+        btn.disabled
+      ) {
+        return;
+      }
 
 
-    btn.addEventListener(
-      "click",
-      () => {
-
-        console.log(
-          "[STARDUST] BEGIN INVESTIGATION clicked."
-        );
+      btn.classList.add("pressed");
+      btn.disabled = true;
 
 
-        /*
-          Prevent double clicking while
-          the cinematic transition is running.
-        */
+      /*
+        Mirror flash.
+      */
 
-        if (btn.classList.contains("pressed"))
-          return;
+      if (
+        mirror &&
+        typeof mirror.animate === "function"
+      ) {
 
+        mirror.animate(
 
-        btn.classList.add(
-          "pressed"
-        );
-
-
-        /*
-          Mirror flash
-        */
-
-        if (mirror) {
-
-          mirror.animate(
-
-            [
-              {
-                filter: "brightness(1)"
-              },
-
-              {
-                filter: "brightness(1.35)"
-              },
-
-              {
-                filter: "brightness(1)"
-              }
-
-            ],
+          [
+            {
+              filter: "brightness(1)"
+            },
 
             {
-              duration: 700,
-              easing: "ease-out"
+              filter: "brightness(1.35)"
+            },
+
+            {
+              filter: "brightness(1)"
             }
 
-          );
+          ],
 
-        }
+          {
+            duration: 700,
+            easing: "ease-out"
+          }
+        );
+      }
 
 
-        /*
-          Start the actual gate.
-        */
+      /*
+        Start the gate.
+        If reduced motion is enabled,
+        skip the gate and go directly to video.
+      */
 
-        if (reduceMotion) {
+      if (reduceMotion) {
 
-          startInvestigationVideo();
+        startInvestigationVideo();
 
-        } else {
+      } else {
 
-          startMissionGate();
-
-        }
+        startMissionGate();
 
       }
-    );
 
+    });
   }
 
 
   /* ============================================================
-     VIDEO END
+     VIDEO END / SKIP / ERROR
   ============================================================ */
 
   function initInvestigationVideo() {
@@ -593,12 +582,13 @@
       );
 
 
-    if (!video)
+    if (!video) {
       return;
+    }
 
 
     /*
-      Video finished
+      VIDEO FINISHED
     */
 
     video.addEventListener(
@@ -610,6 +600,11 @@
         );
 
 
+        document.body.classList.remove(
+          "investigation-video-playing"
+        );
+
+
         window.location.href =
           "/questions/question-page.html";
 
@@ -618,7 +613,7 @@
 
 
     /*
-      Skip button
+      OPTIONAL SKIP BUTTON
     */
 
     if (skip) {
@@ -633,7 +628,6 @@
 
 
           video.pause();
-
           video.currentTime = 0;
 
 
@@ -642,12 +636,11 @@
 
         }
       );
-
     }
 
 
     /*
-      Video error
+      VIDEO ERROR
     */
 
     video.addEventListener(
@@ -655,21 +648,23 @@
       () => {
 
         console.error(
-          "[STARDUST] VIDEO FILE COULD NOT BE LOADED."
+          "[STARDUST] Investigation video could not be loaded."
         );
 
-        console.error(
-          video.error
-        );
+        console.error(video.error);
+
+
+        // Don't leave the player stuck.
+        window.location.href =
+          "/questions/question-page.html";
 
       }
     );
-
   }
 
 
   /* ============================================================
-     INITIALIZE EVERYTHING
+     INITIALIZE
   ============================================================ */
 
   document.addEventListener(
@@ -686,6 +681,11 @@
 
       initInvestigationVideo();
 
+
+      /*
+        STARTUP ANIMATION
+        This remains completely independent.
+      */
 
       const startup =
         document.getElementById(

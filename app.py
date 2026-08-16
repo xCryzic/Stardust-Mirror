@@ -167,9 +167,6 @@ def init_db():
 # ============================================================
 
 INITIAL_TEAMS = {
-    "TEST1": "test123",
-    "TEST2": "test456",
-
     "TEAM ALPHA": "St@rDust!71",
     "TEAM BRAVO": "C0sm1c#2027",
     "TEAM CHARLIE": "M1rr0r@1971",

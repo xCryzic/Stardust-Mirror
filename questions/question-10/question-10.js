@@ -146,7 +146,7 @@
         if (winButton) {
 
             winButton.href =
-                "../victory/win.html";
+                "/victory/win.html";
 
         }
 
@@ -208,7 +208,7 @@
 
             const response =
                 await fetch(
-                    "../api/questions/10",
+                    "/api/questions/10",
                     {
                         method: "GET",
 
@@ -229,7 +229,7 @@
             if (response.status === 401) {
 
                 window.location.href =
-                    "../login";
+                    "/login";
 
                 return null;
 
@@ -254,7 +254,7 @@
             ) {
 
                 window.location.href =
-                    "../login";
+                    "/login";
 
                 return null;
 
