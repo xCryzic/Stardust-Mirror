@@ -152,3 +152,43 @@
   );
 
 })();
+(function () {
+
+    const bar = document.getElementById("scrollProgressBar");
+    const value = document.getElementById("scrollProgressValue");
+
+    if (!bar || !value) return;
+
+    function updateScrollProgress() {
+
+        const scrollTop = window.scrollY;
+
+        const documentHeight =
+            document.documentElement.scrollHeight - window.innerHeight;
+
+        if (documentHeight <= 0) {
+            bar.style.width = "0%";
+            value.textContent = "00%";
+            return;
+        }
+
+        const progress = Math.min(
+            100,
+            Math.max(0, (scrollTop / documentHeight) * 100)
+        );
+
+        bar.style.width = progress + "%";
+
+        value.textContent =
+            String(Math.round(progress)).padStart(2, "0") + "%";
+    }
+
+    window.addEventListener("scroll", updateScrollProgress, {
+        passive: true
+    });
+
+    window.addEventListener("resize", updateScrollProgress);
+
+    updateScrollProgress();
+
+})();

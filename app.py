@@ -1590,23 +1590,619 @@ def submit_question(question_id):
     })
 
 
-# ============================================================
-# Q4 HIDDEN ENDPOINT
-# ============================================================
-
 @app.get("/CHECKSOURCE")
 @app.get("/checksource")
 def checksource():
 
     return """
-STARDUST // RECOVERED SOURCE
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-53 54 41 52 44 55 53 54 20 2f 2f 20 53 54 41 52 44 55 53 54 7b 54 48 45 5f 4d 49 52 52 4f 52 5f 53 45 45 53 5f 59 4f 55 7d
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-RECOVERY COMPLETE.
+    <title>STARDUST // RECOVERED SOURCE</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 40px;
+
+            background:
+                radial-gradient(
+                    circle at 50% 45%,
+                    rgba(255,255,255,.045),
+                    transparent 42%
+                ),
+                #050505;
+
+            color: #d8d8d8;
+
+            font-family:
+                "IBM Plex Mono",
+                monospace;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           BACKGROUND GRID
+        ===================================================== */
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 70px 70px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent 90%
+                );
+        }
+
+
+        /* =====================================================
+           NOISE
+        ===================================================== */
+
+        body::after {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            opacity: .025;
+
+            background-image:
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+        }
+
+
+        /* =====================================================
+           TERMINAL
+        ===================================================== */
+
+        .terminal {
+
+            position: relative;
+
+            width: min(900px, 100%);
+
+            border: 1px solid rgba(255,255,255,.18);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.035),
+                    rgba(255,255,255,.008)
+                ),
+                #080808;
+
+            box-shadow:
+                0 40px 120px rgba(0,0,0,.8),
+                0 0 80px rgba(255,255,255,.025);
+
+            overflow: hidden;
+        }
+
+
+        /* =====================================================
+           TERMINAL HEADER
+        ===================================================== */
+
+        .terminal-header {
+
+            height: 58px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 20px;
+
+            border-bottom: 1px solid rgba(255,255,255,.1);
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(255,255,255,.035),
+                    rgba(255,255,255,.01)
+                );
+        }
+
+
+        .header-left {
+
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            color: #aaa;
+
+            font-size: 11px;
+
+            letter-spacing: .16em;
+        }
+
+
+        .dot {
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #e5e5e5;
+
+            box-shadow:
+                0 0 12px rgba(255,255,255,.45);
+        }
+
+
+        .header-right {
+
+            color: #555;
+
+            font-size: 9px;
+
+            letter-spacing: .14em;
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .terminal-body {
+
+            padding: 45px 50px 50px;
+        }
+
+
+        .classification {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding-bottom: 18px;
+
+            border-bottom: 1px solid rgba(255,255,255,.08);
+
+            color: #555;
+
+            font-size: 9px;
+
+            letter-spacing: .18em;
+        }
+
+
+        .title {
+
+            margin-top: 38px;
+
+            font-size: clamp(1.8rem, 4vw, 3rem);
+
+            font-weight: 600;
+
+            letter-spacing: -.04em;
+
+            color: #f0f0f0;
+        }
+
+
+        .subtitle {
+
+            margin-top: 10px;
+
+            color: #666;
+
+            font-size: 10px;
+
+            letter-spacing: .22em;
+        }
+
+
+        /* =====================================================
+           SOURCE PANEL
+        ===================================================== */
+
+        .source-panel {
+
+            position: relative;
+
+            margin-top: 38px;
+
+            border: 1px solid rgba(255,255,255,.14);
+
+            background: #030303;
+
+            box-shadow:
+                inset 0 0 50px rgba(255,255,255,.015);
+        }
+
+
+        .source-header {
+
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 15px;
+
+            border-bottom: 1px solid rgba(255,255,255,.08);
+
+            color: #666;
+
+            font-size: 9px;
+
+            letter-spacing: .15em;
+        }
+
+
+        .source-content {
+
+            padding: 30px;
+
+            overflow-x: auto;
+        }
+
+
+        .hex {
+
+            color: #dcdcdc;
+
+            font-size: clamp(
+                .65rem,
+                1.3vw,
+                .82rem
+            );
+
+            line-height: 2;
+
+            letter-spacing: .09em;
+
+            word-break: break-word;
+
+            text-shadow:
+                0 0 12px rgba(255,255,255,.08);
+        }
+
+
+        .hex-label {
+
+            display: block;
+
+            margin-bottom: 12px;
+
+            color: #555;
+
+            font-size: 9px;
+
+            letter-spacing: .16em;
+        }
+
+
+        /* =====================================================
+           RECOVERY STATUS
+        ===================================================== */
+
+        .recovery {
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            margin-top: 30px;
+
+            padding: 15px 18px;
+
+            border: 1px solid rgba(255,255,255,.09);
+
+            background:
+                rgba(255,255,255,.015);
+
+            color: #aaa;
+
+            font-size: 10px;
+
+            letter-spacing: .14em;
+        }
+
+
+        .recovery-dot {
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #fff;
+
+            box-shadow:
+                0 0 14px rgba(255,255,255,.45);
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .terminal-footer {
+
+            display: flex;
+            justify-content: space-between;
+
+            margin-top: 35px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid rgba(255,255,255,.08);
+
+            color: #444;
+
+            font-size: 9px;
+
+            letter-spacing: .14em;
+        }
+
+
+        /* =====================================================
+           CORNER MARKS
+        ===================================================== */
+
+        .corner {
+
+            position: absolute;
+
+            width: 12px;
+            height: 12px;
+
+            border-color: rgba(255,255,255,.35);
+            border-style: solid;
+        }
+
+        .corner.tl {
+            top: 12px;
+            left: 12px;
+
+            border-width: 1px 0 0 1px;
+        }
+
+        .corner.tr {
+            top: 12px;
+            right: 12px;
+
+            border-width: 1px 1px 0 0;
+        }
+
+        .corner.bl {
+            bottom: 12px;
+            left: 12px;
+
+            border-width: 0 0 1px 1px;
+        }
+
+        .corner.br {
+            bottom: 12px;
+            right: 12px;
+
+            border-width: 0 1px 1px 0;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 18px;
+            }
+
+            .terminal-body {
+                padding: 30px 22px 30px;
+            }
+
+            .classification {
+                flex-direction: column;
+                align-items: flex-start;
+
+                gap: 8px;
+            }
+
+            .source-content {
+                padding: 22px;
+            }
+
+            .terminal-footer {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <main class="terminal">
+
+        <span class="corner tl"></span>
+        <span class="corner tr"></span>
+        <span class="corner bl"></span>
+        <span class="corner br"></span>
+
+
+        <!-- HEADER -->
+
+        <header class="terminal-header">
+
+            <div class="header-left">
+
+                <span class="dot"></span>
+
+                <span>
+                    STARDUST // ARCHIVE TERMINAL
+                </span>
+
+            </div>
+
+            <span class="header-right">
+                NODE // 1971-06
+            </span>
+
+        </header>
+
+
+        <!-- BODY -->
+
+        <section class="terminal-body">
+
+            <div class="classification">
+
+                <span>
+                    UNITED RESEARCH DIRECTORATE
+                </span>
+
+                <span>
+                    ACCESS // RESTRICTED
+                </span>
+
+            </div>
+
+
+            <h1 class="title">
+                RECOVERED SOURCE
+            </h1>
+
+
+            <p class="subtitle">
+                MIRROR PROTOCOL // SOURCE FRAGMENT
+            </p>
+
+
+            <!-- SOURCE -->
+
+            <div class="source-panel">
+
+                <div class="source-header">
+
+                    <span>
+                        HEX DUMP
+                    </span>
+
+                    <span>
+                        READ ONLY
+                    </span>
+
+                </div>
+
+
+                <div class="source-content">
+
+                    <span class="hex-label">
+                        RECOVERED TRANSMISSION
+                    </span>
+
+                    <div class="hex">
+                        53 54 41 52 44 55 53 54 20 2f 2f
+                        20 53 54 41 52 44 55 53 54 7b
+                        54 48 45 5f 4d 49 52 52 4f 52
+                        5f 53 45 45 53 5f 59 4f 55 7d
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="recovery">
+
+                <span class="recovery-dot"></span>
+
+                <span>
+                    RECOVERY COMPLETE.
+                </span>
+
+            </div>
+
+
+            <footer class="terminal-footer">
+
+                <span>
+                    STARDUST RESEARCH ARCHIVE
+                </span>
+
+                <span>
+                    FILE // CHECKSOURCE
+                </span>
+
+            </footer>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
 """
-
-
 # ============================================================
 # ERROR HANDLERS
 # ============================================================
