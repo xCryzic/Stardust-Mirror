@@ -167,6 +167,7 @@ def init_db():
 # ============================================================
 
 INITIAL_TEAMS = {
+    "TEAM ORACLE": "Stardustoracle",
     "TEAM ALPHA": "St@rDust!71",
     "TEAM BRAVO": "C0sm1c#2027",
     "TEAM CHARLIE": "M1rr0r@1971",
