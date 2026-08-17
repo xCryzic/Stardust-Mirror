@@ -163,64 +163,6 @@ def init_db():
 
 
 # ============================================================
-# PREDEFINED TEAMS
-# ============================================================
-
-INITIAL_TEAMS = {
-    "TEAM ALPHA": "St@rDust!71",
-    "TEAM BRAVO": "C0sm1c#2027",
-    "TEAM CHARLIE": "M1rr0r@1971",
-    "TEAM DELTA": "D33pSp@ce!",
-    "TEAM ECHO": "V0id#S1gn@1",
-    "TEAM FOXTROT": "0rb1t@171",
-    "TEAM GOLF": "Tr@c3Th3St@r$",
-    "TEAM HOTEL": "L0stM1ss10n!",
-    "TEAM INDIA": "C0sm0s@1971",
-    "TEAM JULIETT": "D@rkM@tter#",
-    "TEAM KILO": "St@rL1ght!",
-    "TEAM LIMA": "F1n@lTr@c3",
-    "TEAM MIKE": "L@stS1gn@1",
-    "TEAM NOVEMBER": "Tr@nsm1ss10n#71",
-    "TEAM ORION": "Ex0pl@n3t!27",
-
-}
-
-def seed_teams():
-    db = get_db()
-
-    for team_name, password in INITIAL_TEAMS.items():
-
-        existing = db.execute(
-            """
-            SELECT id
-            FROM teams
-            WHERE team_name = ?
-            """,
-            (team_name,),
-        ).fetchone()
-
-        if existing is None:
-            db.execute(
-                """
-                INSERT INTO teams (
-                    team_name,
-                    password_hash,
-                    created_at
-                )
-                VALUES (?, ?, ?)
-                """,
-                (
-                    team_name,
-                    generate_password_hash(password),
-                    utc_now(),
-                ),
-            )
-
-    db.commit()
-    db.close()
-
-
-# ============================================================
 # FLAGS
 # ============================================================
 
@@ -774,9 +716,7 @@ def frontend_file(filename):
 @app.post("/api/login")
 def api_login():
 
-    data = request.get_json(
-        silent=True
-    ) or {}
+    data = request.get_json(silent=True) or {}
 
     team = str(
         data.get("team", "")
@@ -786,69 +726,170 @@ def api_login():
         data.get("password", "")
     )
 
-    if not team or not password:
+    # =========================================================
+    # VALIDATION
+    # =========================================================
 
+    if not team or not password:
         return jsonify({
             "success": False,
-            "message": (
-                "TEAM NAME AND PASSWORD REQUIRED."
-            ),
+            "message": "TEAM NAME AND PASSWORD REQUIRED."
+        }), 400
+
+    if len(team) < 2:
+        return jsonify({
+            "success": False,
+            "message": "TEAM NAME TOO SHORT."
+        }), 400
+
+    if len(team) > 40:
+        return jsonify({
+            "success": False,
+            "message": "TEAM NAME TOO LONG."
+        }), 400
+
+    if len(password) < 4:
+        return jsonify({
+            "success": False,
+            "message": "PASSWORD MUST BE AT LEAST 4 CHARACTERS."
         }), 400
 
     db = get_db()
 
-    row = db.execute(
-        """
-        SELECT *
-        FROM teams
-        WHERE team_name = ?
-        """,
-        (team,),
-    ).fetchone()
+    try:
 
-    if (
-        row is None
-        or not check_password_hash(
+        # =====================================================
+        # CHECK FOR EXISTING TEAM
+        # =====================================================
+
+        row = db.execute(
+            """
+            SELECT *
+            FROM teams
+            WHERE team_name = ?
+            """,
+            (team,),
+        ).fetchone()
+
+        # =====================================================
+        # NEW TEAM
+        # =====================================================
+
+        if row is None:
+
+            password_hash = generate_password_hash(
+                password
+            )
+
+            cursor = db.execute(
+                """
+                INSERT INTO teams (
+                    team_name,
+                    password_hash,
+                    score,
+                    current_level,
+                    created_at,
+                    last_login
+                )
+                VALUES (?, ?, 0, 1, ?, ?)
+                """,
+                (
+                    team,
+                    password_hash,
+                    utc_now(),
+                    utc_now(),
+                ),
+            )
+
+            team_id = cursor.lastrowid
+
+            db.commit()
+
+            session.clear()
+
+            session["team_id"] = team_id
+            session["team"] = team
+
+            return jsonify({
+                "success": True,
+                "created": True,
+                "message": "TEAM CREATED. ACCESS GRANTED.",
+                "team": team,
+                "score": 0,
+                "current_level": 1,
+            })
+
+        # =====================================================
+        # EXISTING TEAM
+        # =====================================================
+
+        if not check_password_hash(
             row["password_hash"],
             password,
-        )
-    ):
+        ):
 
-        db.close()
+            return jsonify({
+                "success": False,
+                "created": False,
+                "message": "INVALID MISSION CREDENTIALS."
+            }), 401
+
+        # =====================================================
+        # UPDATE LAST LOGIN
+        # =====================================================
+
+        db.execute(
+            """
+            UPDATE teams
+            SET last_login = ?
+            WHERE id = ?
+            """,
+            (
+                utc_now(),
+                row["id"],
+            ),
+        )
+
+        db.commit()
+
+        session.clear()
+
+        session["team_id"] = row["id"]
+        session["team"] = row["team_name"]
+
+        return jsonify({
+            "success": True,
+            "created": False,
+            "message": "ACCESS GRANTED.",
+            "team": row["team_name"],
+            "score": row["score"],
+            "current_level": row["current_level"],
+        })
+
+    except sqlite3.IntegrityError:
+
+        db.rollback()
 
         return jsonify({
             "success": False,
-            "message": (
-                "INVALID MISSION CREDENTIALS."
-            ),
-        }), 401
+            "message": "TEAM NAME ALREADY EXISTS."
+        }), 409
 
-    db.execute(
-        """
-        UPDATE teams
-        SET last_login = ?
-        WHERE id = ?
-        """,
-        (
-            utc_now(),
-            row["id"],
-        ),
-    )
+    except Exception:
 
-    db.commit()
-    db.close()
+        db.rollback()
 
-    session.clear()
+        app.logger.exception(
+            "Team authentication/creation failed."
+        )
 
-    session["team_id"] = row["id"]
-    session["team"] = row["team_name"]
+        return jsonify({
+            "success": False,
+            "message": "INTERNAL MISSION ERROR."
+        }), 500
 
-    return jsonify({
-        "success": True,
-        "message": "ACCESS GRANTED.",
-        "team": row["team_name"],
-    })
-
+    finally:
+        db.close()
 
 @app.post("/api/logout")
 def api_logout():
@@ -2249,7 +2290,6 @@ def internal_error(error):
 # ============================================================
 
 init_db()
-seed_teams()
 
 
 # ============================================================
